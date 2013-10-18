@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Abikantenstadl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Abikantenstadl<% if content_for?(:title) %> - <%= yield(:title) %><% end %></title>
   <%= csrf_meta_tags %>
+	<%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
 </head>
 <body>
-
-<%= yield %>
-
+  <nav class="top-bar">
+    <ul class="title-area">
+      <li class="name">
+        <h1>Abikantenstadl</a></h1>
+      </li>
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="divider"></li>
+        <li>Foo Bar</li>
+        <li class="divider"></li>
+        <li>logout</li>
+      </ul>
+    </div>
+  </nav>
+  <%= yield %>
 </body>
 </html>
