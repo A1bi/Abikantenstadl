@@ -46,29 +46,32 @@ Abikantenstadl::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-	config.assets.precompile << Proc.new { |path|
-		if path =~ /\.(css|js)\z/
-			# exclude global files
-			if path[0] == "_"
-				false
-			else
-				full_path = Rails.application.assets.resolve(path).to_path
-				app_assets_path = Rails.root.join('app', 'assets').to_path
-				if full_path.starts_with? app_assets_path
-					# including asset
-					true
-				else
-					# excluding asset
-					false
-				end
-			end
-		else
-			false
-		end
-	}
+  config.assets.precompile << Proc.new { |path|
+    if path =~ /\.(css|js)\z/
+      # exclude global files
+      if path[0] == "_"
+        false
+      else
+        full_path = Rails.application.assets.resolve(path).to_path
+        app_assets_path = Rails.root.join('app', 'assets').to_path
+        if full_path.starts_with? app_assets_path
+          # including asset
+          true
+        else
+          # excluding asset
+          false
+        end
+      end
+    else
+      false
+    end
+  }
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.default_url_options = { host: "www.abikantenstadl.net", protocol: "http" }
 
   # Enable threaded mode
   # config.threadsafe!

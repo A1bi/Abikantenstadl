@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Abikantenstadl<% if content_for?(:title) %> - <%= yield(:title) %><% end %></title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abikantenstadl<% if content_for?(:title) %> - <%= yield(:title) %><% end %></title>
   <%= csrf_meta_tags %>
-	<%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "application" %>
 </head>
 <body>
   <header class="row">
-    <div class="small-4 columns title">Abikantenstadl</div>
-    <div class="small-2 small-offset-5 columns text-right">Foo Bar</div>
-    <div class="small-1 columns">logout</div>
+    <div class="small-4 columns title"><%= link_to "Abikantenstadl", root_path %></div>
+    <% if @_user.id %>
+      <div class="small-2 small-offset-5 columns text-right"><%= @_user.full_name %></div>
+      <div class="small-1 columns"><%= link_to "logout", logout_path %></div>
+    <% end %>
   </header>
+  <div class="row">
+    <div class="small-12 columns">
+      <% flash.each do |type, msg| %>
+        <div class="alert-box <%= type %>" data-alert>
+          <%= msg %>
+          <a href="#" class="close">&times;</a>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <%= yield %>
   <%= javascript_include_tag "application" %>
 </body>

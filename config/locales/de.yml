@@ -1,4 +1,23 @@
 de:
+  application:
+    login_required: "Bitte logge dich ein."
+    saved_changes: "Änderungen gespeichert"
+  sessions:
+    auth_error: "e-mail-Adresse oder Passwort falsch."
+    logout: "Du wurdest erfolgreich ausgeloggt."
+  users:
+    activated: "Dein Konto wurde erfolgreich aktiviert."
+    email_not_found: "Ein Konto mit dieser e-mail-Adresse wurde nicht gefunden."
+    password_reset: "Eine e-mail mit weiteren Instruktionen wurde dir zugeschickt."
+    password_changed: "Dein Passwort wurde geändert."
+  action_mailer:
+    defaults:
+      from: "Abikantenstadl <noreply@abikantenstadl.net>"
+  user_mailer:
+    activation:
+      subject: "Es geht los!"
+    reset_password:
+      subject: "Passwort zurücksetzen"
   activerecord:
     errors:
       messages:
@@ -7,6 +26,11 @@ de:
         email:
           invalid: "Die e-mail-Adresse ist ungültig."
       models:
+        user:
+          attributes:
+            password:
+              confirmation: "Die Passwörter stimmen nicht überein."
+              too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

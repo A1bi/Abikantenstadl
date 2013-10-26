@@ -1,25 +1,32 @@
 <% title = "Login" %>
 <div class="row">
-  <div class="small-5 small-centered columns panel login">
-    <%= form_tag "" do %>
+  <div class="small-form-panel login">
+    <%= form_tag login_path do %>
       <div class="row">
         <div class="large-12 columns"><h4>Login</h4></div>
       </div>
       <div class="row">
         <div class="large-12 columns">
           <label>e-mail</label>
-          <input type="text" />
+          <%= text_field_tag :email, params[:email] %>
         </div>
       </div>
       <div class="row">
         <div class="large-12 columns">
           <label>Passwort</label>
-          <input type="password" />
+          <div class="row collapse">
+            <div class="small-8 columns">
+              <%= password_field_tag :password %>
+            </div>
+            <div class="small-4 columns">
+              <span class="postfix radius"><%= link_to "vergessen?", forgot_password_user_path %></span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="large-12 columns text-center">
-          <input type="submit" value="login" class="button small" />
+          <%= submit_tag "login", class: [:button, :small] %>
         </div>
       </div>
     <% end %>

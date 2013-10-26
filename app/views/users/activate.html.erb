@@ -1,0 +1,39 @@
+<% title "Konto aktivieren" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Hallo <%= @user.first_name %>!</h4>
+    <p>
+      <% if @user.last_login %>
+        Du kannst nun ein neues Passwort für dein Konto festlegen.
+      <% else %>
+        Bevor du die Seite das erste Mal betreten kannst, musst du dein persönliches Passwort festlegen, mit dem du dich hier in Zukunft einloggen kannst.
+      <% end %>
+    </p>
+    <div class="row">
+      <div class="small-form-panel">
+        <%= render "errors", :errors => @user.errors %>
+        <%= form_for @user, :url => finish_activation_user_path do |f| %>
+          <%= f.hidden_field :id %>
+          <%= f.hidden_field :activation_code %>
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Passwort</label>
+              <%= f.password_field :password %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Passwort wiederholen</label>
+              <%= f.password_field :password_confirmation %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-12 columns text-center">
+              <%= f.submit "aktivieren", class: [:button, :small] %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

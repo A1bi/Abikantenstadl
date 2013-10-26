@@ -2,6 +2,8 @@
 // Foundation Variables
 //
 
+@import "_mixins";
+
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
 $base-font-size: 100% !default;
@@ -305,7 +307,7 @@ $column-gutter: em-calc(25px);
 // $input-bg-color: #fff;
 // $input-focus-bg-color: darken(#fff, 2%);
 // $input-border-color: darken(#fff, 20%);
-// $input-focus-border-color: darken(#fff, 40%);
+$input-focus-border-color: $light-color;
 // $input-border-style: solid;
 // $input-border-width: 1px;
 // $input-disabled-bg: #ddd;
@@ -1341,9 +1343,32 @@ $column-gutter: em-calc(25px);
   "foundation/components/forms",
   "foundation/components/section",
   "foundation/components/labels",
-  "foundation/components/panels";
+  "foundation/components/panels",
+  "foundation/components/alert-boxes";
 
 
 .panel, .button, input[type="text"], input[type="password"] {
+  @include radius;
+}
+
+.button {
+  @include main-gradient;
+}
+
+.alert-box {
+  @include radius;
+  
+  &.notice {
+    @extend .success;
+  }
+  
+  &.warning {
+    @include alert(orange);
+  }
+}
+
+.small-form-panel {
+  @include grid-column(5, true, true);
+  @include panel;
   @include radius;
 }

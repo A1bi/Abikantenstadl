@@ -1,0 +1,17 @@
+$main-color: #1B5CB7;
+$dark-color: #173A73;
+$light-color: #0A9AFA;
+
+@mixin background-gradient($pos, $colors, $default: "") {
+  @if $default != "" {
+    background: #{$default};
+  }
+  @each $vendor in moz, webkit, o, ms {
+    background: -#{$vendor}-linear-gradient($pos, $colors) !important;
+  }
+}
+
+
+@mixin main-gradient {
+  @include background-gradient(top, ($light-color 0%, $main-color 100%), $dark-color);
+}
