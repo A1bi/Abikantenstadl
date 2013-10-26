@@ -86,7 +86,7 @@ $default-float: left;
 
 // Make sure border radius matches unless we want it different.
 
-// $global-radius: 3px;
+$global-radius: 5px;
 // $global-rounded: 1000px;
 
 // Inset shadow shiny edges and depressions.
@@ -149,8 +149,8 @@ $default-float: left;
 // Grid Variables
 //
 
-// $row-width: em-calc(1000);
-$column-gutter: em-calc(30);
+// $row-width: em-calc(1000px);
+$column-gutter: em-calc(25px);
 // $total-columns: 12;
 
 //
@@ -1255,7 +1255,7 @@ $column-gutter: em-calc(30);
 
 // Background color for the top bar
 
-$topbar-bg-color: #eee;
+// $topbar-bg-color: #eee;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin
@@ -1340,5 +1340,10 @@ $topbar-bg-color: #eee;
   "foundation/components/buttons",
   "foundation/components/forms",
   "foundation/components/section",
-  "foundation/components/top-bar",
-  "foundation/components/labels";
+  "foundation/components/labels",
+  "foundation/components/panels";
+
+
+.panel, .button, input[type="text"], input[type="password"] {
+  @include radius;
+}

@@ -8,6 +8,41 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require foundation_and_overrides
+ *= require_self
  */
+
+$main-color: #1B5CB7;
+$dark-color: #173A73;
+
+.button {
+  background: $main-color;
+  border: none;
+  
+  &:hover {
+    box-shadow: 0px 0px 4px white;
+  }
+}
+
+header {
+  background: #eee;
+  box-shadow: 0px 1px 5px black;
+  background: $main-color;
+  border-bottom: 1px solid $dark-color;
+  min-width: 100%;
+  margin-bottom: 25px !important;
+  
+  .columns {
+    padding: 10px;
+    color: white;
+    
+    &.title {
+      font-weight: bold;
+      text-shadow: 1px 1px 5px black;
+    }
+  }
+}
+
+.login.panel {
+  margin-top: 60px;
+}

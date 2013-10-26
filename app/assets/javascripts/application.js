@@ -13,11 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require vendor/custom.modernizr
+//= require foundation/foundation
 //= require foundation/foundation.alerts
 //= require foundation/foundation.forms
 //= require foundation/foundation.section
 //= require foundation/foundation.tooltips
-//= require foundation/foundation.topbar
 //= require foundation/foundation.placeholder
 //= require foundation/foundation.abide
 
