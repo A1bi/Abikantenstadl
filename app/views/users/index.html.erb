@@ -19,7 +19,7 @@
             <td><%= user.last_name %></td>
             <td><%= user.first_name %></td>
             <td><%= user.email %></td>
-            <td><%= user.last_login || "<em>noch nie</em>".html_safe %></td>
+            <td><%= ld user.last_login, format: :short %></td>
             <td><%= link_to "bearbeiten", edit_user_path(user) %> | <%= link_to "löschen", user_path(user), method: :delete, confirm: "Möchtest du diesen Schüler wirklich löschen?" %></td>
           </tr>
         <% end %>

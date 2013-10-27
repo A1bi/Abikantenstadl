@@ -3,8 +3,8 @@
     <h3>Aktionen</h3>
     <div class="large-6 columns end">
       <div class="panel">
-        <h4>Test</h4>
-        Lorem ipsum
+        <h4><%= link_to "Dein Steckbrief", edit_profile_path %></h4>
+        Hier kannst du deinen Steckbrief bearbeiten.
       </div>
     </div>
     <div class="large-6 columns end">
@@ -32,6 +32,12 @@
         <div class="panel">
           <h4><%= link_to "Schüler", users_path %></h4>
           Hier kannst du alle Schüler verwalten.
+        </div>
+      </div>
+      <div class="large-6 columns end">
+        <div class="panel">
+          <h4><%= link_to "Steckbriefe", profiles_path %></h4>
+          Hier kannst du die Steckbriefe aller Schüler einsehen.
         </div>
       </div>
     </div>

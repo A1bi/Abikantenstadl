@@ -26,5 +26,11 @@ Abikantenstadl::Application.routes.draw do
       end
     end
     
+    controller :profiles, :path => "steckbrief" do
+      get "/", :action => :index, :as => :profiles
+      get "(/:id)/bearbeiten", :action => :edit, :as => :edit_profile
+      put "(/:id)", :action => :update, :as => :profile
+    end
+    
   end
 end

@@ -39,7 +39,11 @@ de:
     email: "e-mail-Adresse"
     first_name: "Vorname"
     last_name: "Nachname"
+  time:
+    formats:
+      short: "%d.%m.%y, %H:%M Uhr"
   date:
+    never: "noch nie"
     month_names:
       - 
       - Januar

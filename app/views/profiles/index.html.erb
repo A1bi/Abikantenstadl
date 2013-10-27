@@ -1,0 +1,28 @@
+<% title "Übersicht über alle Steckbriefe" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Übersicht über alle Steckbriefe</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ausgefüllt</th>
+          <th>zuletzt bearbeitet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to "#{user.last_name}, #{user.first_name}", edit_profile_path(user) %></td>
+            <td><%= @fields.count.zero? ? 100 : (user.profile_field_values.not_empty.count / @fields.count.to_f * 100).to_i %> %</td>
+            <td><%= ld user.profile_field_values.maximum(:updated_at), format: :short %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

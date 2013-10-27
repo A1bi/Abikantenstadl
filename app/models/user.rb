@@ -4,6 +4,8 @@ class User < BaseModel
   attr_accessible :email, :first_name, :last_name, :admin, :as => :admin
   has_secure_password
   
+  has_many :profile_field_values
+  
   attr_accessor :email_can_be_blank
   
   validates :email, :presence => true, :if => Proc.new { |user| !user.email_can_be_blank }
@@ -18,6 +20,10 @@ class User < BaseModel
             :if => :password_digest_changed?
             
   validates_presence_of :first_name, :last_name
+  
+  def self.student
+    where(student: true)
+  end
   
   def full_name
     self.first_name + " " + self.last_name

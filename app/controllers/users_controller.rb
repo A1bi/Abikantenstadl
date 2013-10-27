@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.order(:last_name, :first_name).scoped
+    @users = User.order(:last_name, :first_name).student
   end
   
   def destroy
