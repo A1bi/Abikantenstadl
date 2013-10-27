@@ -1,0 +1,29 @@
+<% title "Schüler" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Schüler</h4>
+    <div class="text-right"><%= link_to "Schüler hinzufügen", new_user_path, class: [:button, :small] %></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nachname</th>
+          <th>Vorname</th>
+          <th>e-mail</th>
+          <th>zuletzt online</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.last_name %></td>
+            <td><%= user.first_name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.last_login || "<em>noch nie</em>".html_safe %></td>
+            <td><%= link_to "bearbeiten", edit_user_path(user) %> | <%= link_to "löschen", user_path(user), method: :delete, confirm: "Möchtest du diesen Schüler wirklich löschen?" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

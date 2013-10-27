@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="small-12 columns panel">
+    <%= render "errors", :errors => @user.errors %>
+    <%= form_for @user do |f| %>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Vorname</label>
+          <%= f.text_field :first_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Nachname</label>
+          <%= f.text_field :last_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>e-mail</label>
+          <%= f.text_field :email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <%= label_tag do %><%= f.check_box :admin %> gehört zur Redaktion<% end %>
+        </div>
+      </div>
+      <% if (new_action ||= false) %>
+        <div class="row">
+          <div class="large-12 columns">
+            <%= label_tag do %><%= check_box_tag :send_email %> Aktivierungsmail zusenden<% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="large-12 columns text-center">
+          <%= link_to "abbrechen", users_path, class: [:button, :small] %> <%= f.submit "speichern", class: [:button, :small] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

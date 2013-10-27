@@ -1,0 +1,43 @@
+<% title "Dein Konto" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Dein Benutzerkonto</h4>
+    <p>Hier hast du die Möglichkeit deine Kontodaten zu bearbeiten.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns panel">
+    <%= render "errors", :errors => @user.errors %>
+    <%= form_for @user do |f| %>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Name</label>
+          <%= text_field_tag :name, @user.full_name, disabled: true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>e-mail</label>
+          <%= f.text_field :email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Neues Passwort (nur ausfüllen, wenn du es ändern möchtest)</label>
+          <%= f.password_field :password %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Neues Passwort wiederholen</label>
+          <%= f.password_field :password_confirmation %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns text-center">
+          <%= f.submit "speichern", class: [:button, :small] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

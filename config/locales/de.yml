@@ -1,7 +1,8 @@
 de:
   application:
     login_required: "Bitte logge dich ein."
-    saved_changes: "Änderungen gespeichert"
+    saved_changes: "Die Änderungen wurden gespeichert."
+    access_denied: "Du hast nicht die erforderlichen Rechte für diese Aktion."
   sessions:
     auth_error: "e-mail-Adresse oder Passwort falsch."
     logout: "Du wurdest erfolgreich ausgeloggt."
@@ -10,6 +11,9 @@ de:
     email_not_found: "Ein Konto mit dieser e-mail-Adresse wurde nicht gefunden."
     password_reset: "Eine e-mail mit weiteren Instruktionen wurde dir zugeschickt."
     password_changed: "Dein Passwort wurde geändert."
+    reset: "Das Konto wurde zurückgesetzt und eine neue Aktivierungs-mail an den Schüler gesendet."
+    destroyed: "Der Schüler wurde gelöscht."
+    created: "Der Schüler wurde hinzugefügt."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"
@@ -22,15 +26,14 @@ de:
     errors:
       messages:
         blank: "Das Feld \"%{attribute}\" darf nicht leer sein."
-      attributes:
-        email:
-          invalid: "Die e-mail-Adresse ist ungültig."
       models:
         user:
           attributes:
             password:
               confirmation: "Die Passwörter stimmen nicht überein."
               too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
+            email:
+              invalid: "Die e-mail-Adresse ist ungültig."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

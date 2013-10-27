@@ -16,18 +16,18 @@ class ApplicationController < ActionController::Base
   end
   
   def restrict_access_to_users
-    if !@_user.id
-      return redirect_to login_path, :flash => { :warning => t("application.login_required") }
-    end
+    redirect_to login_path, :flash => { :warning => t("application.login_required") } if !@_user.id
   end
   
   def restrict_access_to_admins
-    if !@_user.admin?
-      return redirect_to root_path, :alert => t("application.access_denied")
-    end
+    redirect_to root_path, :alert => t("application.access_denied") if !@_user.admin?
+  end
+  
+  def self.restrict_access_to_admins(options = {})
+    before_filter :restrict_access_to_admins, options
   end
   
   def self.ignore_restrictions(options = {})
-    skip_filter :restrict_access_to_users, options
+    skip_filter :restrict_access_to_users, :restrict_access_to_admins, options
   end
 end

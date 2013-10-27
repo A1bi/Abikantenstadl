@@ -1,7 +1,7 @@
 class User < BaseModel
   attr_accessible
   attr_accessible :email, :password, :password_confirmation, :as => :user
-  attr_accessible :email, :first_name, :last_name, :as => :admin
+  attr_accessible :email, :first_name, :last_name, :admin, :as => :admin
   has_secure_password
   
   attr_accessor :email_can_be_blank

@@ -37,16 +37,28 @@ header {
   }
   
   * {
-    color: white;
+    color: white !important;
   }
   
   a:hover {
-    color: #cccccc;
+    color: #cccccc !important;
   }
   
   :not(.title) {
     padding-top: 12px;
   }
+}
+
+a {
+  color: $light-color;
+  
+  &:hover {
+    color: $dark-color;
+  }
+}
+
+table {
+  width: 100%;
 }
 
 .login.small-form-panel {

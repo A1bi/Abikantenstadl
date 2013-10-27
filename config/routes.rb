@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 Abikantenstadl::Application.routes.draw do
   controller :static do
     root :action => :index
@@ -7,12 +9,22 @@ Abikantenstadl::Application.routes.draw do
   post "login" => "sessions#create"
   get "logout" => "sessions#destroy", :as => :logout
   
-  resource :user, :path => "konto", :only => [:edit, :update] do
-    member do
+  scope :path_names => { :new => "neu", :edit => "bearbeiten" } do
+    
+    scope :controller => :users, :path => "konto" do
       get "activate", :path => "aktivieren"
       put "finish_activation"
       get "forgot_password", :path => "passwort_vergessen"
       post "reset_password"
+      get :edit_own, :path => "bearbeiten"
+      put :action => :update
     end
+  
+    resources :users, :path => Rack::Utils.escape("schüler"), except: [:show] do
+      member do
+        post :reset
+      end
+    end
+    
   end
 end
