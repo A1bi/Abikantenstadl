@@ -27,16 +27,18 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
+gem 'memcache-client'
+
 gem 'unicorn'
 
 group :development do
-  gem 'capistrano'
-	gem 'sqlite3'
-	gem 'ffaker'
+  gem 'capistrano', '~> 2.14.x'
+  gem 'sqlite3'
+  gem 'ffaker'
 end
 
 group :production do
-	gem 'mysql2'
+  gem 'mysql2'
 end
 
 # To use debugger

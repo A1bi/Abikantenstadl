@@ -12,7 +12,7 @@ Abikantenstadl::Application.routes.draw do
   scope :path_names => { :new => "neu", :edit => "bearbeiten" } do
     
     scope :controller => :users, :path => "konto" do
-      get "activate", :path => "aktivieren"
+      get "activate", :path => "aktivieren", :as => :activate_user
       put "finish_activation"
       get "forgot_password", :path => "passwort_vergessen"
       post "reset_password"
