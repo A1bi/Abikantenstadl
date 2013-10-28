@@ -1,45 +1,91 @@
-<div class="row">
+<div class="row index">
   <div class="small-12 columns">
     <h3>Aktionen</h3>
-    <div class="large-6 columns end">
-      <div class="panel">
-        <h4><%= link_to "Dein Steckbrief", edit_profile_path %></h4>
-        Hier kannst du deinen Steckbrief bearbeiten.
+    <div class="row">
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4><%= link_to "Dein Steckbrief", edit_profile_path %></h4>
+          <span>Hier kannst du deinen Steckbrief bearbeiten.</span>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Fotos für deinen Steckbrief</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Fotos für Collagen</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Wir über uns</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Zitate</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Umfragen</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Kursberichte</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Short Stories</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4>Survivaltips</h4>
+          <em>Folgt in den nächsten Tagen...</em>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel">
+          <h4><%= link_to "Dein Konto", edit_own_path %></h4>
+          <span>Hier kannst du dein Passwort und deine e-mail-Adresse ändern.</span>
+        </div>
       </div>
     </div>
-    <div class="large-6 columns end">
-      <div class="panel">
-        <h4>Test</h4>
-        Lorem ipsum
+    <% if @_user.admin? %>
+    <div class="row">
+      <div class="small-12 columns"><hr /></div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
+        <h3>Redaktion</h3>
+        <div class="row">
+          <div class="large-6 columns">
+            <div class="panel">
+              <h4><%= link_to "Schüler", users_path %></h4>
+              <span>Hier kannst du alle Schüler verwalten.</span>
+            </div>
+          </div>
+          <div class="large-6 columns">
+            <div class="panel">
+              <h4><%= link_to "Steckbriefe", profiles_path %></h4>
+              <span>Hier kannst du die Steckbriefe aller Schüler einsehen.</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="large-6 columns end">
-      <div class="panel">
-        <h4><%= link_to "Dein Konto", edit_own_path %></h4>
-        Hier kannst du dein Passwort und deine e-mail-Adresse ändern.
-      </div>
-    </div>
+    <% end %>
   </div>
 </div>
-<% if @_user.admin? %>
-  <div class="row">
-    <hr class="small-12 columns" />
-  </div>
-  <div class="row">
-    <div class="small-12 columns">
-      <h3>Redaktion</h3>
-      <div class="large-6 columns end">
-        <div class="panel">
-          <h4><%= link_to "Schüler", users_path %></h4>
-          Hier kannst du alle Schüler verwalten.
-        </div>
-      </div>
-      <div class="large-6 columns end">
-        <div class="panel">
-          <h4><%= link_to "Steckbriefe", profiles_path %></h4>
-          Hier kannst du die Steckbriefe aller Schüler einsehen.
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>

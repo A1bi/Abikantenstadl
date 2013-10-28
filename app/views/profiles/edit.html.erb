@@ -6,21 +6,23 @@
   </div>
 </div>
 <div class="row">
-  <div class="small-12 columns panel">
-    <%= form_tag profile_path(params[:id]), method: :put do %>
-      <% @fields.each do |field| %>
+  <div class="small-12 columns">
+    <div class="panel">
+      <%= form_tag profile_path(params[:id]), method: :put do %>
+        <% @fields.each do |field| %>
+          <div class="row">
+            <div class="large-12 columns">
+              <label><%= field.name %></label>
+              <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description %>
+            </div>
+          </div>
+        <% end %>
         <div class="row">
-          <div class="large-12 columns">
-            <label><%= field.name %></label>
-            <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description %>
+          <div class="large-12 columns text-center">
+            <% if @user != @_user %><%= link_to "abbrechen", profiles_path, class: [:button, :small] %> <% end %><%= submit_tag "speichern", class: [:button, :small] %>
           </div>
         </div>
       <% end %>
-      <div class="row">
-        <div class="large-12 columns text-center">
-          <% if @user != @_user %><%= link_to "abbrechen", profiles_path, class: [:button, :small] %> <% end %><%= submit_tag "speichern", class: [:button, :small] %>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>

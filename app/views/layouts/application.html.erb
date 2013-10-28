@@ -9,10 +9,9 @@
 </head>
 <body>
   <header class="row">
-    <div class="small-4 columns title"><%= link_to "Abikantenstadl", root_path %></div>
+    <div class="large-4 small-12 columns title"><%= link_to "Abikantenstadl", root_path %></div>
     <% if @_user.id %>
-      <div class="small-2 small-offset-5 columns text-right"><%= @_user.full_name %></div>
-      <div class="small-1 columns"><%= link_to "logout", logout_path %></div>
+      <div class="large-3 large-offset-5 small-12 columns"><%= @_user.full_name %> - <%= link_to "logout", logout_path %></div>
     <% end %>
   </header>
   <div class="row">

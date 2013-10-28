@@ -1348,7 +1348,7 @@ $input-focus-border-color: $light-color;
   "foundation/components/tables";
 
 
-.panel, .button, input[type="text"], input[type="password"] {
+.panel, .button, input[type="text"], input[type="password"], input[type="email"] {
   @include radius;
 }
 
@@ -1369,7 +1369,10 @@ $input-focus-border-color: $light-color;
 }
 
 .small-form-panel {
-  @include grid-column(5, true, true);
+  @extend .small-11;
+  @extend .large-5;
+  @extend .columns;
+  @extend .small-centered;
   @include panel;
   @include radius;
 }
