@@ -18,6 +18,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   
   gem 'zurb-foundation'
+  gem 'foundation-icons-sass-rails'
 end
 
 gem 'jquery-rails'

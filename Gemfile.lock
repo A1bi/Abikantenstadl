@@ -40,6 +40,9 @@ GEM
     erubis (2.7.0)
     execjs (2.0.2)
     ffaker (1.20.0)
+    foundation-icons-sass-rails (3.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     highline (1.6.15)
     hike (1.2.3)
     i18n (0.6.5)
@@ -127,6 +130,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   capistrano (~> 2.14.x)
   ffaker
+  foundation-icons-sass-rails
   jquery-rails
   memcache-client
   mysql2

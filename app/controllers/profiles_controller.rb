@@ -1,10 +1,16 @@
 class ProfilesController < ApplicationController
+  restrict_access_to_admins only: [:index]
+  
   before_filter :find_fields, only: [:edit]
   before_filter :find_user, only: [:edit, :update]
   
   def index
     @fields = ProfileField.scoped
     @users = User.order(:last_name, :first_name).student
+  end
+  
+  def edit
+    redirect_to edit_profile_path if params[:id] && !@_user.admin?
   end
   
   def update

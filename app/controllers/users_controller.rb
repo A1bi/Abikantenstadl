@@ -41,8 +41,8 @@ class UsersController < ApplicationController
   
   def reset_password
     user = User.where(email: params[:user][:email]).first
-    if !user
-      flash.alert = t("users.email_not_found")
+    if params[:user][:email].empty? || !user
+      flash.alert = t("users.email_not_found") if params[:user][:email].present?
       redirect_to action: :forgot_password
     else
       user.set_activation_code

@@ -2,12 +2,13 @@
 <div class="row">
   <div class="small-12 columns">
     <h4>Steckbrief<% if @user != @_user %> von <%= @user.full_name %><% end %> bearbeiten</h4>
-    <% if @user == @_user %><p>Hier hast du die Möglichkeit, deinen Steckbrief zu bearbeiten. Du kannst diesen bis zum Redaktionsschluss (wird noch bekannt gegeben) so oft du magst verändern.</p><% end %>
+    <% if @user == @_user %><p>Hier hast du die Möglichkeit, deinen Steckbrief zu bearbeiten. Du kannst diesen <b>bis 31. Januar 2014</b> so oft du magst verändern.</p><% end %>
   </div>
 </div>
 <div class="row">
   <div class="small-12 columns">
     <div class="panel">
+      <%= render "text_rules" %>
       <%= form_tag profile_path(params[:id]), method: :put do %>
         <% @fields.each do |field| %>
           <div class="row">

@@ -20,5 +20,30 @@
 //= require foundation/foundation.tooltips
 //= require foundation/foundation.placeholder
 //= require foundation/foundation.abide
+//= require foundation/foundation.dropdown
 
-$(function(){ $(document).foundation(); });
+$(function() {
+  var el = $("<div>").prop("id", "ieDetect");
+  $("body").append(el);
+  el.html("<!--[if IE]><em></em><![endif]-->");
+  if (el.find("em").length) {
+
+    var v;
+    for (v = 10; v >= 6; v--) {
+      el.html("<!--[if gte IE " + v + "]><b></b><![endif]-->");
+      if (el.find("b").length) break;
+    }
+  
+    var classToAdd = "";
+    if (v < 8) {
+      classToAdd = "unsupportedBrowser";
+      $.getScript("/assets/unsupported_browser.js");
+    } else if (v == 8) {
+      classToAdd = "ie8";
+    }
+    $("html").addClass(classToAdd);
+  }
+  el.remove();
+  
+  $(document).foundation();
+});

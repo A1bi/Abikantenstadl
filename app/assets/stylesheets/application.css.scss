@@ -74,3 +74,27 @@ ul.alert-box {
     height: 120px;
   }
 }
+
+.text-rules {
+  text-align: right;
+  
+  a {
+    color: red;
+    
+    i {
+      font-size: 20px;
+    }
+  }
+  
+  #drop-text-rules {
+    text-align: left;
+    
+    &, * {
+      font-size: 15px;
+    }
+    
+    ul {
+      padding: 10px 20px;
+    }
+  }
+}

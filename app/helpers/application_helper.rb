@@ -10,4 +10,8 @@ module ApplicationHelper
       content_tag :em, t("date.never")
     end
   end
+  
+  def glyph(name)
+    content_tag :i, "", class: "fi-#{name}"
+  end
 end
