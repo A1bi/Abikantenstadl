@@ -23,25 +23,19 @@
 //= require foundation/foundation.dropdown
 
 $(function() {
+  var minVer = 9;
   var el = $("<div>").prop("id", "ieDetect");
   $("body").append(el);
   el.html("<!--[if IE]><em></em><![endif]-->");
   if (el.find("em").length) {
-
-    var v;
-    for (v = 10; v >= 6; v--) {
-      el.html("<!--[if gte IE " + v + "]><b></b><![endif]-->");
+    for (var v = 6; v < 15; v++) {
+      el.html("<!--[if lte IE " + v + "]><b></b><![endif]-->");
       if (el.find("b").length) break;
     }
-  
-    var classToAdd = "";
-    if (v < 8) {
-      classToAdd = "unsupportedBrowser";
+    if (v < minVer) {
+      $("html").addClass("unsupportedBrowser");
       $.getScript("/assets/unsupported_browser.js");
-    } else if (v == 8) {
-      classToAdd = "ie8";
     }
-    $("html").addClass(classToAdd);
   }
   el.remove();
   

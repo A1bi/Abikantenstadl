@@ -20,7 +20,7 @@
             <td><%= user.first_name %></td>
             <td><%= user.email %></td>
             <td><%= ld user.last_login, format: :short %></td>
-            <td><%= link_to edit_user_path(user), title: "bearbeiten" do %><%= glyph "pencil" %><% end %> <%= link_to user_path(user), method: :delete, confirm: "Möchtest du diesen Schüler wirklich löschen?", title: "löschen" do %><%= glyph "x" %><% end %></td>
+            <td><%= link_to "", edit_user_path(user), title: "bearbeiten", class: "fi-pencil" %> <%= link_to "", user_path(user), method: :delete, confirm: "Möchtest du diesen Schüler wirklich löschen?", title: "löschen", class: "fi-x" %></td>
           </tr>
         <% end %>
       </tbody>
