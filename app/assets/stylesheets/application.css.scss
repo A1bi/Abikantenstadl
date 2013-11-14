@@ -143,3 +143,11 @@ html {
     }
   }
 }
+
+textarea {
+  height: 80px;
+  
+  &.large {
+    height: 170px;
+  }
+}

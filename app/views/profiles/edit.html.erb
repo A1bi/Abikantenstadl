@@ -14,7 +14,7 @@
           <div class="row">
             <div class="large-12 columns">
               <label><%= field.name %></label>
-              <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description %>
+              <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description, class: (field.large ? :large : nil) %>
             </div>
           </div>
         <% end %>
