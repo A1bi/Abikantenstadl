@@ -1,0 +1,68 @@
+<% title "Wir über #{@user.full_name}" %>
+<div class="row">
+  <div class="small-12 columns">
+    <%= link_to about_path, class: "button small" do %><i class="fi-arrow-left"></i> zurück zu allen Schülern<% end %>
+    <%= form_for AboutUsEntry.new, method: :post, url: about_user_path(@user) do |f| %>
+      <h4>Wir über uns - <%= @user.full_name %></h4>
+      <p>Hier kannst du alles hinterlassen, was dir zu <%= @user.full_name %> einfällt. Natürlich sollte dein Eintrag humorvoll aber nicht verletzend sein.
+      <br />Halte dich möglichst kurz (Einzeiler sind optimal) und teile verschiedene Dinge in mehrere Einträge auf.
+      <br />Dein Name wird weder hier auf der Internetseite noch später in der fertigen Abizeitung als Verfasser erscheinen.</p>
+      <div class="row">
+        <div class="small-12 columns">
+          <div class="panel">
+            <%= render "text_rules" %>
+            <label>Neuen Eintrag verfassen</label>
+            <%= f.text_area :text %>
+            <div class="text-center">
+              <%= submit_tag "speichern", class: [:button, :small] %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <hr />
+    <h4>Deine Einträge</h4>
+    <div class="row">
+      <div class="small-12 columns">
+        <% @own_entries.each do |entry| %>
+          <div class="panel">
+            <div class="row">
+              <div class="small-11 columns">
+                <%= entry.text %>
+              </div>
+              <div class="small-1 columns">
+                <%= render "action_btns", path: about_entry_edit_path(@user, entry), del_path: about_entry_path(@user, entry), confirm: "diesen Eintrag" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @own_entries.count < 1 %>
+          <em>Du hast zu <%= @user.full_name %> noch keine Einträge hinterlassen.</em>
+        <% end %>
+      </div>
+    </div>
+    <hr />
+    <h4>Einträge anderer</h4>
+    <div class="row">
+      <div class="small-12 columns">
+        <% @other_entries.each do |entry| %>
+          <div class="panel">
+            <div class="row">
+              <div class="small-11 columns">
+                <%= entry.text %>
+              </div>
+              <div class="small-1 columns">
+                <% if @_user.admin? %>
+                  <%= render "action_btns", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @other_entries.count < 1 %>
+          <em>Noch keine Einträge vorhanden.</em>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,7 +35,7 @@
         <% end %>
         <div class="row">
           <div class="large-12 columns text-center">
-            <%= link_to "abbrechen", users_path, class: [:button, :small] %> <%= f.submit "speichern", class: [:button, :small] %>
+            <%= link_to "Konto zurücksetzen", reset_user_path(@user), method: :post, confirm: "Möchtest du dieses Konto wirklich zurücksetzen?", class: [:button, :radius, :small] if !new_action %> <%= link_to "abbrechen", users_path, class: [:button, :small] %> <%= f.submit "speichern", class: [:button, :small] %>
           </div>
         </div>
       <% end %>

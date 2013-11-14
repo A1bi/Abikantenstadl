@@ -14,6 +14,8 @@ de:
     reset: "Das Konto wurde zurückgesetzt und eine neue Aktivierungs-mail an den Schüler gesendet."
     destroyed: "Der Schüler wurde gelöscht."
     created: "Der Schüler wurde hinzugefügt."
+  about:
+    destroyed: "Der Eintrag wurde gelöscht."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"

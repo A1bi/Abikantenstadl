@@ -1,0 +1,23 @@
+<% title "Wir über uns" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Wir über uns</h4>
+    <p>Suche dir einen Schüler aus, über den du etwas schreiben möchtest.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Einträge</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to "#{user.last_name}, #{user.first_name}", about_user_path(user) %></td>
+            <td><%= user.about_us_entries.count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

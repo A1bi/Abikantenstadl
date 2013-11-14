@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
   
   def index
     @fields = ProfileField.scoped
-    @users = User.order(:last_name, :first_name).student
+    @users = User.ordered_by_name.student
   end
   
   def edit

@@ -1,8 +1,8 @@
 <% title "Schüler bearbeiten" %>
 <div class="row">
   <div class="small-12 columns">
+    <%= link_to users_path, class: "button small" do %><i class="fi-arrow-left"></i> zurück zu allen Schülern<% end %>
     <h4>Schüler bearbeiten</h4>
-    <%= link_to "Konto zurücksetzen", reset_user_path(@user), method: :post, confirm: "Möchtest du dieses Konto wirklich zurücksetzen?", class: [:button, :radius, :small] %>
   </div>
 </div>
 <%= render "form" %>

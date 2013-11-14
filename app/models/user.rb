@@ -5,6 +5,7 @@ class User < BaseModel
   has_secure_password
   
   has_many :profile_field_values
+  has_many :about_us_entries
   
   attr_accessor :email_can_be_blank
   
@@ -23,6 +24,10 @@ class User < BaseModel
   
   def self.student
     where(student: true)
+  end
+  
+  def self.ordered_by_name
+    order(:last_name, :first_name)
   end
   
   def full_name
