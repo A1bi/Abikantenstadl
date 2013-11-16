@@ -36,7 +36,7 @@
             </div>
           </div>
         <% end %>
-        <% if @own_entries.count < 1 %>
+        <% if @own_entries.empty? %>
           <em>Du hast zu <%= @user.full_name %> noch keine Einträge hinterlassen.</em>
         <% end %>
       </div>
@@ -59,7 +59,7 @@
             </div>
           </div>
         <% end %>
-        <% if @other_entries.count < 1 %>
+        <% if @other_entries.empty? %>
           <em>Noch keine Einträge vorhanden.</em>
         <% end %>
       </div>

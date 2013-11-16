@@ -1,0 +1,27 @@
+<% title "Fotos für Collagen" %>
+<div class="row photos">
+  <div class="small-12 columns">
+    <h4>Fotos für Collagen</h4>
+    <p>In der Abizeitung wird es einige Seiten mit Collagen unserer Fotos geben. Du kannst dazu natürlich auch beitragen, indem du hier deine Fotos hochlädst.</p>
+    <div class="panel text-center">
+      <%= render "errors", :errors => @photo.errors %>
+      <%= form_for @photo do |f| %>
+        <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
+        <%= f.submit "hochladen", class: [:button, :tiny] %>
+      <% end %>
+    </div>
+    <hr />
+    <h4>Deine bereits hochgeladenen Fotos</h4>
+    <div class="panel">
+      <ul class="small-block-grid-2 large-block-grid-5">
+        <%= content_tag_for :li, @photos do |photo| %>
+          <%= image_tag photo.image.url(:thumb), class: "th radius" %>
+          <div class="delete-btn"><%= render "delete_btn", path: photo_path(photo), confirm: "dieses Foto" %></div>
+        <% end %>
+      </ul>
+      <% if @photos.empty? %>
+        <em>Du hast noch keine Fotos hochgeladen.</em>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,8 @@ de:
     created: "Der Schüler wurde hinzugefügt."
   about:
     destroyed: "Der Eintrag wurde gelöscht."
+  photos:
+    destroyed: "Das Foto wurde gelöscht."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"
@@ -36,6 +38,12 @@ de:
               too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
             email:
               invalid: "Die e-mail-Adresse ist ungültig."
+        photo:
+          attributes:
+            image_content_type:
+              invalid: "Bitte lade dein Foto im JPG- oder PNG-Format hoch."
+            image:
+              blank: "Bitte wähle ein Foto aus."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

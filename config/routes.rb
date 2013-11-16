@@ -45,5 +45,7 @@ Abikantenstadl::Application.routes.draw do
       end
     end
     
+    resources :photos, :path => "fotos", only: [:index, :create, :destroy]
+    
   end
 end
