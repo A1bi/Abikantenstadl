@@ -25,6 +25,6 @@ class PhotosController < ApplicationController
   private
   
   def find_photos
-    @photos = Photo.where(user_id: @_user).section(:collage)
+    @photos = @_user.photos.section(:collage)
   end
 end

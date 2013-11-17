@@ -1,10 +1,8 @@
-class AboutUsEntry < ActiveRecord::Base
+class AboutUsEntry < BaseModel
   attr_accessible :text
   
   belongs_to :user
   belongs_to :author, class_name: User
   
-  def self.order_by_date_desc
-    order("created_at DESC")
-  end
+  validates_presence_of :author, :user, :text
 end

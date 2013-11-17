@@ -1,0 +1,26 @@
+<% title "Zitat bearbeiten" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Zitat bearbeiten</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <div class="panel">
+      <%= render "text_rules" %>
+      <%= render "errors", errors: @snippet.errors %>
+      <%= form_for @snippet, url: quote_path(@snippet) do |f| %>
+        <div class="row">
+          <div class="small-12 columns">
+            <%= f.text_area :content, class: :large %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns text-center">
+            <%= f.submit "speichern", class: [:button, :small] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

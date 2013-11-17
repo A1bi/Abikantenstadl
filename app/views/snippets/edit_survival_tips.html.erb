@@ -1,0 +1,22 @@
+<% title "Survivaltipp bearbeiten" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Survivaltipp bearbeiten</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <%= render "text_rules" %>
+    <%= render "errors", errors: @snippet.errors %>
+    <%= form_for @snippet, url: survival_tip_path(@snippet) do |f| %>
+      <div class="row">
+        <div class="small-10 columns">
+          <%= f.text_field :content %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.submit "speichern", class: [:button, :prefix] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

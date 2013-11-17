@@ -116,6 +116,7 @@ html {
 
 .text-rules {
   text-align: right;
+  margin-bottom: 20px;
   
   a {
     color: red;
@@ -164,5 +165,26 @@ textarea {
     background: rgba(0, 0, 0, .7);
     padding: 0px 5px;
     border-radius: 5px;
+  }
+}
+
+.snippets {
+  input {
+    margin-bottom: 0px !important;
+  }
+  
+  .row.entry {
+    &:nth-child(odd) {
+      background: #D9F4FF;
+    }
+    &:nth-child(even) {
+      background: #A7D8FA;
+    }
+    
+    .columns {
+      font-size: 14px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
   }
 }

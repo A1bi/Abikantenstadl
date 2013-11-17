@@ -1,0 +1,41 @@
+<% title "Gerüchte" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Gerüchte</h4>
+    <p>Wir halten es für ein Gerücht, dass...</p>
+  </div>
+</div>
+<%= form_for @snippet, url: rumors_path do |f| %>
+  <div class="row snippets">
+    <div class="row">
+      <div class="small-12 columns">
+        <%= render "text_rules" %>
+        <%= render "errors", errors: @snippet.errors %>
+      </div>
+    </div>
+    <div class="small-12 columns">
+      <div class="row entry">
+        <div class="small-1 columns text-right">
+          <span class="inline">...</span>
+        </div>
+        <div class="small-9 columns">
+          <%= f.text_field :content %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.submit "hinzufügen", class: [:button, :prefix] %>
+        </div>
+      </div>
+      <%= div_for @snippets, class: "row entry" do |snippet| %>
+        <div class="small-1 columns text-right">
+          ...
+        </div>
+        <div class="small-10 columns">
+          <%= snippet.content %>
+        </div>
+        <div class="small-1 columns text-right">
+          <%= render "action_btns", path: edit_rumor_path(snippet), del_path: rumor_path(snippet), confirm: "dieses Gerücht" if @_user.admin? || snippet.user == @_user %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

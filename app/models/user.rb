@@ -7,6 +7,7 @@ class User < BaseModel
   has_many :profile_field_values
   has_many :about_us_entries
   has_many :photos
+  has_many :snippets
   
   attr_accessor :email_can_be_blank
   

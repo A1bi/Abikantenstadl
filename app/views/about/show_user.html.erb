@@ -2,7 +2,7 @@
 <div class="row">
   <div class="small-12 columns">
     <%= link_to about_path, class: "button small" do %><i class="fi-arrow-left"></i> zurück zu allen Schülern<% end %>
-    <%= form_for AboutUsEntry.new, method: :post, url: about_user_path(@user) do |f| %>
+    <%= form_for @entry, method: :post, url: about_user_path(@user) do |f| %>
       <h4>Wir über uns - <%= @user.full_name %></h4>
       <p>Hier kannst du alles hinterlassen, was dir zu <%= @user.full_name %> einfällt. Natürlich sollte dein Eintrag humorvoll aber nicht verletzend sein.
       <br />Halte dich möglichst kurz (Einzeiler sind optimal) und teile verschiedene Dinge in mehrere Einträge auf.
@@ -10,6 +10,7 @@
       <div class="row">
         <div class="small-12 columns">
           <div class="panel">
+            <%= render "errors", errors: @entry.errors %>
             <%= render "text_rules" %>
             <label>Neuen Eintrag verfassen</label>
             <%= f.text_area :text %>

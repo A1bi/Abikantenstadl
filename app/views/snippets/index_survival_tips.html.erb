@@ -1,0 +1,30 @@
+<% title "Survivaltipps" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Survivaltipps</h4>
+  </div>
+</div>
+<div class="row snippets">
+  <div class="small-12 columns">
+    <%= render "text_rules" %>
+    <%= render "errors", errors: @snippet.errors %>
+    <%= form_for @snippet, url: survival_tips_path do |f| %>
+      <div class="row">
+        <div class="small-10 columns">
+          <%= f.text_field :content %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.submit "hinzufügen", class: [:button, :prefix] %>
+        </div>
+      </div>
+    <% end %>
+    <%= div_for @snippets, class: "row entry" do |snippet| %>
+      <div class="small-11 columns">
+        <%= snippet.content %>
+      </div>
+      <div class="small-1 columns text-right">
+        <%= render "action_btns", path: edit_survival_tip_path(snippet), del_path: survival_tip_path(snippet), confirm: "diesen Tipp" if @_user.admin? || snippet.user == @_user %>
+      </div>
+    <% end %>
+  </div>
+</div>

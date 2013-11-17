@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115173740) do
+ActiveRecord::Schema.define(:version => 20131116192141) do
 
   create_table "about_us_entries", :force => true do |t|
     t.text     "text"
@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(:version => 20131115173740) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.boolean  "large",       :default => false
+  end
+
+  create_table "snippets", :force => true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.string   "section"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

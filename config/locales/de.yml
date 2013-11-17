@@ -3,6 +3,7 @@ de:
     login_required: "Bitte logge dich ein."
     saved_changes: "Die Änderungen wurden gespeichert."
     access_denied: "Du hast nicht die erforderlichen Rechte für diese Aktion."
+    entry_destroyed: "Der Eintrag wurde gelöscht."
   sessions:
     auth_error: "e-mail-Adresse oder Passwort falsch."
     logout: "Du wurdest erfolgreich ausgeloggt."
@@ -14,8 +15,6 @@ de:
     reset: "Das Konto wurde zurückgesetzt und eine neue Aktivierungs-mail an den Schüler gesendet."
     destroyed: "Der Schüler wurde gelöscht."
     created: "Der Schüler wurde hinzugefügt."
-  about:
-    destroyed: "Der Eintrag wurde gelöscht."
   photos:
     destroyed: "Das Foto wurde gelöscht."
   action_mailer:
@@ -44,6 +43,14 @@ de:
               invalid: "Bitte lade dein Foto im JPG- oder PNG-Format hoch."
             image:
               blank: "Bitte wähle ein Foto aus."
+        about_us_entry:
+          attributes:
+            text:
+              blank: "Bitte gib einen Text für deinen Eintrag an."
+        snippet:
+          attributes:
+            content:
+              blank: "Bitte fülle das Feld aus."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

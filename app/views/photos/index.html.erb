@@ -4,7 +4,7 @@
     <h4>Fotos für Collagen</h4>
     <p>In der Abizeitung wird es einige Seiten mit Collagen unserer Fotos geben. Du kannst dazu natürlich auch beitragen, indem du hier deine Fotos hochlädst.</p>
     <div class="panel text-center">
-      <%= render "errors", :errors => @photo.errors %>
+      <%= render "errors", errors: @photo.errors %>
       <%= form_for @photo do |f| %>
         <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
         <%= f.submit "hochladen", class: [:button, :tiny] %>

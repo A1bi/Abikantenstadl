@@ -11,7 +11,7 @@
     </p>
     <div class="row">
       <div class="small-form-panel">
-        <%= render "errors", :errors => @user.errors %>
+        <%= render "errors", errors: @user.errors %>
         <%= form_for @user, :url => finish_activation_path do |f| %>
           <%= f.hidden_field :id %>
           <%= f.hidden_field :activation_code %>

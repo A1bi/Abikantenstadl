@@ -1,0 +1,26 @@
+<% title "Gerücht bearbeiten" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Gerücht bearbeiten</h4>
+    <p>Wir halten es für ein Gerücht, dass...</p>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <%= render "text_rules" %>
+    <%= render "errors", errors: @snippet.errors %>
+    <%= form_for @snippet, url: rumor_path(@snippet) do |f| %>
+      <div class="row">
+        <div class="small-1 columns text-right">
+          <span class="inline">...</span>
+        </div>
+        <div class="small-9 columns">
+          <%= f.text_field :content %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.submit "speichern", class: [:button, :prefix] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

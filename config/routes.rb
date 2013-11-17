@@ -47,5 +47,9 @@ Abikantenstadl::Application.routes.draw do
     
     resources :photos, :path => "fotos", only: [:index, :create, :destroy]
     
+    { rumors: Rack::Utils.escape("gerüchte"), quotes: "zitate", survival_tips: "survivaltips" }.each do |section, path|
+      resources section, :controller => :snippets, :path => path, :except => [:show, :new], :defaults => { :section => section }
+    end
+    
   end
 end

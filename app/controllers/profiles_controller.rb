@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
   def update
     params[:fields].each do |id, text_value|
       field = ProfileField.find(id)
-      value = ProfileFieldValue.where(profile_field_id: field.id, user_id: @user.id).first_or_initialize
+      value = field.values.where(user_id: @user.id).first_or_initialize
       value.value = text_value
       value.save
     end
