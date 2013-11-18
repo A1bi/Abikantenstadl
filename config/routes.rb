@@ -27,13 +27,13 @@ Abikantenstadl::Application.routes.draw do
     end
     
     controller :profiles, :path => "steckbrief" do
-      root :action => :index, :as => :profiles
+      get "/", :action => :index, :as => :profiles
       get "(/:id)/bearbeiten", :action => :edit, :as => :edit_profile
       put "(/:id)", :action => :update, :as => :profile
     end
     
     controller :about, :path => Rack::Utils.escape("über-uns"), :as => :about do
-      root :action => :index, :as => ""
+      get "/", :action => :index, :as => ""
       scope :path => ":user" do
         get :action => :show_user, :as => :user
         post :action => :create
