@@ -18,6 +18,7 @@ class PhotosController < ApplicationController
   
   def destroy
     photo = Photo.find(params[:id])
+    return redirect_to action: :index if !@_user.admin? && photo.user != @_user
     flash.notice = t("photos.destroyed") if photo.destroy
     redirect_to photos_path
   end
@@ -25,6 +26,7 @@ class PhotosController < ApplicationController
   private
   
   def find_photos
-    @photos = @_user.photos.section(:collage)
+    @own_photos = @_user.photos.section(:collage)
+    @all_photos = Photo.where("user_id != ?", @_user).section(:collage)
   end
 end

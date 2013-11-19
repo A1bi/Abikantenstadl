@@ -174,11 +174,8 @@ textarea {
   }
   
   .row.entry {
-    &:nth-child(odd) {
-      background: #D9F4FF;
-    }
     &:nth-child(even) {
-      background: #A7D8FA;
+      background: #f9f9f9;
     }
     
     .columns {

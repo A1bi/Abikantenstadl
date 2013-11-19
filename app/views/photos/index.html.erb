@@ -6,22 +6,27 @@
     <div class="panel text-center">
       <%= render "errors", errors: @photo.errors %>
       <%= form_for @photo do |f| %>
-        <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
-        <%= f.submit "hochladen", class: [:button, :tiny] %>
+        <div class="row">
+          <div class="small-6 small-centered columns">
+            <div class="row">
+              <div class="small-9 columns">
+                <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
+              </div>
+              <div class="small-3 columns">
+                <%= f.submit "hochladen", class: [:button, :tiny] %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
     <hr />
-    <h4>Deine bereits hochgeladenen Fotos</h4>
-    <div class="panel">
-      <ul class="small-block-grid-2 large-block-grid-5">
-        <%= content_tag_for :li, @photos do |photo| %>
-          <%= image_tag photo.image.url(:thumb), class: "th radius" %>
-          <div class="delete-btn"><%= render "delete_btn", path: photo_path(photo), confirm: "dieses Foto" %></div>
-        <% end %>
-      </ul>
-      <% if @photos.empty? %>
-        <em>Du hast noch keine Fotos hochgeladen.</em>
-      <% end %>
-    </div>
+    <h4>Deine Fotos</h4>
+    <%= render "gallery", photos: @own_photos %>
+    <% if @_user.admin? %>
+      <hr />
+      <h4>Fotos anderer</h4>
+      <%= render "gallery", photos: @all_photos %>
+    <% end %>
   </div>
 </div>
