@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131116192141) do
+ActiveRecord::Schema.define(:version => 20131118194423) do
 
   create_table "about_us_entries", :force => true do |t|
     t.text     "text"
@@ -28,6 +28,28 @@ ActiveRecord::Schema.define(:version => 20131116192141) do
     t.datetime "image_updated_at"
     t.integer  "user_id"
     t.string   "section"
+  end
+
+  create_table "poll_options", :force => true do |t|
+    t.string   "content"
+    t.integer  "poll_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "poll_votes", :force => true do |t|
+    t.integer  "poll_id"
+    t.integer  "option_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "polls", :force => true do |t|
+    t.string   "question"
+    t.boolean  "multiple_choice"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "profile_field_values", :force => true do |t|

@@ -1,0 +1,43 @@
+<% title "Umfragen" %>
+<div class="row polls">
+  <div class="small-12 columns">
+    <h4>Umfragen</h4>
+    <% if @_user.admin? %><div class="text-right"><%= link_to new_poll_path, class: [:button, :small] do %><%= glyph "plus" %> Umfrage erstellen<% end %></div><% end %>
+    <% @polls.each do |poll| %>
+      <%= form_tag vote_poll_path(poll) do %>
+        <div class="panel callout">
+          <div class="row">
+            <div class="small-11 columns">
+              <h6><%= poll.question %></h6>
+              <% if poll.multiple_choice %><h6 class="subheader">Mehrfachauswahl möglich</h6><% end %>
+            </div>
+            <div class="small-1 columns">
+              <%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %>
+            </div>
+          </div>
+          <hr />
+          <% poll.options.each do |option| %>
+            <div class="row">
+              <div class="small-1 columns text-center">
+                <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, option.votes.where(user_id: @_user).any?) %>
+              </div>
+              <div class="small-4 columns">
+                <%= label_tag("option_#{option.id}", option.content) %>
+              </div>
+              <div class="small-7 columns">
+                <% if poll.votes.where(user_id: @_user).any? %>
+                  <div class="row">
+                    <div class="small-10 progress radius">
+                      <div class="meter" style="width: <%= (option.votes.count / poll.votes.count.to_f * 100).round %>%;"></div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <%= submit_tag :abstimmen, class: [:button, :tiny] %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

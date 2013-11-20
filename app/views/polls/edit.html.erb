@@ -1,0 +1,21 @@
+<% title "Umfrage bearbeiten" %>
+<div class="row polls">
+  <div class="small-12 columns">
+    <h4>Umfrage bearbeiten</h4>
+    <%= form_for @poll do |f| %>
+      <div class="panel callout">
+        <%= render "errors", errors: @poll.errors %>
+        <%= f.text_field :question, placeholder: "Frage" %>
+        <hr />
+        <%= f.fields_for :options do |option| %>
+          <%= option.text_field :content, placeholder: "Antwortmöglichkeit t" %>
+        <% end %>
+        <hr />
+        <%= label_tag do %><%= f.check_box :multiple_choice %> Mehrfachauswahl möglich<% end %>
+        <div class="text-center">
+          <%= f.submit :speichern, class: "button small" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
