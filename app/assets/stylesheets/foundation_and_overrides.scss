@@ -1379,3 +1379,8 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
   @include panel;
   @include radius;
 }
+
+// glyphs fix for links in older webkit browsers
+[class*="fi-"] {
+  position: relative;
+}
