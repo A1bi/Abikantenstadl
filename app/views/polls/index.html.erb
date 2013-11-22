@@ -12,7 +12,7 @@
               <% if poll.multiple_choice %><h6 class="subheader">Mehrfachauswahl möglich</h6><% end %>
             </div>
             <div class="small-1 columns">
-              <%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %>
+              <% if @_user.admin? %><%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %><% end %>
             </div>
           </div>
           <hr />
@@ -35,6 +35,15 @@
               </div>
             </div>
           <% end %>
+          <div class="row">
+            <div class="small-4 small-offset-1 columns">
+              <%= text_field_tag(:options_new, "", placeholder: "Weitere Antwort hinzufügen") %>
+            </div>
+            <div class="small-1 columns">
+              <%= submit_tag :hinzufügen, class: [:button, :small] %>
+            </div>
+            <div class="small-7 columns"></div>
+          </div>
           <%= submit_tag :abstimmen, class: [:button, :tiny] %>
         </div>
       <% end %>

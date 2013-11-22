@@ -6,5 +6,4 @@ class Poll < BaseModel
   accepts_nested_attributes_for :options
   
   validates_presence_of :question
-  validates_length_of :options, minimum: 2
 end

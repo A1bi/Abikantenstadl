@@ -14,7 +14,9 @@ class PollsController < ApplicationController
     @poll = Poll.new(params[:poll])
     params[:options].each do |option|
       next if option.blank?
-      @poll.options.build(content: option).poll = @poll
+      option = @poll.options.build(content: option)
+      option.poll = @poll
+      option.user = @_user
     end
     if @poll.save
       redirect_to polls_path
@@ -38,15 +40,34 @@ class PollsController < ApplicationController
   
   def vote
     @poll.votes.where(user_id: @_user).destroy_all
-    (params[:options] || []).each do |option|
-      vote = @poll.votes.build
-      vote.poll = @poll
-      vote.option = @poll.options.find(option)
+    
+    params[:options] ||= []
+    if params[:options_new].present?
+      option = @poll.options.where("lower(content) = ?", params[:options_new].downcase).first || @poll.options.build
+      if option.new_record?
+        option.content = params[:options_new]
+        option.user = @_user
+        option.save
+      end
+      if option.persisted?
+        vote = option.votes.build
+        vote.user = @_user
+        vote.save
+        params[:options].clear if !@poll.multiple_choice
+        flash.notice ||= t("polls.voted_option_created")
+      end
+    end
+    
+    params[:options].each do |option|
+      option = @poll.options.find(option)
+      vote = option.votes.build
       vote.user = @_user
       vote.save
       break if !@poll.multiple_choice
     end
-    redirect_to polls_path, notice: t("polls.voted")
+    
+    flash.notice ||= t("polls.voted")
+    redirect_to polls_path
   end
   
   private

@@ -19,6 +19,7 @@ de:
     destroyed: "Das Foto wurde gelöscht."
   polls:
     voted: "Deine Abstimmung wurde gespeichert."
+    voted_option_created: "Deine neue Antwort und Abstimmung wurden gespeichert."
     destroyed: "Die Umfrage wurde gelöscht."
   action_mailer:
     defaults:
