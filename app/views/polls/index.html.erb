@@ -8,11 +8,11 @@
       <%= form_tag vote_poll_path(poll) do %>
         <div class="panel callout">
           <div class="row">
-            <div class="small-11 columns">
+            <div class="large-11 small-9 columns">
               <h6><%= poll.question %></h6>
               <% if poll.multiple_choice %><h6 class="subheader">Mehrfachauswahl möglich</h6><% end %>
             </div>
-            <div class="small-1 columns">
+            <div class="large-1 small-3 columns">
               <% if @_user.admin? %><%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %><% end %>
             </div>
           </div>
@@ -22,17 +22,17 @@
               <div class="small-1 columns text-center">
                 <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, option.votes.where(user_id: @_user).any?) %>
               </div>
-              <div class="small-4 columns">
-                <%= label_tag("option_#{option.id}", option.content) %>
-              </div>
-              <div class="small-7 columns">
-                <% if poll.votes.where(user_id: @_user).any? %>
-                  <div class="row">
-                    <div class="small-10 progress radius">
+              <div class="small-11 columns">
+                <div class="row">
+                  <div class="large-4 columns">
+                    <%= label_tag("option_#{option.id}", option.content) %>
+                  </div>
+                  <div class="large-8 columns">
+                    <div class="progress radius">
                       <div class="meter" style="width: <%= (option.votes.count / poll.votes.count.to_f * 100).round %>%;"></div>
                     </div>
                   </div>
-                <% end %>
+                </div>
               </div>
             </div>
           <% end %>
@@ -40,13 +40,13 @@
             <h6 class="subheader">Es gibt noch keine Antwortmöglichkeiten zu dieser Umfrage. Füge jetzt selbst eine hinzu:</h6>
           <% end %>
           <div class="row">
-            <div class="small-4 small-offset-1 columns">
+            <div class="large-4 small-8 small-offset-1 columns">
               <%= text_field_tag(:options_new, "", placeholder: "Weitere Antwort hinzufügen") %>
             </div>
-            <div class="small-1 columns">
-              <%= submit_tag :hinzufügen, class: [:button, :small] %>
+            <div class="large-3 small-2 columns">
+              <%= render "add_btn" %>
             </div>
-            <div class="small-7 columns"></div>
+            <div class="large-5 small-2 columns"></div>
           </div>
           <%= submit_tag :abstimmen, class: [:button, :tiny] if poll.options.any? %>
         </div>

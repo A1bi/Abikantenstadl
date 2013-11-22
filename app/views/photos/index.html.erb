@@ -7,12 +7,12 @@
       <%= render "errors", errors: @photo.errors %>
       <%= form_for @photo do |f| %>
         <div class="row">
-          <div class="small-6 small-centered columns">
+          <div class="large-6 large-centered columns">
             <div class="row">
-              <div class="small-9 columns">
+              <div class="large-9 columns">
                 <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
               </div>
-              <div class="small-3 columns">
+              <div class="large-3 columns">
                 <%= f.submit "hochladen", class: [:button, :tiny] %>
               </div>
             </div>

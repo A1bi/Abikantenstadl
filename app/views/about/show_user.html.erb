@@ -53,9 +53,7 @@
                 <%= entry.text %>
               </div>
               <div class="small-1 columns">
-                <% if @_user.admin? %>
-                  <%= render "action_btns", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" %>
-                <% end %>
+                <%= render "edit_btn", path: about_entry_edit_path(@user, entry) if @_user.admin? %> <%= render "delete_btn", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" if @_user.admin? || @user == @_user %>
               </div>
             </div>
           </div>

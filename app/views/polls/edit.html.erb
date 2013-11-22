@@ -8,15 +8,17 @@
         <%= render "errors", errors: @poll.errors %>
         <%= f.text_field :question, placeholder: "Frage" %>
         <hr />
+        <% i = 1 %>
         <%= f.fields_for :options do |option| %>
           <div class="row">
-            <div class="small-11 columns">
-              <%= option.text_field :content, placeholder: "Antwortmöglichkeit t" %>
+            <div class="large-11 small-9 columns">
+              <%= option.text_field :content, placeholder: "Antwortmöglichkeit #{i}" %>
             </div>
-            <div class="small-1 columns">
-             <label class="inline" title="Antwortmöglichkeit löschen"><%= option.check_box :_destroy %> <i class="fi-x"></i></label>
+            <div class="large-1 small-3 columns">
+              <label class="inline" title="Antwortmöglichkeit löschen"><%= option.check_box :_destroy %> <i class="fi-x"></i></label>
             </div>
           </div>
+        <% i = i + 1 %>
         <% end %>
         <hr />
         <%= label_tag do %><%= f.check_box :multiple_choice %> Mehrfachauswahl möglich<% end %>

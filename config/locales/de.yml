@@ -61,6 +61,10 @@ de:
               blank: "Bitte gib eine Frage an."
             options:
               too_short: "Bitte gib mindestens %{count} Antwortmöglichkeiten an."
+        poll_option:
+          attributes:
+            content:
+              blank: "Bitte gib einen Text für die Antwortmöglichkeit an."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

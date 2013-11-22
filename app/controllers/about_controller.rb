@@ -2,6 +2,7 @@ class AboutController < ApplicationController
   before_filter :find_user, only: [:show_user, :create]
   before_filter :find_entry, only: [:destroy, :edit, :update]
   before_filter :find_entries, only: [:show_user, :create]
+  before_filter :restrict_access_to_edit, only: [:edit, :update]
   
   def index
     @users = User.student.ordered_by_name
@@ -30,11 +31,8 @@ class AboutController < ApplicationController
   end
   
   def destroy
-    if @_user.admin? || @entry.author == @_user
-      @entry.destroy
-      flash.notice = t("application.entry_destroyed")
-    end
-    redirect_to about_user_path(@entry.user)
+    @entry.destroy
+    redirect_to about_user_path(@entry.user), notice: t("application.entry_destroyed")
   end
   
   private
@@ -45,11 +43,22 @@ class AboutController < ApplicationController
   
   def find_entry
     @entry = AboutUsEntry.find(params[:entry])
+    if !@_user.admin? && @entry.author != @_user && @entry.user != @_user
+      return redirect_access_denied
+    end
   end
   
   def find_entries
     entries = @user.about_us_entries.order_by_date_desc
     @own_entries = entries.where(author_id: @_user)
     @other_entries = entries.where("author_id != ?", @_user)
+  end
+  
+  def restrict_access_to_edit
+    return redirect_access_denied if @entry.user == @_user
+  end
+  
+  def redirect_access_denied
+    redirect_to about_user_path(@entry.user), alert: t("application.access_denied")
   end
 end

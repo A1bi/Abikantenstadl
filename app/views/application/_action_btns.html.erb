@@ -1,1 +1,1 @@
-<%= link_to "", path, class: "fi-pencil", title: "bearbeiten" %> <%= render "delete_btn", path: (del_path ||= path), confirm: confirm %>
+<%= render "edit_btn", path: path %> <%= render "delete_btn", path: (del_path ||= path), confirm: confirm %>
