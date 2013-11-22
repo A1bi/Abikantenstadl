@@ -51,5 +51,11 @@ Abikantenstadl::Application.routes.draw do
       resources section, :controller => :snippets, :path => path, :except => [:show, :new], :defaults => { :section => section }
     end
     
+    resources :polls, :path => "umfragen", except: [:show] do
+      member do
+        post :vote
+      end
+    end
+    
   end
 end

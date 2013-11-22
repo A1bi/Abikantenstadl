@@ -17,6 +17,10 @@ de:
     created: "Der Schüler wurde hinzugefügt."
   photos:
     destroyed: "Das Foto wurde gelöscht."
+  polls:
+    voted: "Deine Abstimmung wurde gespeichert."
+    voted_option_created: "Deine neue Antwort wurde hinzugefügt und deine Abstimmung gespeichert."
+    destroyed: "Die Umfrage wurde gelöscht."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"
@@ -51,6 +55,12 @@ de:
           attributes:
             content:
               blank: "Bitte fülle das Feld aus."
+        poll:
+          attributes:
+            question:
+              blank: "Bitte gib eine Frage an."
+            options:
+              too_short: "Bitte gib mindestens %{count} Antwortmöglichkeiten an."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

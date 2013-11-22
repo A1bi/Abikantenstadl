@@ -1,0 +1,21 @@
+<% title "Umfrage erstellen" %>
+<div class="row polls">
+  <div class="small-12 columns">
+    <h4>Neue Umfrage erstellen</h4>
+    <%= form_for @poll do |f| %>
+      <div class="panel callout">
+        <%= render "errors", errors: @poll.errors %>
+        <%= f.text_field :question, placeholder: "Frage" %>
+        <hr />
+        <% 10.times do |i| %>
+          <%= text_field_tag "options[]", "", placeholder: "Antwortmöglichkeit #{i+1}" %>
+        <% end %>
+        <hr />
+        <%= label_tag do %><%= f.check_box :multiple_choice %> Mehrfachauswahl möglich<% end %>
+        <div class="text-center">
+          <%= f.submit :erstellen, class: "button small" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
