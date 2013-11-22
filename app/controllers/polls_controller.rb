@@ -27,7 +27,7 @@ class PollsController < ApplicationController
   
   def update
     if @poll.update_attributes(params[:poll])
-      redirect_to polls_path, notice: t("application.saved_changes")
+      redirect_to edit_poll_path(@poll), notice: t("application.saved_changes")
     else
       render :edit
     end

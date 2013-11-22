@@ -1,6 +1,7 @@
 <% title "Umfrage bearbeiten" %>
 <div class="row polls">
   <div class="small-12 columns">
+    <%= link_to polls_path, class: "button small" do %><i class="fi-arrow-left"></i> zurück zu allen Umfragen<% end %>
     <h4>Umfrage bearbeiten</h4>
     <%= form_for @poll do |f| %>
       <div class="panel callout">
@@ -8,7 +9,14 @@
         <%= f.text_field :question, placeholder: "Frage" %>
         <hr />
         <%= f.fields_for :options do |option| %>
-          <%= option.text_field :content, placeholder: "Antwortmöglichkeit t" %>
+          <div class="row">
+            <div class="small-11 columns">
+              <%= option.text_field :content, placeholder: "Antwortmöglichkeit t" %>
+            </div>
+            <div class="small-1 columns">
+             <label class="inline" title="Antwortmöglichkeit löschen"><%= option.check_box :_destroy %> <i class="fi-x"></i></label>
+            </div>
+          </div>
         <% end %>
         <hr />
         <%= label_tag do %><%= f.check_box :multiple_choice %> Mehrfachauswahl möglich<% end %>
