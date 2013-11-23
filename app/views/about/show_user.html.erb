@@ -2,63 +2,49 @@
 <div class="row">
   <div class="small-12 columns">
     <%= link_to about_path, class: "button small" do %><i class="fi-arrow-left"></i> zurück zu allen Schülern<% end %>
-    <%= form_for @entry, method: :post, url: about_user_path(@user) do |f| %>
-      <h4>Wir über uns - <%= @user.full_name %></h4>
+    <h4>Wir über uns - <%= @user.full_name %></h4>
+    <% if @user == @_user %>
+      <p>Hier siehst du Einträge, die andere über dich verfasst haben. Wenn dir davon etwas wirklich nicht passt, kannst du es löschen.<p>
+    <% else %>
       <p>Hier kannst du alles hinterlassen, was dir zu <%= @user.full_name %> einfällt. Natürlich sollte dein Eintrag humorvoll aber nicht verletzend sein.
-      <br />Halte dich möglichst kurz (Einzeiler sind optimal) und teile verschiedene Dinge in mehrere Einträge auf.
+      <br />Halte dich möglichst kurz und teile verschiedene Dinge in mehrere Einträge auf.
       <br />Dein Name wird weder hier auf der Internetseite noch später in der fertigen Abizeitung als Verfasser erscheinen.</p>
-      <div class="row">
-        <div class="small-12 columns">
-          <div class="panel">
-            <%= render "errors", errors: @entry.errors %>
-            <%= render "text_rules" %>
-            <label>Neuen Eintrag verfassen</label>
-            <%= f.text_area :text %>
-            <div class="text-center">
-              <%= submit_tag "speichern", class: [:button, :small] %>
+      <%= form_for @entry, method: :post, url: about_user_path(@user) do |f| %>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="panel">
+              <%= render "errors", errors: @entry.errors %>
+              <%= render "text_rules" %>
+              <div class="row">
+                <div class="small-10 columns">
+                  <%= f.text_field :text, placeholder: "Was fällt dir zu #{@user.first_name} ein?" %>
+                </div>
+                <div class="small-2 columns">
+                  <%= render "add_btn" %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      <% end %>
+      <hr />
     <% end %>
-    <hr />
-    <h4>Deine Einträge</h4>
     <div class="row">
       <div class="small-12 columns">
-        <% @own_entries.each do |entry| %>
+        <% @entries.each do |entry| %>
           <div class="panel">
             <div class="row">
               <div class="small-11 columns">
                 <%= entry.text %>
               </div>
               <div class="small-1 columns">
-                <%= render "action_btns", path: about_entry_edit_path(@user, entry), del_path: about_entry_path(@user, entry), confirm: "diesen Eintrag" %>
+                <% can_edit = @_user.admin? || entry.author == @_user %>
+                <%= render "edit_btn", path: about_entry_edit_path(@user, entry) if can_edit %> <%= render "delete_btn", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" if can_edit || @user == @_user %>
               </div>
             </div>
           </div>
         <% end %>
-        <% if @own_entries.empty? %>
-          <em>Du hast zu <%= @user.full_name %> noch keine Einträge hinterlassen.</em>
-        <% end %>
-      </div>
-    </div>
-    <hr />
-    <h4>Einträge anderer</h4>
-    <div class="row">
-      <div class="small-12 columns">
-        <% @other_entries.each do |entry| %>
-          <div class="panel">
-            <div class="row">
-              <div class="small-11 columns">
-                <%= entry.text %>
-              </div>
-              <div class="small-1 columns">
-                <%= render "edit_btn", path: about_entry_edit_path(@user, entry) if @_user.admin? %> <%= render "delete_btn", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" if @_user.admin? || @user == @_user %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% if @other_entries.empty? %>
+        <% if @entries.empty? %>
           <em>Noch keine Einträge vorhanden.</em>
         <% end %>
       </div>

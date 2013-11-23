@@ -1396,3 +1396,15 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
     background: white;
   }
 }
+
+table tr.highlighted td {
+  background: $faint-color;
+  
+  a {
+    color: $dark-color;
+    
+    &:hover {
+      color: $light-color;
+    }
+  }
+}

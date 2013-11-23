@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <% @users.each do |user| %>
-          <tr>
+          <tr<% if user == @_user %> class="highlighted"<% end %>>
             <td><%= link_to "#{user.last_name}, #{user.first_name}", about_user_path(user) %></td>
             <td><%= user.about_us_entries.count %></td>
           </tr>

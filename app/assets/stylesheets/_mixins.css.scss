@@ -1,6 +1,7 @@
 $main-color: #1B5CB7;
 $dark-color: #173A73;
 $light-color: #0A9AFA;
+$faint-color: #9ED8FF;
 
 @mixin background-gradient($pos, $colors, $default: "") {
   @if $default != "" {

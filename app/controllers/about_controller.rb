@@ -13,6 +13,7 @@ class AboutController < ApplicationController
   end
   
   def create
+    redirect_access_denied if @user == @_user
     @entry = @user.about_us_entries.build(params[:about_us_entry])
     @entry.author = @_user
     if @entry.save
@@ -49,9 +50,7 @@ class AboutController < ApplicationController
   end
   
   def find_entries
-    entries = @user.about_us_entries.order_by_date_desc
-    @own_entries = entries.where(author_id: @_user)
-    @other_entries = entries.where("author_id != ?", @_user)
+    @entries = @user.about_us_entries.order_by_date_desc
   end
   
   def restrict_access_to_edit
