@@ -29,7 +29,7 @@
                   </div>
                   <div class="large-8 columns">
                     <div class="progress radius">
-                      <div class="meter" style="width: <%= (option.votes.count / poll.votes.count.to_f * 100).round %>%;"></div>
+                      <div class="meter" style="width: <%= poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round %>%;"></div>
                     </div>
                   </div>
                 </div>
