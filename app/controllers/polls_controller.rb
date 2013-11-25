@@ -39,9 +39,12 @@ class PollsController < ApplicationController
   end
   
   def vote
-    @poll.votes.where(user_id: @_user).destroy_all
+    @poll.options.map do |option|
+      option.votes.where(user_id: @_user).delete_all
+      option.touch
+    end
     
-    params[:options] ||= []
+    (params[:options] ||= []).map! { |id| id.to_i }
     if params[:options_new].present?
       option = @poll.options.where("lower(content) = ?", params[:options_new].downcase).first || @poll.options.build
       if option.new_record?
@@ -50,9 +53,11 @@ class PollsController < ApplicationController
         option.save
       end
       if option.persisted?
-        vote = option.votes.build
-        vote.user = @_user
-        vote.save
+        if !params[:options].include?(option.id)
+          vote = option.votes.build
+          vote.user = @_user
+          vote.save
+        end
         params[:options].clear if !@poll.multiple_choice
         flash.notice ||= t("polls.voted_option_created")
       end
