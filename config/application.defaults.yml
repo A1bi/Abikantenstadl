@@ -1,0 +1,7 @@
+development:
+  secret_token:
+  host:
+  imagemagick_path: "/opt/ImageMagick/bin/"
+production:
+  secret_token:
+  host: "www.abikantenstadl.de"
