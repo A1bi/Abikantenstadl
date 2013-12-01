@@ -1,0 +1,19 @@
+<% cache [:polls, :index, :options, poll, option] do %>
+  <%= div_for option, class: :row do |option| %>
+    <div class="small-1 columns text-center">
+      <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, false, id: "option_#{option.id}") %>
+    </div>
+    <div class="small-11 columns">
+      <div class="row">
+        <div class="large-4 columns content">
+          <%= label_tag("option_#{option.id}", option.content) %>
+        </div>
+        <div class="large-8 columns">
+          <div class="progress radius">
+            <div class="meter"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -41,10 +41,46 @@ $(function() {
   
   $(document).foundation();
   
+  
   function updateCharCount() {
     shortStoriesBox.find(".chars span").html(maxChars - shortStoriesBox.find("textarea").val().length);
   }
-  var shortStoriesBox = $(".short_stories"), maxChars = parseInt(shortStoriesBox.find(".chars span").text());
-  $(".short_stories textarea").keyup(updateCharCount);
-  updateCharCount();
+  var shortStoriesBox = $(".short_stories");
+  if (shortStoriesBox.length) {
+    var maxChars = parseInt(shortStoriesBox.find(".chars span").text());
+    $(".short_stories textarea").keyup(updateCharCount);
+    updateCharCount();
+  }
+  
+  
+  function updatePolls(info) {
+    $.each(info, function (pId, options) {
+      var poll = polls.find("#poll_"+pId);
+      $.each(options, function (oId, optionInfo) {
+        var option = poll.find("#poll_option_"+oId);
+        option.find("input").prop("checked", optionInfo.v ? "checked" : "");
+        option.find(".progress .meter").css({ width: optionInfo.p + "%" });
+      });
+    });
+  }
+  function togglePollBtns(poll, toggle) {
+    $(":submit", poll).prop("disabled", !toggle).toggleClass("disabled", !toggle);
+  }
+  var polls = $(".polls_index");
+  if (polls.length) {
+    polls.find("form").submit(function () {
+      togglePollBtns(this, false);
+    })
+    .on("ajax:success", function (e, data) {
+      if (data.new_option) {
+        $(data.new_option).hide().insertAfter($(".poll_option", this).last()).slideDown();
+      }
+      $("input[type=text]", this).val("");
+      updatePolls(data.options);
+      togglePollBtns(this, true);
+    });
+    $.get(polls.data("results-path"), function (data) {
+      updatePolls(data.options);
+    });
+  }
 });

@@ -38,7 +38,13 @@ class PollsController < ApplicationController
     redirect_to polls_path
   end
   
+  def results
+    render json: { options: find_options }
+  end
+  
   def vote
+    response = {}
+    
     @poll.options.map do |option|
       option.votes.where(user_id: @_user).delete_all
       option.touch
@@ -51,6 +57,7 @@ class PollsController < ApplicationController
         option.content = params[:options_new]
         option.user = @_user
         option.save
+        response[:new_option] = render_to_string("_option", layout: false, locals: { option: option, poll: @poll })
       end
       if option.persisted?
         if !params[:options].include?(option.id)
@@ -59,11 +66,11 @@ class PollsController < ApplicationController
           vote.save
         end
         params[:options].clear if !@poll.multiple_choice
-        flash.notice ||= t("polls.voted_option_created")
       end
     end
     
     params[:options].each do |option|
+      next if option.zero?
       option = @poll.options.find(option)
       vote = option.votes.build
       vote.user = @_user
@@ -71,13 +78,27 @@ class PollsController < ApplicationController
       break if !@poll.multiple_choice
     end
     
-    flash.notice ||= t("polls.voted")
-    redirect_to polls_path
+    response[:options] = find_options(@poll)
+    render json: response
   end
   
   private
   
   def find_poll
     @poll = Poll.find(params[:id])
+  end
+  
+  def find_options(poll = nil)
+    options = { options: {} }
+    (poll.present? ? [poll] : Poll.scoped).each do |poll|
+      options[poll.id] = {}
+      poll.options.each do |option|
+        options[poll.id][option.id] = {
+          p: poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round,
+          v: option.votes.where(user_id: @_user).any?
+        }
+      end
+    end
+    options
   end
 end

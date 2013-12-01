@@ -1,50 +1,25 @@
 <% title "Umfragen" %>
-<div class="row polls">
+<div class="row polls polls_index" data-results-path="<%= results_polls_path %>">
   <div class="small-12 columns">
     <h4>Umfragen</h4>
     <p>Hier kannst du an unseren (nicht immer ganz ernst gemeinten) Umfragen teilnehmen. Einfach eine Antwort (oder auch mehrere, wenn möglich) auswählen und auf abstimmen klicken. Sollte deine gewünschte Antwortmöglichkeit noch nicht dabei sein, kannst du sie einfach selbst hinzufügen.</p>
     <% if @_user.admin? %><div class="text-right"><%= link_to new_poll_path, class: [:button, :small] do %><%= glyph "plus" %> Umfrage erstellen<% end %></div><% end %>
     <% @polls.each do |poll| %>
-      <% cache [:polls, :index, :poll, poll, poll.options, @_user] do %>
-        <%= form_tag vote_poll_path(poll) do %>
-          <div class="panel callout">
-            <% cache [:polls, :index, :title, poll, @_user.admin?] do %>
-              <div class="row">
-                <div class="large-11 small-9 columns">
-                  <h6><%= poll.question %></h6>
-                  <% if poll.multiple_choice %><h6 class="subheader">Mehrfachauswahl möglich</h6><% end %>
-                </div>
-                <div class="large-1 small-3 columns">
-                  <% if @_user.admin? %><%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %><% end %>
-                </div>
+      <% cache [:polls, :index, :poll, poll, poll.options, @_user.admin?] do %>
+        <%= form_tag vote_poll_path(poll), remote: true do %>
+          <div class="panel callout" id="poll_<%= poll.id %>">
+            <div class="row">
+              <div class="large-11 small-9 columns">
+                <h6><%= poll.question %></h6>
+                <% if poll.multiple_choice %><h6 class="subheader">Mehrfachauswahl möglich</h6><% end %>
               </div>
-              <hr />
-            <% end %>
+              <div class="large-1 small-3 columns">
+                <% if @_user.admin? %><%= render "action_btns", path: edit_poll_path(poll), del_path: poll_path(poll), confirm: "diese Umfrage" %><% end %>
+              </div>
+            </div>
+            <hr />
             <% poll.options.each do |option| %>
-              <% cache [:polls, :index, :options, poll, option, @_user] do %>
-                <div class="row">
-                  <% voted = option.votes.where(user_id: @_user).any? %>
-                  <% cache [:polls, :index, :option_btn, poll.multiple_choice, option.id, voted] do %>
-                    <div class="small-1 columns text-center">
-                      <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, voted) %>
-                    </div>
-                  <% end %>
-                  <% cache [:polls, :index, :option, poll, option] do %>
-                    <div class="small-11 columns">
-                      <div class="row">
-                        <div class="large-4 columns">
-                          <%= label_tag("option_#{option.id}", option.content) %>
-                        </div>
-                        <div class="large-8 columns">
-                          <div class="progress radius">
-                            <div class="meter" style="width: <%= poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round %>%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
+              <%= render "option", poll: poll, option: option %>
             <% end %>
             <% if poll.options.empty? %>
               <h6 class="subheader">Es gibt noch keine Antwortmöglichkeiten zu dieser Umfrage. Füge jetzt selbst eine hinzu:</h6>

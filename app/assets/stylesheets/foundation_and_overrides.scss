@@ -1394,6 +1394,8 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
   
   .meter {
     background: white;
+    width: 0%;
+    transition: width .5s;
   }
 }
 

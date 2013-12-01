@@ -52,6 +52,9 @@ Abikantenstadl::Application.routes.draw do
     end
     
     resources :polls, :path => "umfragen", except: [:show] do
+      collection do
+        get :results
+      end
       member do
         post :vote
       end
