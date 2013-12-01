@@ -1,0 +1,18 @@
+<%= render "text_rules" %>
+<%= render "errors", errors: @snippet.errors %>
+<%= form_for @snippet, url: (params[:action] == "edit") ? short_story_path(@snippet) : short_stories_path do |f| %>
+  <div class="row">
+    <div class="small-6 columns"><label>Short Story schreiben</label></div>
+    <div class="small-6 columns text-right chars">noch <span>600</span> Zeichen</div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_area :content, class: :large %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns text-center">
+      <%= f.submit "speichern", class: [:button, :small] %>
+    </div>
+  </div>
+<% end %>

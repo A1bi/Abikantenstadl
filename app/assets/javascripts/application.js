@@ -40,4 +40,11 @@ $(function() {
   el.remove();
   
   $(document).foundation();
+  
+  function updateCharCount() {
+    shortStoriesBox.find(".chars span").html(maxChars - shortStoriesBox.find("textarea").val().length);
+  }
+  var shortStoriesBox = $(".short_stories"), maxChars = parseInt(shortStoriesBox.find(".chars span").text());
+  $(".short_stories textarea").keyup(updateCharCount);
+  updateCharCount();
 });

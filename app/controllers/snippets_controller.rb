@@ -24,7 +24,7 @@ class SnippetsController < ApplicationController
   
   def update
     if @snippet.update_attributes(params[:snippet])
-      redirect_to action: :index
+      redirect_to({ action: :index }, notice: t("application.saved_changes"))
     else
       render_edit
     end
@@ -44,6 +44,7 @@ class SnippetsController < ApplicationController
   
   def find_snippets
     @snippets = Snippet.section(params[:section]).order_by_date_desc
+    @user_snippets = @_user.snippets.section(params[:section]).order_by_date_desc
   end
   
   def render_index

@@ -1,0 +1,29 @@
+<% title "Short Stories" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Short Stories</h4>
+    <p>Hier kannst du Short Stories verfassen. Bitte achte dabei auf eine Länge von maximal 600 Zeichen.</p>
+  </div>
+</div>
+<div class="row snippets short_stories">
+  <div class="small-12 columns">
+    <div class="panel">
+      <%= render "form_short_stories" %>
+    </div>
+    <hr />
+    <h4>Deine Short Stories</h4>
+    <%= div_for @user_snippets, class: :panel do |snippet| %>
+      <div class="row">
+        <div class="small-11 columns">
+          <%= simple_format snippet.content %>
+        </div>
+        <div class="small-1 columns">
+          <%= render "action_btns", path: edit_short_story_path(snippet), del_path: short_story_path(snippet), confirm: "diese Short Story" %>
+        </div>
+      </div>
+    <% end %>
+    <% if @user_snippets.empty? %>
+      <em>Du hast noch keine Short Stories geschrieben.</em>
+    <% end %>
+  </div>
+</div>
