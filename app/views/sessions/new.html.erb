@@ -25,6 +25,11 @@
         </div>
       </div>
       <div class="row">
+        <div class="large-12 columns">
+          <%= label_tag do %><%= check_box_tag :remember %> eingeloggt bleiben<% end %>
+        </div>
+      </div>
+      <div class="row">
         <div class="large-12 columns text-center">
           <%= submit_tag "login", class: [:button, :small] %>
         </div>

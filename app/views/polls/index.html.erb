@@ -8,7 +8,7 @@
       <% cache [:polls, :index, :poll, poll, poll.options, @_user] do %>
         <%= form_tag vote_poll_path(poll) do %>
           <div class="panel callout">
-            <% cache [:polls, :index, :title, poll, @_user] do %>
+            <% cache [:polls, :index, :title, poll, @_user.admin?] do %>
               <div class="row">
                 <div class="large-11 small-9 columns">
                   <h6><%= poll.question %></h6>
