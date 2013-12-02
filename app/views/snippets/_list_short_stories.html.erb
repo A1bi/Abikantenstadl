@@ -1,0 +1,13 @@
+<%= div_for snippets, class: :panel do |snippet| %>
+  <div class="row">
+    <div class="small-11 columns">
+      <%= simple_format snippet.content %>
+    </div>
+    <div class="small-1 columns">
+      <%= render "action_btns", path: edit_short_story_path(snippet), del_path: short_story_path(snippet), confirm: "diese Short Story" %>
+    </div>
+  </div>
+<% end %>
+<% if snippets.empty? %>
+  <em><%= empty %></em>
+<% end %>

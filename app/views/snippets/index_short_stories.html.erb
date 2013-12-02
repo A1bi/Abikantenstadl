@@ -12,18 +12,11 @@
     </div>
     <hr />
     <h4>Deine Short Stories</h4>
-    <%= div_for @user_snippets, class: :panel do |snippet| %>
-      <div class="row">
-        <div class="small-11 columns">
-          <%= simple_format snippet.content %>
-        </div>
-        <div class="small-1 columns">
-          <%= render "action_btns", path: edit_short_story_path(snippet), del_path: short_story_path(snippet), confirm: "diese Short Story" %>
-        </div>
-      </div>
-    <% end %>
-    <% if @user_snippets.empty? %>
-      <em>Du hast noch keine Short Stories geschrieben.</em>
+    <%= render "list_short_stories", snippets: @user_snippets, empty: "Du hast noch keine Short Stories geschrieben." %>
+    <% if @_user.admin? %>
+      <hr />
+      <h4>Short Stories anderer</h4>
+      <%= render "list_short_stories", snippets: @other_snippets, empty: "Noch keine anderen Short Stories vorhanden." %>
     <% end %>
   </div>
 </div>

@@ -45,6 +45,7 @@ class SnippetsController < ApplicationController
   def find_snippets
     @snippets = Snippet.section(params[:section]).order_by_date_desc
     @user_snippets = @_user.snippets.section(params[:section]).order_by_date_desc
+    @other_snippets = @snippets.where("user_id != ?", @_user.id)
   end
   
   def render_index
