@@ -27,6 +27,7 @@ class PollsController < ApplicationController
   
   def update
     if @poll.update_attributes(params[:poll])
+      @poll.touch
       redirect_to edit_poll_path(@poll), notice: t("application.saved_changes")
     else
       render :edit
@@ -45,10 +46,8 @@ class PollsController < ApplicationController
   def vote
     response = {}
     
-    @poll.options.map do |option|
-      option.votes.where(user_id: @_user).delete_all
-      option.touch
-    end
+    @poll.options.update_all(updated_at: Time.now)
+    @poll.options.map { |option| option.votes.where(user_id: @_user).delete_all }
     
     (params[:options] ||= []).map! { |id| id.to_i }
     if params[:options_new].present?
@@ -93,10 +92,12 @@ class PollsController < ApplicationController
     (poll.present? ? [poll] : Poll.scoped).each do |poll|
       options[poll.id] = {}
       poll.options.each do |option|
-        options[poll.id][option.id] = {
-          p: poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round,
-          v: option.votes.where(user_id: @_user).any?
-        }
+        options[poll.id][option.id] = Rails.cache.fetch([@_user, option]) do
+          {
+            p: Rails.cache.fetch(option) { poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round },
+            v: option.votes.where(user_id: @_user).any?
+          }
+        end
       end
     end
     options
