@@ -55,8 +55,10 @@ class PollsController < ApplicationController
       if option.new_record?
         option.content = params[:options_new]
         option.user = @_user
-        option.save
-        response[:new_option] = render_to_string("_option", layout: false, locals: { option: option, poll: @poll })
+        if option.save
+          response[:new_option] = render_to_string("_option", layout: false, locals: { option: option, poll: @poll })
+          @poll.touch
+        end
       end
       if option.persisted?
         if !params[:options].include?(option.id)
@@ -88,16 +90,17 @@ class PollsController < ApplicationController
   end
   
   def find_options(poll = nil)
-    options = { options: {} }
+    options = {}
     (poll.present? ? [poll] : Poll.scoped).each do |poll|
-      options[poll.id] = {}
-      poll.options.each do |option|
-        options[poll.id][option.id] = Rails.cache.fetch([@_user, option]) do
-          {
-            p: Rails.cache.fetch(option) { poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round },
-            v: option.votes.where(user_id: @_user).any?
-          }
-        end
+      options[poll.id] = Rails.cache.fetch([@_user, poll.options.scoped]) do
+        Hash[poll.options.map do |option|
+          [option.id, Rails.cache.fetch([@_user, poll.options.scoped, option]) do
+            {
+              p: Rails.cache.fetch([poll.options.scoped, option]) { poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round },
+              v: option.votes.where(user_id: @_user).any?
+            }
+          end]
+        end]
       end
     end
     options
