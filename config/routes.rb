@@ -60,5 +60,7 @@ Abikantenstadl::Application.routes.draw do
       end
     end
     
+    resources :stories, :path => "kursberichte", except: [:show, :new]
+    
   end
 end

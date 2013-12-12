@@ -19,6 +19,8 @@ de:
     destroyed: "Das Foto wurde gelöscht."
   polls:
     destroyed: "Die Umfrage wurde gelöscht."
+  stories:
+    destroyed: "Der Kursbericht wurde gelöscht."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"
@@ -63,6 +65,12 @@ de:
           attributes:
             content:
               blank: "Bitte gib einen Text für die Antwortmöglichkeit an."
+        story:
+          attributes:
+            title:
+              blank: "Bitte gib einen Titel oder eine kurze Zusammenfassung für deinen Kursbericht an."
+            document:
+              blank: "Bitte gib ein Dokument an, das deinen Bericht enthält."
   attributes:
     title: "Titel"
     email: "e-mail-Adresse"

@@ -8,25 +8,37 @@ class PhotosController < ApplicationController
   def create
     @photo = Photo.new(params[:photo])
     @photo.user = @_user
-    @photo.section = :collage
     if @photo.save
-      redirect_to photos_path
+      redirect_to_gallery
     else
-      render :index
+      if @photo.assignable.present?
+        flash.alert = @photo.errors.values.first.first
+        redirect_to_gallery
+      else
+        render :index
+      end
     end
   end
   
   def destroy
-    photo = Photo.find(params[:id])
-    return redirect_to action: :index if !@_user.admin? && photo.user != @_user
-    flash.notice = t("photos.destroyed") if photo.destroy
-    redirect_to photos_path
+    @photo = Photo.find(params[:id])
+    flash.notice = t("photos.destroyed") if (@_user.admin? || @photo.user == @_user) && @photo.destroy
+    redirect_to_gallery
   end
   
   private
   
   def find_photos
-    @own_photos = @_user.photos.section(:collage)
-    @all_photos = Photo.where("user_id != ?", @_user).section(:collage)
+    @own_photos = @_user.photos.not_assigned
+    @all_photos = Photo.where("user_id != ?", @_user).not_assigned
+  end
+  
+  def redirect_to_gallery
+    if @photo.assignable.class == Story
+      path = stories_path
+    else
+      path = photos_path
+    end
+    redirect_to path
   end
 end

@@ -1,0 +1,29 @@
+<% title "Kursbericht bearbeiten" %>
+<div class="row photos">
+  <div class="small-12 columns">
+    <h4>Kursbericht bearbeiten</h4>
+    <div class="panel">
+      <%= render "errors", errors: @story.errors %>
+      <%= form_for @story do |f| %>
+        <div class="row">
+          <div class="large-12 columns">
+            <label>Titel oder kurze Zusammenfassung</label>
+            <%= f.text_field :title %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-5 columns">
+            <label>Textdokument</label>
+            <%= f.file_field :document %>
+            Wähle hier ein neues Dokument aus, wenn du das alte ersetzen möchtest. Ansonsten lass es frei.
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-12 columns text-center">
+            <%= f.submit "speichern", class: [:button, :small] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

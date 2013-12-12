@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122005542) do
+ActiveRecord::Schema.define(:version => 20131210164850) do
 
   create_table "about_us_entries", :force => true do |t|
     t.text     "text"
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(:version => 20131122005542) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "user_id"
-    t.string   "section"
+    t.integer  "assignable_id"
+    t.string   "assignable_type"
   end
 
   create_table "poll_options", :force => true do |t|
@@ -74,6 +75,17 @@ ActiveRecord::Schema.define(:version => 20131122005542) do
     t.string   "section"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "stories", :force => true do |t|
+    t.string   "title"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.integer  "user_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "users", :force => true do |t|

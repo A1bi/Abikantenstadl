@@ -8,6 +8,7 @@ class User < BaseModel
   has_many :about_us_entries
   has_many :photos
   has_many :snippets
+  has_many :stories
   
   attr_accessor :email_can_be_blank
   

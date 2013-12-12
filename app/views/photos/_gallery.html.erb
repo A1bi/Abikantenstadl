@@ -1,10 +1,5 @@
 <div class="panel">
-  <ul class="small-block-grid-2 large-block-grid-5">
-    <%= content_tag_for :li, photos do |photo| %>
-      <%= image_tag photo.image.url(:thumb), class: "th radius" %>
-      <div class="delete-btn"><%= render "delete_btn", path: photo_path(photo), confirm: "dieses Foto" %></div>
-    <% end %>
-  </ul>
+  <%= render "photo_gallery", photos: photos %>
   <% if photos.empty? %>
     <em>Noch keine Fotos hochgeladen.</em>
   <% end %>
