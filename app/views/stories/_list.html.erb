@@ -7,18 +7,18 @@
       <em><%= story.document.original_filename %></em>
     </div>
     <div class="large-1 columns">
-      <%= render "action_btns", path: edit_story_path(story), del_path: story_path(story), confirm: "diesen Kursbericht" %>
+      <%= render "action_btns", path: edit_story_path(story), del_path: story_path(story), confirm: "diesen Bericht" %>
     </div>
   </div>
   <hr />
-  <h6>Fotos zu diesem Kursbericht</h6>
+  <h6>Fotos zu diesem Bericht</h6>
   <div class="row">
     <div class="small-12 columns">
       <%= render "photo_gallery", photos: story.photos %>
       <% if story.photos.empty? %>
         <div class="row">
           <div class="small-12 columns">
-            <p>Sollte dein Kursbericht Fotos enthalten, lade diese bitte hier noch einmal gesondert hoch.</p>
+            <p>Sollte dein Bericht Fotos enthalten, lade diese bitte hier noch einmal gesondert hoch.</p>
           </div>
         </div>
       <% end %>
@@ -43,5 +43,5 @@
   </div>
 <% end %>
 <% if stories.empty? %>
-  <em>Noch keine Kursberichte hochgeladen.</em>
+  <em>Noch keine Berichte hochgeladen.</em>
 <% end %>

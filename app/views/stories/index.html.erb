@@ -1,8 +1,8 @@
-<% title "Kursberichte" %>
+<% title "Kurs- und Kursfahrtberichte" %>
 <div class="row photos">
   <div class="small-12 columns">
-    <h4>Kursberichte</h4>
-    <p>Hier kannst du deine Kursberichte als Textdokument (das Format ist egal) hochladen. Bitte achte aber darauf, dass, falls dein Bericht Fotos enthält, du diese danach noch einmal separat hochlädst. Ein entsprechendes Upload-Feld erscheint unter jedem angelegten Kursbericht.</p>
+    <h4>Kurs- und Kursfahrtberichte</h4>
+    <p>Hier kannst du deine Kurs- und Kursfahrtberichte als Textdokument (das Format ist egal) hochladen. Bitte achte aber darauf, dass, falls dein Bericht Fotos enthält, du diese danach noch einmal separat hochlädst. Ein entsprechendes Upload-Feld erscheint unter jedem angelegten Kursbericht.</p>
     <div class="panel">
       <%= render "errors", errors: @story.errors %>
       <%= form_for @story do |f| %>
@@ -26,11 +26,11 @@
       <% end %>
     </div>
     <hr />
-    <h4>Deine Kursberichte</h4>
+    <h4>Deine Berichte</h4>
     <%= render "list", stories: @own_stories %>
     <% if @_user.admin? %>
       <hr />
-      <h4>Alle Kursberichte</h4>
+      <h4>Alle Berichte</h4>
       <%= render "list", stories: @all_stories %>
     <% end %>
   </div>
