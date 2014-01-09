@@ -36,6 +36,8 @@ class PhotosController < ApplicationController
   def redirect_to_gallery
     if @photo.assignable.class == Story
       path = stories_path
+    elsif @photo.assignable.class == User
+      path = edit_profile_path(@photo.assignable)
     else
       path = photos_path
     end

@@ -11,6 +11,7 @@ class ProfilesController < ApplicationController
   
   def edit
     redirect_to edit_profile_path if params[:id] && !@_user.admin?
+    @photo = Photo.new
   end
   
   def update

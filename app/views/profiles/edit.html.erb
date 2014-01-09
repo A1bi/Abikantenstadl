@@ -7,7 +7,36 @@
 </div>
 <div class="row">
   <div class="small-12 columns">
+    <div class="panel photos">
+      <h4>Kinderfotos</h4>
+      <p>Du kannst <b>bis zu drei Kinderfotos</b> hochladen, die alle neben deinem Steckbrief in der Abizeitung erscheinen werden.</p>
+      <%= render "photo_gallery", photos: @user.profile_photos %>
+      <% if @user.profile_photos.count < 3 %>
+        <%= render "errors", errors: @photo.errors %>
+        <%= form_for @photo do |f| %>
+          <%= f.hidden_field :assignable_type, value: @user.class.name %>
+          <%= f.hidden_field :assignable_id, value: @user.id %>
+          <div class="row">
+            <div class="large-6 large-centered columns">
+              <div class="row">
+                <div class="large-9 columns">
+                  <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
+                </div>
+                <div class="large-3 columns">
+                  <%= f.submit "hochladen", class: [:button, :tiny] %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
     <div class="panel">
+      <h4>Steckbrief</h4>
       <%= render "text_rules" %>
       <%= form_tag profile_path(params[:id]), method: :put do %>
         <% @fields.each do |field| %>
