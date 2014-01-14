@@ -38,7 +38,7 @@
     <div class="panel">
       <h4>Steckbrief</h4>
       <%= render "text_rules" %>
-      <%= form_tag profile_path(params[:id]), method: :put do %>
+      <%= form_tag profile_path(params[:id]), method: :patch do %>
         <% @fields.each do |field| %>
           <div class="row">
             <div class="large-12 columns">

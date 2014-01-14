@@ -3,7 +3,7 @@ class PollsController < ApplicationController
   before_filter :find_poll, only: [:vote, :edit, :update, :destroy]
   
   def index
-    @polls = Poll.scoped
+    @polls = Poll.all
   end
   
   def new
@@ -11,7 +11,7 @@ class PollsController < ApplicationController
   end
   
   def create
-    @poll = Poll.new(params[:poll])
+    @poll = Poll.new(poll_params)
     params[:options].each do |option|
       next if option.blank?
       option = @poll.options.build(content: option)
@@ -26,7 +26,7 @@ class PollsController < ApplicationController
   end
   
   def update
-    if @poll.update_attributes(params[:poll])
+    if @poll.update_attributes(poll_params)
       @poll.touch
       redirect_to edit_poll_path(@poll), notice: t("application.saved_changes")
     else
@@ -91,12 +91,12 @@ class PollsController < ApplicationController
   
   def find_options(poll = nil)
     options = {}
-    (poll.present? ? [poll] : Poll.scoped).each do |poll|
-      options[poll.id] = Rails.cache.fetch([@_user, poll.options.scoped]) do
+    (poll.present? ? [poll] : Poll.all).each do |poll|
+      options[poll.id] = Rails.cache.fetch([@_user, poll.options]) do
         Hash[poll.options.map do |option|
-          [option.id, Rails.cache.fetch([@_user, poll.options.scoped, option]) do
+          [option.id, Rails.cache.fetch([@_user, poll.options, option]) do
             {
-              p: Rails.cache.fetch([poll.options.scoped, option]) { poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round },
+              p: Rails.cache.fetch([poll.options, option]) { poll.votes.count.zero? ? 0 : (option.votes.count / poll.votes.count.to_f * 100).round },
               v: option.votes.where(user_id: @_user).any?
             }
           end]
@@ -104,5 +104,9 @@ class PollsController < ApplicationController
       end
     end
     options
+  end
+  
+  def poll_params
+    params.require(:poll).permit(:question, :multiple_choice, options_attributes: [:id, :content, :_destroy])
   end
 end

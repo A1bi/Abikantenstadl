@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
   end
   
   def create
-    @photo = Photo.new(params[:photo])
+    @photo = Photo.new(params.require(:photo).permit(:image, :assignable_type, :assignable_id))
     @photo.user = @_user
     if @photo.save
       redirect_to_gallery

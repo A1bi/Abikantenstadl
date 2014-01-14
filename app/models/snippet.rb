@@ -1,6 +1,4 @@
 class Snippet < BaseModel
-  attr_accessible :content
-  
   belongs_to :user
   
   validates_presence_of :content, :user, :section

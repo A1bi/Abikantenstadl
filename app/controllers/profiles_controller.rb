@@ -5,7 +5,7 @@ class ProfilesController < ApplicationController
   before_filter :find_user, only: [:edit, :update]
   
   def index
-    @fields = ProfileField.scoped
+    @fields = ProfileField.all
     @users = User.ordered_by_name.student
   end
   
@@ -28,7 +28,7 @@ class ProfilesController < ApplicationController
   private
   
   def find_fields
-    @fields = ProfileField.scoped
+    @fields = ProfileField.all
   end
   
   def find_user

@@ -7,7 +7,7 @@ class StoriesController < ApplicationController
   end
   
   def create
-    @story = Story.new(params[:story])
+    @story = Story.new(story_params)
     @story.user = @_user
     if @story.save
       redirect_to stories_path
@@ -17,8 +17,8 @@ class StoriesController < ApplicationController
   end
   
   def update
-    if @story.update_attributes(params[:story])
-      redirect_to action: :index
+    if @story.update_attributes(story_params)
+      redirect_to({ action: :index }, notice: t("application.saved_changes"))
     else
       render :edit
     end
@@ -40,5 +40,9 @@ class StoriesController < ApplicationController
   def find_stories
     @own_stories = @_user.stories.order_by_date_desc
     @all_stories = Story.where("user_id != ?", @_user).order_by_date_desc
+  end
+  
+  def story_params
+    params.require(:story).permit(:document, :title)
   end
 end

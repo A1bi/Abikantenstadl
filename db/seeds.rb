@@ -5,6 +5,6 @@
 	else
 		attrs.merge!({ first_name: Faker::NameDE.first_name, last_name: Faker::NameDE.last_name, email: Faker::Internet.free_email })
 	end
-	user = User.new(attrs, without_protection: true)
-	user.save(perform_validations: false)
+	user = User.new(attrs)
+	user.save(validate: false)
 end

@@ -1,11 +1,12 @@
 <% title "Wir über #{@entry.user.full_name} - Eintrag bearbeiten" %>
 <div class="row">
   <div class="small-12 columns">
-    <%= form_for @entry, method: :put, url: about_entry_path(@entry.user, @entry) do |f| %>
+    <%= form_for @entry, url: about_entry_path(@entry.user, @entry) do |f| %>
     <h4>Eintrag zu <%= @entry.user.full_name %> bearbeiten</h4>
     <div class="row">
       <div class="small-12 columns">
         <div class="panel">
+          <%= render "errors", errors: @entry.errors %>
           <%= render "text_rules" %>
           <label>Dein Eintrag</label>
           <%= f.text_area :text %>

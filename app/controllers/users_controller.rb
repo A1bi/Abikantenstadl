@@ -31,11 +31,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user], as: (@_user.admin? ? :admin : :user))
+    if @user.update_attributes(user_params(!params[:own] && @_user.admin?))
       flash.notice = t("application.saved_changes")
-      redirect_to action: :edit
+      redirect_to params[:own] ? edit_own_path : edit_user_path(@user)
     else
-      render action: :edit
+      render action: params[:own] ? :edit_own : :edit
     end
   end
   
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params[:user], as: :admin)
+    @user = User.new(user_params(true))
     @user.reset_password
     if @user.save
       send_activation_mail if params[:send_email]
@@ -102,5 +102,9 @@ class UsersController < ApplicationController
   
   def send_activation_mail
     UserMailer.activation(@user).deliver
+  end
+  
+  def user_params(admin = false)
+    params.require(:user).permit(admin ? [:email, :first_name, :last_name, :admin] : [:email, :password, :password_confirmation])
   end
 end

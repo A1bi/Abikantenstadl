@@ -1,6 +1,4 @@
 class ProfileField < BaseModel
-  attr_accessible :name, :description
-  
   has_many :values, :class_name => ProfileFieldValue
   
   def value_for_user(user)

@@ -14,7 +14,7 @@ class AboutController < ApplicationController
   
   def create
     redirect_access_denied if @user == @_user
-    @entry = @user.about_us_entries.build(params[:about_us_entry])
+    @entry = @user.about_us_entries.build(entry_params)
     @entry.author = @_user
     if @entry.save
       redirect_to about_user_path(@user)
@@ -24,7 +24,7 @@ class AboutController < ApplicationController
   end
   
   def update
-    if @entry.update_attributes(params[:about_us_entry])
+    if @entry.update_attributes(entry_params)
       redirect_to about_user_path(@entry.user), notice: t("application.saved_changes")
     else
       render :edit
@@ -59,5 +59,9 @@ class AboutController < ApplicationController
   
   def redirect_access_denied
     redirect_to about_user_path(@entry.user), alert: t("application.access_denied")
+  end
+  
+  def entry_params
+    params.require(:about_us_entry).permit(:text)
   end
 end

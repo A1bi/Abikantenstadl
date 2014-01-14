@@ -37,8 +37,10 @@ de:
         user:
           attributes:
             password:
-              confirmation: "Die Passwörter stimmen nicht überein."
               too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
+            password_confirmation:
+              confirmation: "Die Passwörter stimmen nicht überein."
+              blank: "Bitte gib das Passwort zur Sicherheit ein zweites Mal ein."
             email:
               invalid: "Die e-mail-Adresse ist ungültig."
         photo:

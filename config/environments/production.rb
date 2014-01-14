@@ -12,7 +12,8 @@ Abikantenstadl::Application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -46,26 +47,7 @@ Abikantenstadl::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile << Proc.new { |path|
-    if path =~ /\.(css|js)\z/
-      # exclude global files
-      if path[0] == "_"
-        false
-      else
-        full_path = Rails.application.assets.resolve(path).to_path
-        app_assets_path = Rails.root.join('app', 'assets').to_path
-        if full_path.starts_with? app_assets_path
-          # including asset
-          true
-        else
-          # excluding asset
-          false
-        end
-      end
-    else
-      false
-    end
-  }
+  # config.assets.precompile << nil
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -82,7 +64,5 @@ Abikantenstadl::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.eager_load = true
 end

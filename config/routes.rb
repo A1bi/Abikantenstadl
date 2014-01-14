@@ -13,14 +13,14 @@ Abikantenstadl::Application.routes.draw do
     
     scope :controller => :users, :path => "konto" do
       get "activate", :path => "aktivieren", :as => :activate_user
-      put "finish_activation"
+      patch "finish_activation"
       get "forgot_password", :path => "passwort_vergessen"
       post "reset_password"
       get :edit_own, :path => "bearbeiten"
-      put :action => :update
+      patch :action => :update
     end
   
-    resources :users, :path => Rack::Utils.escape("schüler"), except: [:show] do
+    resources :users, :path => "schüler", except: [:show] do
       member do
         post :reset
       end
@@ -29,17 +29,17 @@ Abikantenstadl::Application.routes.draw do
     controller :profiles, :path => "steckbrief" do
       get "/", :action => :index, :as => :profiles
       get "(/:id)/bearbeiten", :action => :edit, :as => :edit_profile
-      put "(/:id)", :action => :update, :as => :profile
+      patch "(/:id)", :action => :update, :as => :profile
     end
     
-    controller :about, :path => Rack::Utils.escape("über-uns"), :as => :about do
+    controller :about, :path => "über-uns", :as => :about do
       get "/", :action => :index, :as => ""
       scope :path => ":user" do
         get :action => :show_user, :as => :user
         post :action => :create
         scope :path => ":entry", :as => :entry do
           get "bearbeiten", :action => :edit, :as => :edit
-          put :action => :update
+          patch :action => :update
           delete :action => :destroy
         end
       end
@@ -47,7 +47,7 @@ Abikantenstadl::Application.routes.draw do
     
     resources :photos, :path => "fotos", only: [:index, :create, :destroy]
     
-    { rumors: Rack::Utils.escape("gerüchte"), quotes: "zitate", survival_tips: "survivaltips", short_stories: "shortstories" }.each do |section, path|
+    { rumors: "gerüchte", quotes: "zitate", survival_tips: "survivaltips", short_stories: "shortstories" }.each do |section, path|
       resources section, :controller => :snippets, :path => path, :except => [:show, :new], :defaults => { :section => section }
     end
     

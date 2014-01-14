@@ -8,11 +8,11 @@ class SnippetsController < ApplicationController
   end
   
   def create
-    @snippet = Snippet.new(params[:snippet])
+    @snippet = Snippet.new(snippet_params)
     @snippet.user = @_user
     @snippet.section = params[:section]
     if @snippet.save
-      redirect_to action: :index
+      redirect_to_section_index
     else
       render_index
     end
@@ -23,8 +23,8 @@ class SnippetsController < ApplicationController
   end
   
   def update
-    if @snippet.update_attributes(params[:snippet])
-      redirect_to({ action: :index }, notice: t("application.saved_changes"))
+    if @snippet.update_attributes(snippet_params)
+      redirect_to_section_index notice: t("application.saved_changes")
     else
       render_edit
     end
@@ -32,14 +32,14 @@ class SnippetsController < ApplicationController
   
   def destroy
     @snippet.destroy
-    redirect_to({ action: :index }, notice: t("application.entry_destroyed"))
+    redirect_to_section_index notice: t("application.entry_destroyed")
   end
   
   private
   
   def find_snippet
     @snippet = Snippet.find(params[:id])
-    return redirect_to action: :index if !@_user.admin? && @snippet.user != @_user
+    return redirect_to_section_index if !@_user.admin? && @snippet.user != @_user
   end
   
   def find_snippets
@@ -58,5 +58,13 @@ class SnippetsController < ApplicationController
   
   def render_action_in_section(action)
     render "#{action}_#{params[:section]}"
+  end
+  
+  def redirect_to_section_index(opts = {})
+    redirect_to send("#{params[:section]}_path"), opts
+  end
+  
+  def snippet_params
+    params.require(:snippet).permit(:content)
   end
 end

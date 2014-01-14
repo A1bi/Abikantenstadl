@@ -1,7 +1,4 @@
 class User < BaseModel
-  attr_accessible
-  attr_accessible :email, :password, :password_confirmation, :as => :user
-  attr_accessible :email, :first_name, :last_name, :admin, :as => :admin
   has_secure_password
   
   has_many :profile_field_values
@@ -18,7 +15,7 @@ class User < BaseModel
   validates :email,
             :allow_blank => true,
             :uniqueness => true,
-            :format => /^([a-z0-9\-_]+\.?)+@([a-z0-9\-]+\.)+[a-z]{2,9}$/i
+            :format => /\A([a-z0-9\-_]+\.?)+@([a-z0-9\-]+\.)+[a-z]{2,9}\z/i
             
   validates :password,
             :length => { :minimum => 6 },
@@ -44,6 +41,7 @@ class User < BaseModel
   
   def set_random_password
     self.password = self.class.random_hash
+    self.password_confirmation = self.password
   end
   
   def set_activation_code

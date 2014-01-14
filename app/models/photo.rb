@@ -1,5 +1,4 @@
 class Photo < BaseModel
-  attr_accessible :image, :assignable_type, :assignable_id
   has_attached_file :image, styles: { thumb: "300x300#" }
   
   belongs_to :user

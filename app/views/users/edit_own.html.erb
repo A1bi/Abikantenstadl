@@ -9,6 +9,7 @@
   <div class="small-12 columns panel">
     <%= render "errors", errors: @user.errors %>
     <%= form_for @user do |f| %>
+      <%= hidden_field_tag :own, true %>
       <div class="row">
         <div class="large-12 columns">
           <label>Name</label>

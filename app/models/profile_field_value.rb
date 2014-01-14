@@ -1,6 +1,4 @@
 class ProfileFieldValue < BaseModel
-  attr_accessible :value
-  
   belongs_to :user
   belongs_to :profile_field
   

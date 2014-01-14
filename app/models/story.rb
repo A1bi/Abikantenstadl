@@ -1,5 +1,4 @@
 class Story < BaseModel
-  attr_accessible :document, :title
   has_attached_file :document
   
   belongs_to :user
