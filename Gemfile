@@ -35,6 +35,7 @@ gem 'unicorn'
 
 group :development do
   gem 'capistrano', '~> 2.15.5'
+  gem 'rvm-capistrano'
   gem 'sqlite3'
   gem 'ffaker'
 end

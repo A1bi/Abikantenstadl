@@ -6,4 +6,4 @@ development:
 production:
   secret_token:
   url_options:
-    host: "www.abikantenstadl.de"
+    host: "www.abikantenstadl.net"

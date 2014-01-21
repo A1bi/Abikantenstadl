@@ -34,7 +34,7 @@ $(function() {
     }
     if (v < minVer) {
       $("html").addClass("unsupportedBrowser");
-      $.getScript("/assets/unsupported_browser.js");
+      $.getScript("<%= asset_path('unsupported_browser.js') %>");
     }
   }
   el.remove();
