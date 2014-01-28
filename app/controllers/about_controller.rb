@@ -13,7 +13,6 @@ class AboutController < ApplicationController
   end
   
   def create
-    redirect_access_denied if @user == @_user
     @entry = @user.about_us_entries.build(entry_params)
     @entry.author = @_user
     if @entry.save

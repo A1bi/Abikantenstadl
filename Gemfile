@@ -44,5 +44,15 @@ group :production do
   gem 'mysql2'
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+end
+
 # To use debugger
 # gem 'debugger'
