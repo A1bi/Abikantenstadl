@@ -53,6 +53,8 @@ de:
           attributes:
             text:
               blank: "Bitte gib einen Text für deinen Eintrag an."
+            user:
+              same_as_author: "Du kannst keinen Beitrag zu dir selbst verfassen."
         snippet:
           attributes:
             content:
