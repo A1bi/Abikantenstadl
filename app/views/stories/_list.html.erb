@@ -5,7 +5,7 @@
       <b><%= story.title %></b>
     </div>
     <div class="large-4 small-12 columns">
-      <em><%= story.document.original_filename %></em> <%= link_to "", story.document.path, class: "fi-download", title: "Textdokument herunterladen" %>
+      <em><%= story.document.original_filename %></em> <%= link_to "", story.document.url, class: "fi-download", title: "Textdokument herunterladen" %>
     </div>
     <div class="large-1 columns">
       <%= render "action_btns", path: edit_story_path(story), del_path: story_path(story), confirm: "diesen Bericht" %>

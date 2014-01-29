@@ -146,16 +146,20 @@ textarea {
     position: relative;
   }
   
-  .delete-btn {
+  .action-btns {
     position: absolute;
-    top: 10px;
+    bottom: 15%;
     right: 10%;
     background: rgba(0, 0, 0, .7);
     padding: 0px 5px;
     border-radius: 5px;
     
-    a:hover {
+    a {
       color: white !important;
+      
+      &:hover {
+        color: darken(white, 20%) !important;
+      }
     }
   }
 }

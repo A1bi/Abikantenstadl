@@ -7,6 +7,7 @@ class User < BaseModel
   has_many :snippets
   has_many :stories
   has_many :profile_photos, class_name: Photo, as: :assignable
+  has_many :orders
   
   attr_accessor :email_can_be_blank
   

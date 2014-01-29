@@ -1,0 +1,27 @@
+<% title "Abi-Shirt bestellen" %>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Abi-Shirt bestellen</h4>
+    <p>Wenn du ein Abi-Shirt bestellen möchtest, kannst du hier deine Größe auswählen. Du kannst deine Auswahl auch später noch ändern.</p>
+    <div class="panel photos">
+      <%= form_for @order, url: shirts_path, method: :post do |f| %>
+        <%= f.hidden_field :item_id %>
+        <div class="row">
+          <div class="small-6 small-centered columns">
+            <div class="row">
+              <div class="small-3 columns text-right">Größe:</div>
+              <div class="small-9 columns">
+                <%= f.select :option, @options, include_blank: "Kein Shirt bestellen" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns text-center">
+            <%= f.submit "speichern", class: [:button, :small] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

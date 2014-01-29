@@ -62,5 +62,9 @@ Abikantenstadl::Application.routes.draw do
     
     resources :stories, :path => "kursberichte", except: [:show, :new]
     
+    controller :orders, :path => "shirts" do
+      get "/", :action => :index_shirts, :as => :shirts
+      post "/", :action => :update
+    end
   end
 end

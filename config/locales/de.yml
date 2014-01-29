@@ -21,6 +21,8 @@ de:
     destroyed: "Die Umfrage wurde gelöscht."
   stories:
     destroyed: "Der Kursbericht wurde gelöscht."
+  orders:
+    saved: "Deine Bestellung wurde erfolgreich gespeichert."
   action_mailer:
     defaults:
       from: "Abikantenstadl <noreply@abikantenstadl.net>"

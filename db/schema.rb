@@ -11,12 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210164850) do
+ActiveRecord::Schema.define(version: 20140129170331) do
 
   create_table "about_us_entries", force: true do |t|
     t.text     "text"
     t.integer  "user_id"
     t.integer  "author_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.integer  "item_id"
+    t.string   "option"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
