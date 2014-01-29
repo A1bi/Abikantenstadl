@@ -1257,12 +1257,12 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
 
 // Background color for the top bar
 
-// $topbar-bg-color: #eee;
-// $topbar-bg: $topbar-bg-color;
+$topbar-bg-color: $light-color;
+// $topbar-bg: none;
 
 // Height and margin
 
-// $topbar-height: 45px;
+$topbar-height: 35px;
 // $topbar-margin-bottom: 0;
 
 // Control Input height for top bar
@@ -1276,9 +1276,9 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg: #222;
+// $topbar-dropdown-bg: none;
 // $topbar-dropdown-link-color: #fff;
-// // $topbar-dropdown-link-bg: lighten($topbar-bg-color, 5%);
+$topbar-dropdown-link-bg: rgba($light-color, .6);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.5;
@@ -1291,7 +1291,7 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
 // $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
-// $topbar-link-bg-hover: darken($topbar-bg-color, 3%);
+$topbar-link-bg-hover: darken($topbar-bg-color, 3%);
 // $topbar-link-bg-active: darken($topbar-bg-color, 3%);
 
 // $topbar-dropdown-label-color: #555;
@@ -1313,7 +1313,7 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
 // Transitions and breakpoint styles
 
 // $topbar-transition-speed: 300ms;
-// $topbar-breakpoint: 940 !default; // Change to 9999px for always mobile layout
+$topbar-breakpoint: 0px; // Change to 9999px for always mobile layout
 // $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles
@@ -1349,6 +1349,7 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
   "foundation/components/dropdown",
   "foundation/components/thumbs",
   "foundation/components/progress-bars",
+  "foundation/components/top-bar",
   "foundation-icons";
 
 
@@ -1384,6 +1385,12 @@ $thumb-box-shadow-hover: 0 0 6px 1px rgba($main-color, 0.5);
 // glyphs fix for links in older webkit browsers
 [class*="fi-"] {
   position: relative;
+}
+
+.top-bar {
+  .divider {
+    border-color: darken($topbar-bg-color, 10%) !important;
+  }
 }
 
 .panel.callout .progress {

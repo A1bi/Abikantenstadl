@@ -1,6 +1,7 @@
 <%= div_for snippets, class: :panel do |snippet| %>
   <div class="row">
     <div class="small-11 columns">
+      <%= render "author", author: snippet.user if (all ||= false) %>
       <%= simple_format snippet.content %>
     </div>
     <div class="small-1 columns">

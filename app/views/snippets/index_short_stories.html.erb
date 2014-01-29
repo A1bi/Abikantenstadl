@@ -16,7 +16,7 @@
     <% if @_user.admin? %>
       <hr />
       <h4>Short Stories anderer</h4>
-      <%= render "list_short_stories", snippets: @other_snippets, empty: "Noch keine anderen Short Stories vorhanden." %>
+      <%= render "list_short_stories", snippets: @other_snippets, empty: "Noch keine anderen Short Stories vorhanden.", all: true %>
     <% end %>
   </div>
 </div>

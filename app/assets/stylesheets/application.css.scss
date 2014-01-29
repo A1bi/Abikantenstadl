@@ -15,37 +15,19 @@
 @import "mixins";
 
 header {
-  @include main-gradient;
   box-shadow: 0px 1px 5px black;
-  border-bottom: 1px solid $dark-color;
-  min-width: 100%;
-  margin-bottom: 25px !important;
-  font-size: 13px;
-  
-  .columns {
-    padding: 10px;
-    
-    &.title {
-      font-size: 18px;
+  margin-bottom: 15px;
+
+  nav {
+    .title-area a {
+      font-size: 20px;
       font-weight: bold;
-      text-shadow: 1px 1px 5px black;
+      text-shadow: 1px 1px 3px black;
       
-      a:hover {
-        color: white;
+      &:hover {
+        text-shadow: 1px 1px 6px black;
       }
     }
-  }
-  
-  * {
-    color: white !important;
-  }
-  
-  a:hover {
-    color: #cccccc !important;
-  }
-  
-  :not(.title) {
-    padding-top: 12px;
   }
 }
 
@@ -140,6 +122,11 @@ html {
   }
 }
 
+.author {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
 textarea {
   height: 80px;
   
@@ -166,6 +153,10 @@ textarea {
     background: rgba(0, 0, 0, .7);
     padding: 0px 5px;
     border-radius: 5px;
+    
+    a:hover {
+      color: white !important;
+    }
   }
 }
 

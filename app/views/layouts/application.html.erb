@@ -8,11 +8,32 @@
   <%= stylesheet_link_tag "application" %>
 </head>
 <body>
-  <header class="row">
-    <div class="large-4 small-12 columns title"><%= link_to "Abikantenstadl", root_path %></div>
-    <% if @_user.id %>
-      <div class="large-3 large-offset-5 small-12 columns"><%= @_user.full_name %> - <%= link_to "logout", logout_path %></div>
-    <% end %>
+  <header class="contain-to-grid">
+    <nav class="top-bar" data-topbar data-options="scrolltop:false">
+      <ul class="title-area">
+        <li class="name">
+          <h1><%= link_to "Abikantenstadl", root_path %></h1>
+        </li>
+      </ul>
+      <% if @_user.id %>
+        <section class="top-bar-section">
+          <ul class="right">
+            <li class="divider"></li>
+            <li class="has-dropdown">
+              <a href="#"><%= @_user.full_name %></a>
+              <ul class="dropdown">
+                <li class="text-right">
+                  <%= link_to edit_own_path do %>Dein Konto <i class="fi-torso"></i><% end %>
+                </li>
+                <li class="text-right">
+                  <%= link_to logout_path do %>logout <i class="fi-arrow-right"></i><% end %>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      <% end %>
+    </nav>
   </header>
   <div class="row">
     <div class="small-12 columns">

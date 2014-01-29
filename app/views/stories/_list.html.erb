@@ -1,10 +1,11 @@
 <%= div_for stories, class: :panel do |story| %>
   <div class="row">
-    <div class="large-6 columns">
+    <div class="large-6 small-12 columns">
+      <%= render "author", author: story.user if (all ||= false) %>
       <b><%= story.title %></b>
     </div>
-    <div class="large-4 columns text-right">
-      <em><%= story.document.original_filename %></em>
+    <div class="large-4 small-12 columns">
+      <em><%= story.document.original_filename %></em> <%= link_to "", story.document.path, class: "fi-download", title: "Textdokument herunterladen" %>
     </div>
     <div class="large-1 columns">
       <%= render "action_btns", path: edit_story_path(story), del_path: story_path(story), confirm: "diesen Bericht" %>
@@ -28,11 +29,11 @@
         <div class="row">
           <div class="large-12 columns">
             <div class="row">
-              <div class="large-4 columns">
+              <div class="large-4 small-7 columns">
                 <label>Foto hinzufügen</label>
                 <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
               </div>
-              <div class="large-8 columns">
+              <div class="large-7 small-4 columns">
                 <%= f.submit "hochladen", class: [:button, :tiny] %>
               </div>
             </div>

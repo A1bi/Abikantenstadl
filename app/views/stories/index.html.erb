@@ -31,7 +31,7 @@
     <% if @_user.admin? %>
       <hr />
       <h4>Alle Berichte</h4>
-      <%= render "list", stories: @all_stories %>
+      <%= render "list", stories: @all_stories, all: true %>
     <% end %>
   </div>
 </div>
