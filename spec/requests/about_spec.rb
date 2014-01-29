@@ -21,6 +21,15 @@ describe "About" do
   end
   
   it "does deny access to restricted actions" do
+    entry = create(:about_us_entry)
+    login(entry.user)
+    path = about_entry_edit_path(entry.user, entry)
+    visit path
+    expect(current_path).to_not eq(path)
+    expect(page).to have_content("erforderlichen Rechte")
     
+    login(create(:admin))
+    visit path
+    expect(current_path).to eq(path)
   end
 end
