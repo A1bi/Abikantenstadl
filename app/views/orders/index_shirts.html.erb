@@ -39,7 +39,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @orders.group(:option).count.each do |size, number| %>
+            <% @orders.group("orders.option").count.each do |size, number| %>
               <tr>
                 <td><%= @options.key(size.to_i) %></td>
                 <td><%= number %></td>
@@ -56,7 +56,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @orders.each do |order| %>
+            <% @orders.includes(:user).each do |order| %>
               <tr>
                 <td><%= link_to order.user.full_name, edit_profile_path(order.user) %></td>
                 <td><%= @options.key(order.option.to_i) %></td>
