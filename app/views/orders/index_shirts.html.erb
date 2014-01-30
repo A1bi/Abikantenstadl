@@ -25,3 +25,46 @@
     </div>
   </div>
 </div>
+<% if @_user.admin? %>
+  <div class="row orders">
+    <div class="small-12 columns">
+      <hr />
+      <h4>Alle Bestellungen</h4>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Größe</th>
+              <th>Anzahl</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.group(:option).count.each do |size, number| %>
+              <tr>
+                <td><%= @options.key(size.to_i) %></td>
+                <td><%= number %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <hr />
+        <table>
+          <thead>
+            <tr>
+              <th>Schüler</th>
+              <th>Größe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td><%= link_to order.user.full_name, edit_profile_path(order.user) %></td>
+                <td><%= @options.key(order.option.to_i) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

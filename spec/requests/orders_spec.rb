@@ -7,13 +7,11 @@ describe "Orders" do
     
     expect(find_field("order_option").value).to eq("")
     
-    select "M", from: :order_option
-    click_button :speichern
+    order "M"
     saved?
     expect(find_field("order_option").find('option[selected]').text).to eq("M")
     
-    select "L", from: :order_option
-    click_button :speichern
+    order "L"
     expect(Order.count).to eq(1)
   end
   
@@ -34,6 +32,39 @@ describe "Orders" do
     
     expect(find_field("order_option").find('option[selected]').text).to eq("XL")
     expect(Order.count).to eq(1)
+  end
+  
+  it "shows all shirt orders for admins" do
+    user = nil
+    in_session :user do
+      user = login
+      visit shirts_path
+      expect(page).to_not have_content("Alle Bestellungen")
+    end
+    
+    in_session :admin do
+      login(create(:admin))
+      visit shirts_path
+      expect(page).to have_content("Alle Bestellungen")
+      expect(page).to have_content(user.full_name)
+    end
+    
+    in_session :user do
+      order "L"
+    end
+    
+    in_session :admin do
+      refresh
+      expect(page.first(:xpath, "//tr[td[a[text()='#{user.full_name}']]]/td[2]").text).to eq("L")
+      expect(page.first(:xpath, "//tr[td[text()='L']]/td[2]").text).to eq("1")
+      order "L"
+      expect(page.first(:xpath, "//tr[td[text()='L']]/td[2]").text).to eq("2")
+    end
+  end
+  
+  def order(option)
+    select option, from: :order_option
+    click_button :speichern
   end
   
   def saved?(saved = true)

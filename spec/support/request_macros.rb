@@ -11,4 +11,8 @@ module RequestMacros
     click_button :login
     user
   end
+  
+  def refresh
+    visit(current_path)
+  end
 end

@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
   def index_shirts
     @order = order_with_item_id @@shirt_item_id
     @options = @@shirt_options
+    @orders = Order.where.not(option: "")
   end
   
   def update
