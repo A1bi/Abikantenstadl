@@ -22,4 +22,9 @@ FactoryGirl.define do
     author
     user
   end
+  
+  factory :profile_field do
+    sequence(:name) { |n| "Name #{n}" }
+    sequence(:description) { |n| "Field #{n}" }
+  end
 end

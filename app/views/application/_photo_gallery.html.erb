@@ -1,6 +1,6 @@
 <ul class="small-block-grid-2 large-block-grid-5">
   <%= content_tag_for :li, photos do |photo| %>
     <%= image_tag photo.image.url(:thumb), class: "th radius" %>
-    <div class="action-btns"><%= render "delete_btn", path: photo_path(photo), confirm: "dieses Foto" %> <%= link_to "", photo.image.url(:original), class: "fi-download", title: "Foto herunterladen" %></div>
+    <div class="action-btns"><%= render "delete_btn", path: photo_path(photo), confirm: "dieses Foto" if !(no_delete ||= false) %> <%= link_to "", photo.image.url(:original), class: "fi-download", title: "Foto herunterladen" %></div>
   <% end %>
 </ul>

@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  @@lock_time = Time.local(2014, 2, 1, 3)
+  
   restrict_access_to_admins only: [:index]
   
   before_filter :find_fields, only: [:edit]
@@ -11,18 +13,23 @@ class ProfilesController < ApplicationController
   
   def edit
     redirect_to edit_profile_path if params[:id] && !@_user.admin?
+    @locked = locked?
     @photo = Photo.new
   end
   
   def update
-    params[:fields].each do |id, text_value|
-      field = ProfileField.find(id)
-      value = field.values.where(user_id: @user.id).first_or_initialize
-      value.value = text_value
-      value.save
+    if !locked?
+      params[:fields].each do |id, text_value|
+        field = ProfileField.find(id)
+        value = field.values.where(user_id: @user.id).first_or_initialize
+        value.value = text_value
+        value.save
+      end
+      
+      flash.notice = t("application.saved_changes")
     end
     
-    redirect_to edit_profile_path(params[:id]), notice: t("application.saved_changes")
+    redirect_to edit_profile_path(params[:id])
   end
 
   private
@@ -33,5 +40,9 @@ class ProfilesController < ApplicationController
   
   def find_user
     @user = (params[:id] && @_user.admin?) ? User.find(params[:id]) : @_user
+  end
+  
+  def locked?
+    !@_user.admin? && Time.zone.now >= @@lock_time
   end
 end
