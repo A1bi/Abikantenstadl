@@ -26,45 +26,51 @@
   </div>
 </div>
 <% if @_user.admin? %>
-  <div class="row orders">
-    <div class="small-12 columns">
-      <hr />
-      <h4>Alle Bestellungen</h4>
-      <div class="panel">
-        <table>
-          <thead>
-            <tr>
-              <th>Größe</th>
-              <th>Anzahl</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @orders.group("orders.option").count.each do |size, number| %>
-              <tr>
-                <td><%= @options.key(size.to_i) %></td>
-                <td><%= number %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+  <% cache [:orders, :shirts, :all, @orders] do %>
+    <div class="row orders">
+      <div class="small-12 columns">
         <hr />
-        <table>
-          <thead>
-            <tr>
-              <th>Schüler</th>
-              <th>Größe</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @orders.includes(:user).each do |order| %>
+        <h4>Alle Bestellungen</h4>
+        <div class="panel">
+          <table>
+            <thead>
               <tr>
-                <td><%= link_to order.user.full_name, edit_profile_path(order.user) %></td>
-                <td><%= @options.key(order.option.to_i) %></td>
+                <th>Größe</th>
+                <th>Anzahl</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @orders.group("orders.option").count.each do |size, number| %>
+                <tr>
+                  <td><%= @options.key(size.to_i) %></td>
+                  <td><%= number %></td>
+                </tr>
+              <% end %>
+              <tr class="total">
+                <td>Gesamt</td>
+                <td><%= @orders.count %></td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <table>
+            <thead>
+              <tr>
+                <th>Schüler</th>
+                <th>Größe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @orders.includes(:user).merge(User.ordered_by_name).references(:users).each do |order| %>
+                <tr>
+                  <td><%= link_to "#{order.user.last_name}, #{order.user.first_name}", edit_profile_path(order.user) %></td>
+                  <td><%= @options.key(order.option.to_i) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

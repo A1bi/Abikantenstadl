@@ -46,7 +46,7 @@ describe "Orders" do
       login(create(:admin))
       visit shirts_path
       expect(page).to have_content("Alle Bestellungen")
-      expect(page).to have_content(user.full_name)
+      expect(page).to_not have_content(user.first_name)
     end
     
     in_session :user do
@@ -55,10 +55,12 @@ describe "Orders" do
     
     in_session :admin do
       refresh
-      expect(page.first(:xpath, "//tr[td[a[text()='#{user.full_name}']]]/td[2]").text).to eq("L")
-      expect(page.first(:xpath, "//tr[td[text()='L']]/td[2]").text).to eq("1")
+      expect(page.first(:xpath, "//tr[*[contains(.,'#{user.last_name}')]]/td[2]").text).to eq("L")
+      expect(orders_for_size("L")).to eq("1")
+      expect(total_orders).to eq("1")
       order "L"
-      expect(page.first(:xpath, "//tr[td[text()='L']]/td[2]").text).to eq("2")
+      expect(orders_for_size("L")).to eq("2")
+      expect(total_orders).to eq("2")
     end
   end
   
@@ -73,5 +75,13 @@ describe "Orders" do
   
   def not_saved?
     saved?(false)
+  end
+  
+  def orders_for_size(size)
+    page.first(:xpath, "//tr[td[text()='#{size}']]/td[2]").text
+  end
+  
+  def total_orders
+    page.first(:xpath, "//tr[*[text()='Gesamt']]/td[2]").text
   end
 end

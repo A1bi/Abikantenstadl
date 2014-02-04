@@ -195,7 +195,14 @@ textarea {
 }
 
 .orders {
-  table td {
-    width: 50%;
+  table tr {
+    &.total td {
+      font-weight: bold;
+      border-top: 1px solid lighten(black, 80%);
+    }
+    
+    td {
+      width: 50%;
+    }
   }
 }

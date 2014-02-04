@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user, aliases: [:author] do
-    first_name "John"
-    last_name "Doe"
+    sequence(:first_name) { |n| "John #{n}" }
+    sequence(:last_name) { |n| "Doe #{n}" }
     sequence(:email) { |n| "user#{n}@user.com" }
     password 123456
     password_confirmation 123456
