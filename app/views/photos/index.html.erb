@@ -3,30 +3,29 @@
   <div class="small-12 columns">
     <h4>Fotos für Collagen</h4>
     <p>In der Abizeitung wird es einige Seiten mit Collagen unserer Fotos geben. Du kannst dazu natürlich auch beitragen, indem du hier deine Fotos hochlädst.</p>
-    <div class="panel text-center">
-      <%= render "errors", errors: @photo.errors %>
-      <%= form_for @photo do |f| %>
-        <div class="row">
-          <div class="large-6 large-centered columns">
-            <div class="row">
-              <div class="large-9 columns">
-                <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
-              </div>
-              <div class="large-3 columns">
-                <%= f.submit "hochladen", class: [:button, :tiny] %>
-              </div>
+    <div class="photo-form">
+      <%= form_for Photo.new do |f| %>
+        <div class="panel text-center photo-progress">
+          <div class="row">
+            <div class="large-12 columns text-center">
+              <%= render "file_field", form: f %>
             </div>
           </div>
+          <%= render "progress" %>
         </div>
       <% end %>
+      <hr />
+      <h4>Deine Fotos</h4>
+      <div class="panel">
+        <%= render "gallery", photos: @own_photos %>
+      </div>
     </div>
-    <hr />
-    <h4>Deine Fotos</h4>
-    <%= render "gallery", photos: @own_photos %>
     <% if @_user.admin? %>
       <hr />
       <h4>Fotos anderer</h4>
-      <%= render "gallery", photos: @all_photos %>
+      <div class="panel">
+        <%= render "gallery", photos: @all_photos %>
+      </div>
     <% end %>
   </div>
 </div>

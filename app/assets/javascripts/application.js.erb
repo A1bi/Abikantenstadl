@@ -22,6 +22,12 @@
 //= require foundation/foundation.abide
 //= require foundation/foundation.dropdown
 //= require foundation/foundation.topbar
+//= require JavaScript-Templates/js/tmpl.min
+//= require jquery-file-upload/js/vendor/jquery.ui.widget
+//= require jquery-file-upload/js/jquery.iframe-transport
+//= require jquery-file-upload/js/jquery.fileupload
+//= require jquery-file-upload/js/jquery.fileupload-process
+//= require jquery-file-upload/js/jquery.fileupload-image
 
 $(function() {
   var minVer = 9;
@@ -84,4 +90,38 @@ $(function() {
       updatePolls(data.options);
     });
   }
+  
+  $(".new_photo").fileupload({
+    dataType: "json",
+    done: function (e, data) {
+      var file = data.result.file, context = data.context;
+      var slideUpTime = 1000, progressClass = "success";
+      if (!file.error) {
+        context.form.find(".no-photos").slideUp();
+        var pic = $(file.html).appendTo(context.form.find(".gallery").show()).fadeTo(0, 0);
+        pic.find("img").load(function () {
+          pic.fadeTo(600, 1);
+        });
+      } else {
+        context.progress.find(".error").html(file.error);
+        slideUpTime = 10000;
+        progressClass = "alert";
+      }
+      context.progress.find(".progress").addClass(progressClass);
+      setTimeout(function () {
+        context.progress.slideUp();
+      }, slideUpTime);
+    },
+    add: function (e, data) {
+      data.context = { progress: $(tmpl("template-upload", data.files[0])), form: $(this).parent(".photo-form") };
+      data.context.form.find(".photo-progress").append(data.context.progress);
+      data.submit();
+    },
+    progress: function (e, data) {
+      if (data.context) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        data.context.progress.find('.meter').css({ width: progress + "%" });
+      }
+    }
+  });
 });

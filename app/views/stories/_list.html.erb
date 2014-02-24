@@ -15,31 +15,31 @@
   <h6>Fotos zu diesem Bericht</h6>
   <div class="row">
     <div class="small-12 columns">
-      <%= render "photo_gallery", photos: story.photos %>
-      <% if story.photos.empty? %>
-        <div class="row">
-          <div class="small-12 columns">
-            <p>Sollte dein Bericht Fotos enthalten, lade diese bitte hier noch einmal gesondert hoch.</p>
+      <div class="photo-form">
+        <%= render "photos/gallery", photos: story.photos %>
+        <% if story.photos.empty? %>
+          <div class="row">
+            <div class="small-12 columns">
+              <p>Sollte dein Bericht Fotos enthalten, lade diese bitte hier noch einmal gesondert hoch.</p>
+            </div>
           </div>
-        </div>
-      <% end %>
-      <%= form_for Photo.new do |f| %>
-        <%= f.hidden_field :assignable_type, value: story.class.name %>
-        <%= f.hidden_field :assignable_id, value: story.id %>
-        <div class="row">
-          <div class="large-12 columns">
-            <div class="row">
-              <div class="large-4 small-7 columns">
-                <label>Foto hinzufügen</label>
-                <%= f.file_field :image, accept: "image/jpg, image/jpeg, image/png" %>
-              </div>
-              <div class="large-7 small-4 columns">
-                <%= f.submit "hochladen", class: [:button, :tiny] %>
+        <% end %>
+        <%= form_for Photo.new do |f| %>
+          <%= f.hidden_field :assignable_type, value: story.class.name %>
+          <%= f.hidden_field :assignable_id, value: story.id %>
+          <div class="row">
+            <div class="large-12 columns">
+              <div class="row">
+                <div class="small-12 columns">
+                  <label>Foto hinzufügen</label>
+                  <%= render "photos/file_field", form: f %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+        <div class="photo-progress"></div>
+      </div>
     </div>
   </div>
 <% end %>

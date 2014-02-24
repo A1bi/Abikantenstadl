@@ -1,0 +1,6 @@
+[submodule "vendor/assets/javascripts/jQuery-File-Upload"]
+	path = vendor/assets/javascripts/jQuery-File-Upload
+	url = git@github.com:blueimp/jQuery-File-Upload.git
+[submodule "vendor/assets/javascripts/JavaScript-Templates"]
+	path = vendor/assets/javascripts/JavaScript-Templates
+	url = git@github.com:blueimp/JavaScript-Templates.git

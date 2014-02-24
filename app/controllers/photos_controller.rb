@@ -2,22 +2,21 @@ class PhotosController < ApplicationController
   before_filter :find_photos, only: [:index, :create]
   
   def index
-    @photo = Photo.new
   end
   
   def create
     @photo = Photo.new(params.require(:photo).permit(:image, :assignable_type, :assignable_id))
     @photo.user = @_user
-    if @photo.save
-      redirect_to_gallery
-    else
-      if @photo.assignable.present?
-        flash.alert = @photo.errors.values.first.first
-        redirect_to_gallery
-      else
-        render :index
-      end
-    end
+    @photo.save
+    @photo.errors.delete(:image)
+    render json: {
+      file: @photo.save ? {
+        name: @photo.image.name,
+        html: render_to_string(@photo)
+      } : {
+        error: @photo.errors.full_messages.join(', ').html_safe
+      }
+    }
   end
   
   def destroy

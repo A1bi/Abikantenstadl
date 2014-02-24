@@ -31,57 +31,60 @@ de:
       subject: "Es geht los!"
     reset_password:
       subject: "Passwort zurücksetzen"
+  errors: &errors
+    format: "%{message}"
+    messages:
+      blank: 'Das Feld "%{attribute}" darf nicht leer sein.'
+    models:
+      user:
+        attributes:
+          password:
+            too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
+          password_confirmation:
+            confirmation: "Die Passwörter stimmen nicht überein."
+            blank: "Bitte gib das Passwort zur Sicherheit ein zweites Mal ein."
+          email:
+            invalid: "Die e-mail-Adresse ist ungültig."
+      photo:
+        attributes:
+          image_content_type:
+            invalid: "Bitte lade dein Foto im JPG- oder PNG-Format hoch."
+          image:
+            blank: "Bitte wähle ein Foto aus."
+      about_us_entry:
+        attributes:
+          text:
+            blank: "Bitte gib einen Text für deinen Eintrag an."
+          user:
+            same_as_author: "Du kannst keinen Beitrag zu dir selbst verfassen."
+      snippet:
+        attributes:
+          content:
+            blank: "Bitte fülle das Feld aus."
+      poll:
+        attributes:
+          question:
+            blank: "Bitte gib eine Frage an."
+          options:
+            too_short: "Bitte gib mindestens %{count} Antwortmöglichkeiten an."
+      poll_option:
+        attributes:
+          content:
+            blank: "Bitte gib einen Text für die Antwortmöglichkeit an."
+      story:
+        attributes:
+          title:
+            blank: "Bitte gib einen Titel oder eine kurze Zusammenfassung für deinen Kursbericht an."
+          document:
+            blank: "Bitte gib ein Dokument an, das deinen Bericht enthält."
   activerecord:
     errors:
-      messages:
-        blank: "Das Feld \"%{attribute}\" darf nicht leer sein."
-      models:
-        user:
-          attributes:
-            password:
-              too_short: "Das Passwort muss mindestens %{count} Zeichen lang sein."
-            password_confirmation:
-              confirmation: "Die Passwörter stimmen nicht überein."
-              blank: "Bitte gib das Passwort zur Sicherheit ein zweites Mal ein."
-            email:
-              invalid: "Die e-mail-Adresse ist ungültig."
-        photo:
-          attributes:
-            image_content_type:
-              invalid: "Bitte lade dein Foto im JPG- oder PNG-Format hoch."
-            image:
-              blank: "Bitte wähle ein Foto aus."
-        about_us_entry:
-          attributes:
-            text:
-              blank: "Bitte gib einen Text für deinen Eintrag an."
-            user:
-              same_as_author: "Du kannst keinen Beitrag zu dir selbst verfassen."
-        snippet:
-          attributes:
-            content:
-              blank: "Bitte fülle das Feld aus."
-        poll:
-          attributes:
-            question:
-              blank: "Bitte gib eine Frage an."
-            options:
-              too_short: "Bitte gib mindestens %{count} Antwortmöglichkeiten an."
-        poll_option:
-          attributes:
-            content:
-              blank: "Bitte gib einen Text für die Antwortmöglichkeit an."
-        story:
-          attributes:
-            title:
-              blank: "Bitte gib einen Titel oder eine kurze Zusammenfassung für deinen Kursbericht an."
-            document:
-              blank: "Bitte gib ein Dokument an, das deinen Bericht enthält."
-  attributes:
-    title: "Titel"
-    email: "e-mail-Adresse"
-    first_name: "Vorname"
-    last_name: "Nachname"
+      <<: *errors
+    attributes:
+      title: "Titel"
+      email: "e-mail-Adresse"
+      first_name: "Vorname"
+      last_name: "Nachname"
   time:
     formats:
       short: "%d.%m.%y, %H:%M Uhr"
