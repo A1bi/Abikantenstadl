@@ -62,7 +62,7 @@ GEM
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
-    jquery-rails (3.0.4)
+    jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
@@ -167,7 +167,7 @@ DEPENDENCIES
   factory_girl_rails
   ffaker
   foundation-icons-sass-rails
-  jquery-rails
+  jquery-rails (~> 3.1.0)
   mysql2
   paperclip
   rails (~> 4.0.2)

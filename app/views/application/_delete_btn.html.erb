@@ -1,1 +1,1 @@
-<%= link_to "", path, method: :delete, class: "fi-trash", title: "löschen", data: { confirm: "Möchtest du #{confirm} wirklich löschen?" } %>
+<%= link_to "", path, method: :delete, class: "fi-trash delete-btn", title: "löschen", data: { confirm: "Möchtest du #{confirm} wirklich löschen?", remote: (remote ||= false) } %>

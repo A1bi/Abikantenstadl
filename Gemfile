@@ -20,7 +20,7 @@ gem 'zurb-foundation'
 gem 'foundation-icons-sass-rails'
 
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.0'
 
 gem 'bcrypt-ruby'
 
