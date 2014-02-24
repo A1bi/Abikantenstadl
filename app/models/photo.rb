@@ -21,6 +21,8 @@ class Photo < BaseModel
   
   def validate_number
     max = 3
-    errors[:base] << "Max #{max} photos allowed" if assignable.class == User && assignable.profile_photos.count >= max
+    if assignable.class == User && assignable.profile_photos.count >= max
+      errors[:base] << I18n.t("errors.models.photo.too_many", max: max)
+    end
   end
 end

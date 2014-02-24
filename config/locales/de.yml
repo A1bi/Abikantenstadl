@@ -46,6 +46,7 @@ de:
           email:
             invalid: "Die e-mail-Adresse ist ungültig."
       photo:
+        too_many: "Es sind maximal %{max} Fotos erlaubt."
         attributes:
           image_content_type:
             invalid: "Bitte lade dein Foto im JPG- oder PNG-Format hoch."
