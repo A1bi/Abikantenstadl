@@ -3,7 +3,7 @@
   <div class="small-12 columns">
     <h4>Steckbrief<% if @user != @_user %> von <%= @user.full_name %><% end %> bearbeiten</h4>
     <% if @user == @_user %><p>Hier hast du die Möglichkeit, deinen Steckbrief zu bearbeiten. Du kannst diesen <b>bis 31. Januar 2014</b> so oft du magst verändern.</p><% end %>
-    <% if @locked %><h5 class="text-center"><i class="fi-lock"></i> Rien ne va plus. <i class="fi-lock"></i></h6><% end %>
+    <%= render "locked" %>
   </div>
 </div>
 <div class="row">
@@ -12,8 +12,8 @@
       <h4>Kinderfotos</h4>
       <p>Du kannst <b>bis zu drei Kinderfotos</b> hochladen, die alle neben deinem Steckbrief in der Abizeitung erscheinen werden.</p>
       <div class="photo-form">
-        <%= render "photos/gallery", photos: @user.profile_photos, no_delete: @locked %>
-        <% if !@locked && @user.profile_photos.count < 3 %>
+        <%= render "photos/gallery", photos: @user.profile_photos, no_delete: locked? %>
+        <% if !locked? && @user.profile_photos.count < 3 %>
           <%= render "errors", errors: @photo.errors %>
           <%= form_for @photo do |f| %>
             <%= f.hidden_field :assignable_type, value: @user.class.name %>
@@ -35,19 +35,19 @@
   <div class="small-12 columns">
     <div class="panel">
       <h4>Steckbrief</h4>
-      <%= render "text_rules" if !@locked %>
+      <%= render "text_rules" if !locked? %>
       <%= form_tag profile_path(params[:id]), method: :patch do %>
         <% @fields.each do |field| %>
           <div class="row">
             <div class="large-12 columns">
               <label><%= field.name %></label>
-              <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description, class: (field.large ? :large : nil), disabled: @locked %>
+              <%= text_area_tag "fields[#{field.id}]", field.value_for_user(@user), placeholder: field.description, class: (field.large ? :large : nil), disabled: locked? %>
             </div>
           </div>
         <% end %>
         <div class="row">
           <div class="large-12 columns text-center">
-            <% if @user != @_user %><%= link_to "abbrechen", profiles_path, class: [:button, :small] %> <% end %><%= submit_tag "speichern", class: [:button, :small] if !@locked %>
+            <% if @user != @_user %><%= link_to "abbrechen", profiles_path, class: [:button, :small] %> <% end %><%= submit_tag "speichern", class: [:button, :small] if !locked? %>
           </div>
         </div>
       <% end %>

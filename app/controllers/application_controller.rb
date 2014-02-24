@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  @@lock_time = nil
+  
   protect_from_forgery
   
   before_filter :authenticate_user
@@ -57,4 +59,9 @@ class ApplicationController < ActionController::Base
   def reset_goto
     session.delete(:goto_after_login)
   end
+  
+  def locked?
+    (defined? @@lock_time).present? && !@_user.admin? && Time.zone.now >= @@lock_time
+  end
+  helper_method :locked?
 end

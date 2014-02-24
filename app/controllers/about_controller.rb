@@ -1,4 +1,6 @@
 class AboutController < ApplicationController
+  @@lock_time = Time.local(2014, 2, 24, 0)
+  
   before_filter :find_user, only: [:show_user, :create]
   before_filter :find_entry, only: [:destroy, :edit, :update]
   before_filter :find_entries, only: [:show_user, :create]
@@ -15,7 +17,7 @@ class AboutController < ApplicationController
   def create
     @entry = @user.about_us_entries.build(entry_params)
     @entry.author = @_user
-    if @entry.save
+    if !locked? && @entry.save
       redirect_to about_user_path(@user)
     else
       render :show_user
@@ -23,7 +25,7 @@ class AboutController < ApplicationController
   end
   
   def update
-    if @entry.update_attributes(entry_params)
+    if !locked? && @entry.update_attributes(entry_params)
       redirect_to about_user_path(@entry.user), notice: t("application.saved_changes")
     else
       render :edit
@@ -31,8 +33,11 @@ class AboutController < ApplicationController
   end
   
   def destroy
-    @entry.destroy
-    redirect_to about_user_path(@entry.user), notice: t("application.entry_destroyed")
+    if !locked?
+      @entry.destroy
+      flash.notice = t("application.entry_destroyed")
+    end
+    redirect_to about_user_path(@entry.user)
   end
   
   private

@@ -13,7 +13,6 @@ class ProfilesController < ApplicationController
   
   def edit
     redirect_to edit_profile_path if params[:id] && !@_user.admin?
-    @locked = locked?
     @photo = Photo.new
   end
   
@@ -40,9 +39,5 @@ class ProfilesController < ApplicationController
   
   def find_user
     @user = (params[:id] && @_user.admin?) ? User.find(params[:id]) : @_user
-  end
-  
-  def locked?
-    !@_user.admin? && Time.zone.now >= @@lock_time
   end
 end

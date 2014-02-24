@@ -9,6 +9,7 @@
       <p>Hier kannst du alles hinterlassen, was dir zu <%= @user.full_name %> einfällt. Natürlich sollte dein Eintrag humorvoll aber nicht verletzend sein.
       <br />Halte dich möglichst kurz und teile verschiedene Dinge in mehrere Einträge auf.
       <br />Dein Name wird weder hier auf der Internetseite noch später in der fertigen Abizeitung als Verfasser erscheinen.</p>
+      <%= render "locked" %>
       <%= form_for @entry, method: :post, url: about_user_path(@user) do |f| %>
         <div class="row">
           <div class="small-12 columns">
@@ -26,7 +27,7 @@
             </div>
           </div>
         </div>
-      <% end %>
+      <% end if !locked? %>
       <hr />
     <% end %>
     <div class="row">
@@ -38,7 +39,7 @@
                 <%= entry.text %>
               </div>
               <div class="small-1 columns">
-                <% can_edit = @_user.admin? || entry.author == @_user %>
+                <% can_edit = !locked? && (@_user.admin? || entry.author == @_user) %>
                 <%= render "edit_btn", path: about_entry_edit_path(@user, entry) if can_edit %> <%= render "delete_btn", path: about_entry_path(@user, entry), confirm: "diesen Eintrag" if can_edit || @user == @_user %>
               </div>
             </div>
