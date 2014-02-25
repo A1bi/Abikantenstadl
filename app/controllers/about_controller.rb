@@ -33,11 +33,8 @@ class AboutController < ApplicationController
   end
   
   def destroy
-    if !locked?
-      @entry.destroy
-      flash.notice = t("application.entry_destroyed")
-    end
-    redirect_to about_user_path(@entry.user)
+    @entry.destroy if !locked?
+    render nothing: true
   end
   
   private

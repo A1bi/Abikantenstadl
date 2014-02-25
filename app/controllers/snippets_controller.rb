@@ -32,7 +32,7 @@ class SnippetsController < ApplicationController
   
   def destroy
     @snippet.destroy
-    redirect_to_section_index notice: t("application.entry_destroyed")
+    render nothing: true
   end
   
   private

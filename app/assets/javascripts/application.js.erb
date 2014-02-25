@@ -128,7 +128,7 @@ $(function() {
   $(document).on("ajax:beforeSend", ".delete-btn", function () {
     $(this).hide();
   }).on("ajax:success", ".delete-element", function (r, t, z) {
-    $(this).fadeOut("fast", function () {
+    $(this).slideUp("fast", function () {
       $(this).remove();
     });
   });

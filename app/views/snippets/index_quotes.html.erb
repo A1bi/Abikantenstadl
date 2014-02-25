@@ -24,14 +24,14 @@
       <% end %>
     </div>
     <hr />
-    <%= div_for @snippets, class: :panel do |snippet| %>
+    <%= div_for @snippets, class: %w(panel delete-element) do |snippet| %>
       <div class="row">
         <div class="small-11 columns">
           <%= render "author", author: snippet.user if @_user.admin? %>
           <%= simple_format snippet.content %>
         </div>
         <div class="small-1 columns">
-          <%= render "action_btns", path: edit_quote_path(snippet), del_path: quote_path(snippet), confirm: "dieses Zitat" if @_user.admin? || snippet.user == @_user %>
+          <%= render "action_btns", path: edit_quote_path(snippet), del_path: quote_path(snippet), confirm: "dieses Zitat", remote: true if @_user.admin? || snippet.user == @_user %>
         </div>
       </div>
     <% end %>

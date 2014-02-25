@@ -25,7 +25,7 @@
           <%= render "add_btn" %>
         </div>
       </div>
-      <%= div_for @snippets, class: "row entry" do |snippet| %>
+      <%= div_for @snippets, class: %w(row entry delete-element) do |snippet| %>
         <div class="small-1 columns text-right">
           ...
         </div>
@@ -33,7 +33,7 @@
           <%= snippet.content %>
         </div>
         <div class="small-1 columns text-right">
-          <%= render "action_btns", path: edit_rumor_path(snippet), del_path: rumor_path(snippet), confirm: "dieses Gerücht" if @_user.admin? || snippet.user == @_user %>
+          <%= render "action_btns", path: edit_rumor_path(snippet), del_path: rumor_path(snippet), confirm: "dieses Gerücht", remote: true if @_user.admin? || snippet.user == @_user %>
         </div>
       <% end %>
     </div>
