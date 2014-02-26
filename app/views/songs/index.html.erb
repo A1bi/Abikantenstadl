@@ -1,0 +1,27 @@
+<% title "Einlaufsong" %>
+<div class="row songs">
+  <div class="small-12 columns">
+    <h4>Einlaufsong</h4>
+    <p>Hier kannst du deinen persönlichen Song, zu dem du bei der offiziellen Verabschiedung auf die Bühne gehst, hochladen. Bitte achte darauf, dass er zwischen 30 und 45 Sekunden lang ist. Schneide ihn bitte vorher entsprechend zurecht. Erlaubte Formate sind: mp3, aac, wav. Wenn du bereits einen Song hochgeladen hast, kannst du ihn durch erneutes Hochladen ersetzen.</p>
+    <div>
+      <div class="panel">
+        <%= form_for Song.new do |f| %>
+          <div class="row">
+            <div class="large-3 columns">
+              Song hochladen / ersetzen:
+            </div>
+            <div class="large-3 columns">
+              <%= f.file_field :file, accept: Song.accepted_types %>
+            </div>
+            <div class="large-6 columns">
+              <div class="progress radius hide">
+                <div class="meter"></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <%= render "song" if @song.persisted? %>
+      </div>
+    </div>
+  </div>
+</div>

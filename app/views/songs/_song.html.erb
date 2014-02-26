@@ -1,0 +1,17 @@
+<div class="song-preview">
+  <hr />
+  <div class="row">
+    <div class="large-12 columns">
+      <h5>Dein Song</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-2 large-1 columns">
+      <button class="tiny round" title="Vorschau"><i class="fi-play"></i><i class="fi-pause hide"></i></button>
+    </div>
+    <div class="small-10 large-11 columns">
+      <%= @song.file.original_filename %>
+    </div>
+  </div>
+  <%= audio_tag @song.file.url %>
+</div>

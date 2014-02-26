@@ -132,4 +132,53 @@ $(function() {
       $(this).remove();
     });
   });
+  
+  $(".new_song").fileupload({
+    dataType: "json",
+    done: function (e, data) {
+      var file = data.result.file;
+      var slideUpTime = 1000, progressClass = "success";
+      if (!file.error) {
+        var preview = $(".song-preview");
+        var newSong = $(file.html).hide();
+        if (preview.length) {
+          preview.slideUp(function () {
+            $(this).replaceWith(newSong);
+          });
+        } else {
+          $(this).after(newSong);
+        }
+        newSong.slideDown();
+      } else {
+        alert("Es gab leider einen Fehler.");
+        slideUpTime = 10000;
+        progressClass = "alert";
+      }
+      $("#song_file").prop("disabled", false);
+      $(".progress").addClass(progressClass).delay(slideUpTime).fadeOut(function () {
+        $(this).removeClass(progressClass);
+      });
+    },
+    add: function (e, data) {
+      $("#song_file").prop("disabled", true);
+      $(".progress").fadeIn().find(".meter").css({ width: 0 });
+      data.submit();
+    },
+    progress: function (e, data) {
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+      $(".progress .meter").css({ width: progress + "%" });
+    }
+  });
+  
+  $(document).on("click", ".song-preview button", function (e) {
+    var audio = $("audio")[0];
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+    $("i", this).toggle();
+  }).on("ended", ".song-preview audio", function () {
+    $("button i").toggle();
+  });
 });
