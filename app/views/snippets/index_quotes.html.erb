@@ -2,28 +2,31 @@
 <div class="row">
   <div class="small-12 columns">
     <h4>Zitate</h4>
+    <%= render "locked" %>
   </div>
 </div>
 <div class="row">
   <div class="small-12 columns">
-    <div class="panel">
-      <%= render "text_rules" %>
-      <%= render "errors", errors: @snippet.errors %>
-      <%= form_for @snippet, url: quotes_path do |f| %>
-        <div class="row">
-          <div class="small-12 columns">
-            <label>Zitat hinzufügen</label>
-            <%= f.text_area :content, class: :large %>
+    <% if !locked? %>
+      <div class="panel">
+        <%= render "text_rules" %>
+        <%= render "errors", errors: @snippet.errors %>
+        <%= form_for @snippet, url: quotes_path do |f| %>
+          <div class="row">
+            <div class="small-12 columns">
+              <label>Zitat hinzufügen</label>
+              <%= f.text_area :content, class: :large %>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="small-12 columns text-center">
-            <%= f.submit "hinzufügen", class: [:button, :small] %>
+          <div class="row">
+            <div class="small-12 columns text-center">
+              <%= f.submit "hinzufügen", class: [:button, :small] %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-    <hr />
+        <% end %>
+      </div>
+      <hr />
+    <% end %>
     <%= div_for @snippets, class: %w(panel delete-element) do |snippet| %>
       <div class="row">
         <div class="small-11 columns">
@@ -31,7 +34,7 @@
           <%= simple_format snippet.content %>
         </div>
         <div class="small-1 columns">
-          <%= render "action_btns", path: edit_quote_path(snippet), del_path: quote_path(snippet), confirm: "dieses Zitat", remote: true if @_user.admin? || snippet.user == @_user %>
+          <%= render "action_btns", path: edit_quote_path(snippet), del_path: quote_path(snippet), confirm: "dieses Zitat", remote: true if can_edit? snippet %>
         </div>
       </div>
     <% end %>

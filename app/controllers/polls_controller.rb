@@ -1,4 +1,6 @@
 class PollsController < ApplicationController
+  @@lock_time = Time.local(2014, 3, 1, 0)
+  
   restrict_access_to_admins only: [:new, :create, :edit, :update, :destroy]
   before_filter :find_poll, only: [:vote, :edit, :update, :destroy]
   
@@ -46,37 +48,39 @@ class PollsController < ApplicationController
   def vote
     response = {}
     
-    @poll.options.update_all(updated_at: Time.now)
-    @poll.options.map { |option| option.votes.where(user_id: @_user).delete_all }
+    if !locked?
+      @poll.options.update_all(updated_at: Time.now)
+      @poll.options.map { |option| option.votes.where(user_id: @_user).delete_all }
     
-    (params[:options] ||= []).map! { |id| id.to_i }
-    if params[:options_new].present?
-      option = @poll.options.where("lower(content) = ?", params[:options_new].downcase).first || @poll.options.build
-      if option.new_record?
-        option.content = params[:options_new]
-        option.user = @_user
-        if option.save
-          response[:new_option] = render_to_string("_option", layout: false, locals: { option: option, poll: @poll })
-          @poll.touch
+      (params[:options] ||= []).map! { |id| id.to_i }
+      if params[:options_new].present?
+        option = @poll.options.where("lower(content) = ?", params[:options_new].downcase).first || @poll.options.build
+        if option.new_record?
+          option.content = params[:options_new]
+          option.user = @_user
+          if option.save
+            response[:new_option] = render_to_string("_option", layout: false, locals: { option: option, poll: @poll })
+            @poll.touch
+          end
+        end
+        if option.persisted?
+          if !params[:options].include?(option.id)
+            vote = option.votes.build
+            vote.user = @_user
+            vote.save
+          end
+          params[:options].clear if !@poll.multiple_choice
         end
       end
-      if option.persisted?
-        if !params[:options].include?(option.id)
-          vote = option.votes.build
-          vote.user = @_user
-          vote.save
-        end
-        params[:options].clear if !@poll.multiple_choice
-      end
-    end
     
-    params[:options].each do |option|
-      next if option.zero?
-      option = @poll.options.find(option)
-      vote = option.votes.build
-      vote.user = @_user
-      vote.save
-      break if !@poll.multiple_choice
+      params[:options].each do |option|
+        next if option.zero?
+        option = @poll.options.find(option)
+        vote = option.votes.build
+        vote.user = @_user
+        vote.save
+        break if !@poll.multiple_choice
+      end
     end
     
     response[:options] = find_options(@poll)

@@ -3,18 +3,21 @@
   <div class="small-12 columns">
     <h4>Fotos für Collagen</h4>
     <p>In der Abizeitung wird es einige Seiten mit Collagen unserer Fotos geben. Du kannst dazu natürlich auch beitragen, indem du hier deine Fotos hochlädst.</p>
+    <%= render "locked" %>
     <div class="photo-form">
-      <%= form_for Photo.new do |f| %>
-        <div class="panel text-center photo-progress">
-          <div class="row">
-            <div class="large-12 columns text-center">
-              <%= render "file_field", form: f %>
+      <% if !locked? %>
+        <%= form_for Photo.new do |f| %>
+          <div class="panel text-center photo-progress">
+            <div class="row">
+              <div class="large-12 columns text-center">
+                <%= render "file_field", form: f %>
+              </div>
             </div>
+            <%= render "progress" %>
           </div>
-          <%= render "progress" %>
-        </div>
+        <% end %>
+        <hr />
       <% end %>
-      <hr />
       <h4>Deine Fotos</h4>
       <div class="panel">
         <%= render "gallery", photos: @own_photos %>

@@ -1,4 +1,6 @@
 class StoriesController < ApplicationController
+  @@lock_time = Time.local(2014, 3, 1, 0)
+  
   before_filter :find_stories, only: [:index, :create]
   before_filter :find_story, only: [:edit, :update, :destroy]
   
@@ -9,7 +11,7 @@ class StoriesController < ApplicationController
   def create
     @story = Story.new(story_params)
     @story.user = @_user
-    if @story.save
+    if @story.save && !locked?
       redirect_to stories_path
     else
       render :index
@@ -17,7 +19,7 @@ class StoriesController < ApplicationController
   end
   
   def update
-    if @story.update_attributes(story_params)
+    if @story.update_attributes(story_params) && !locked?
       redirect_to({ action: :index }, notice: t("application.saved_changes"))
     else
       render :edit
@@ -25,7 +27,7 @@ class StoriesController < ApplicationController
   end
   
   def destroy
-    return redirect_to action: :index if !@_user.admin? && @story.user != @_user
+    return redirect_to action: :index if !@_user.admin? && @story.user != @_user && !locked?
     flash.notice = t("stories.destroyed") if @story.destroy
     redirect_to stories_path
   end

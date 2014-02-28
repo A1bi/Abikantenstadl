@@ -3,29 +3,32 @@
   <div class="small-12 columns">
     <h4>Kurs- und Kursfahrtberichte</h4>
     <p>Hier kannst du deine Kurs- und Kursfahrtberichte als Textdokument (das Format ist egal) hochladen. Bitte achte aber darauf, dass, falls dein Bericht Fotos enthält, du diese danach noch einmal separat hochlädst. Ein entsprechendes Upload-Feld erscheint unter jedem angelegten Kursbericht.</p>
-    <div class="panel">
-      <%= render "errors", errors: @story.errors %>
-      <%= form_for @story do |f| %>
-        <div class="row">
-          <div class="large-12 columns">
-            <label>Titel oder kurze Zusammenfassung</label>
-            <%= f.text_field :title %>
+    <%= render "locked" %>
+    <% if !locked? %>
+      <div class="panel">
+        <%= render "errors", errors: @story.errors %>
+        <%= form_for @story do |f| %>
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Titel oder kurze Zusammenfassung</label>
+              <%= f.text_field :title %>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="large-5 columns">
-            <label>Textdokument</label>
-            <%= f.file_field :document %>
+          <div class="row">
+            <div class="large-5 columns">
+              <label>Textdokument</label>
+              <%= f.file_field :document %>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="large-12 columns text-center">
-            <%= f.submit "hochladen", class: [:button, :small] %>
+          <div class="row">
+            <div class="large-12 columns text-center">
+              <%= f.submit "hochladen", class: [:button, :small] %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-    <hr />
+        <% end %>
+      </div>
+      <hr />
+    <% end %>
     <h4>Deine Berichte</h4>
     <%= render "list", stories: @own_stories %>
     <% if @_user.admin? %>

@@ -3,14 +3,17 @@
   <div class="small-12 columns">
     <h4>Short Stories</h4>
     <p>Hier kannst du Short Stories verfassen. Bitte achte dabei auf eine Länge von maximal 600 Zeichen.</p>
+    <%= render "locked" %>
   </div>
 </div>
 <div class="row snippets short_stories">
   <div class="small-12 columns">
-    <div class="panel">
-      <%= render "form_short_stories" %>
-    </div>
-    <hr />
+    <% if !locked? %>
+      <div class="panel">
+        <%= render "form_short_stories" %>
+      </div>
+      <hr />
+    <% end %>
     <h4>Deine Short Stories</h4>
     <%= render "list_short_stories", snippets: @user_snippets, empty: "Du hast noch keine Short Stories geschrieben." %>
     <% if @_user.admin? %>

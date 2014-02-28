@@ -2,11 +2,12 @@
 <div class="row">
   <div class="small-12 columns">
     <h4>Gerüchte</h4>
+    <%= render "locked" %>
     <p>Wir halten es für ein Gerücht, dass...</p>
   </div>
 </div>
-<%= form_for @snippet, url: rumors_path do |f| %>
-  <div class="row snippets">
+<div class="row snippets">
+  <%= form_for @snippet, url: rumors_path do |f| %>
     <div class="row">
       <div class="small-12 columns">
         <%= render "text_rules" %>
@@ -25,17 +26,19 @@
           <%= render "add_btn" %>
         </div>
       </div>
-      <%= div_for @snippets, class: %w(row entry delete-element) do |snippet| %>
-        <div class="small-1 columns text-right">
-          ...
-        </div>
-        <div class="small-10 columns">
-          <%= snippet.content %>
-        </div>
-        <div class="small-1 columns text-right">
-          <%= render "action_btns", path: edit_rumor_path(snippet), del_path: rumor_path(snippet), confirm: "dieses Gerücht", remote: true if @_user.admin? || snippet.user == @_user %>
-        </div>
-      <% end %>
     </div>
+  <% end if !locked? %>
+  <div class="small-12 columns">
+    <%= div_for @snippets, class: %w(row entry delete-element) do |snippet| %>
+      <div class="small-1 columns text-right">
+        ...
+      </div>
+      <div class="small-10 columns">
+        <%= snippet.content %>
+      </div>
+      <div class="small-1 columns text-right">
+        <%= render "action_btns", path: edit_rumor_path(snippet), del_path: rumor_path(snippet), confirm: "dieses Gerücht", remote: true if can_edit? snippet %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

@@ -1,4 +1,6 @@
 class SnippetsController < ApplicationController
+  @@lock_time = Time.local(2014, 3, 1, 0)
+  
   before_filter :find_snippets, only: [:index, :create]
   before_filter :find_snippet, only: [:edit, :update, :destroy]
   
@@ -11,7 +13,7 @@ class SnippetsController < ApplicationController
     @snippet = Snippet.new(snippet_params)
     @snippet.user = @_user
     @snippet.section = params[:section]
-    if @snippet.save
+    if @snippet.save && !locked?
       redirect_to_section_index
     else
       render_index
@@ -23,7 +25,7 @@ class SnippetsController < ApplicationController
   end
   
   def update
-    if @snippet.update_attributes(snippet_params)
+    if @snippet.update_attributes(snippet_params) && !locked?
       redirect_to_section_index notice: t("application.saved_changes")
     else
       render_edit
@@ -31,7 +33,7 @@ class SnippetsController < ApplicationController
   end
   
   def destroy
-    @snippet.destroy
+    @snippet.destroy if !locked?
     render nothing: true
   end
   

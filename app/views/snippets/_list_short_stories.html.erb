@@ -5,7 +5,7 @@
       <%= simple_format snippet.content %>
     </div>
     <div class="small-1 columns">
-      <%= render "action_btns", path: edit_short_story_path(snippet), del_path: short_story_path(snippet), confirm: "diese Short Story", remote: true %>
+      <%= render "action_btns", path: edit_short_story_path(snippet), del_path: short_story_path(snippet), confirm: "diese Short Story", remote: true if can_edit? snippet %>
     </div>
   </div>
 <% end %>

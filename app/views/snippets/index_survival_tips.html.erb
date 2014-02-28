@@ -2,28 +2,31 @@
 <div class="row">
   <div class="small-12 columns">
     <h4>Survivaltipps</h4>
+    <%= render "locked" %>
   </div>
 </div>
 <div class="row snippets">
   <div class="small-12 columns">
-    <%= render "text_rules" %>
-    <%= render "errors", errors: @snippet.errors %>
-    <%= form_for @snippet, url: survival_tips_path do |f| %>
-      <div class="row">
-        <div class="small-10 columns">
-          <%= f.text_field :content %>
+    <% if !locked? %>
+      <%= render "text_rules" %>
+      <%= render "errors", errors: @snippet.errors %>
+      <%= form_for @snippet, url: survival_tips_path do |f| %>
+        <div class="row">
+          <div class="small-10 columns">
+            <%= f.text_field :content %>
+          </div>
+          <div class="small-2 columns">
+            <%= render "add_btn" %>
+          </div>
         </div>
-        <div class="small-2 columns">
-          <%= render "add_btn" %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
     <%= div_for @snippets, class: %w(row entry delete-element) do |snippet| %>
       <div class="small-11 columns">
         <%= snippet.content %>
       </div>
       <div class="small-1 columns text-right">
-        <%= render "action_btns", path: edit_survival_tip_path(snippet), del_path: survival_tip_path(snippet), confirm: "diesen Tipp", remote: true if @_user.admin? || snippet.user == @_user %>
+        <%= render "action_btns", path: edit_survival_tip_path(snippet), del_path: survival_tip_path(snippet), confirm: "diesen Tipp", remote: true if can_edit? snippet %>
       </div>
     <% end %>
   </div>

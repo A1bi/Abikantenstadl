@@ -1,7 +1,7 @@
-<% cache [:polls, :index, :options, poll, option] do %>
+<% cache [:polls, :index, :options, poll, option, locked?] do %>
   <%= div_for option, class: :row do |option| %>
     <div class="small-1 columns text-center">
-      <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, false, id: "option_#{option.id}") %>
+      <%= self.send((poll.multiple_choice ? "check_box" : "radio_button")+"_tag", "options[]", option.id, false, id: "option_#{option.id}", disabled: locked?) %>
     </div>
     <div class="small-11 columns">
       <div class="row">

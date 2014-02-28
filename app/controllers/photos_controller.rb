@@ -1,4 +1,6 @@
 class PhotosController < ApplicationController
+  @@lock_time = Time.local(2014, 3, 1, 0)
+  
   before_filter :find_photos, only: [:index, :create]
   
   def index
