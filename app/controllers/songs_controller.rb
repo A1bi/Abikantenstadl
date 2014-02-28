@@ -4,6 +4,7 @@ class SongsController < ApplicationController
   def update
     response = { file: {} }
     if !@song.update(params.require(:song).permit(:file))
+      @song.errors.delete(:file)
       response[:file][:error] = @song.errors.full_messages.join(', ').html_safe
     else
       response[:file][:html] = render_to_string(@song)

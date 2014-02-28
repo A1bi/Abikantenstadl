@@ -26,8 +26,6 @@
 //= require jQuery-File-Upload/js/vendor/jquery.ui.widget
 //= require jQuery-File-Upload/js/jquery.iframe-transport
 //= require jQuery-File-Upload/js/jquery.fileupload
-//= require jQuery-File-Upload/js/jquery.fileupload-process
-//= require jQuery-File-Upload/js/jquery.fileupload-image
 
 $(function() {
   var minVer = 9;
@@ -137,7 +135,7 @@ $(function() {
     dataType: "json",
     done: function (e, data) {
       var file = data.result.file;
-      var slideUpTime = 1000, progressClass = "success";
+      var progressClass = "success";
       if (!file.error) {
         var preview = $(".song-preview");
         var newSong = $(file.html).hide();
@@ -150,16 +148,16 @@ $(function() {
         }
         newSong.slideDown();
       } else {
-        alert("Es gab leider einen Fehler.");
-        slideUpTime = 10000;
+        $(".error").html(file.error);
         progressClass = "alert";
       }
       $("#song_file").prop("disabled", false);
-      $(".progress").addClass(progressClass).delay(slideUpTime).fadeOut(function () {
+      $(".progress").addClass(progressClass).delay(1000).fadeOut(function () {
         $(this).removeClass(progressClass);
       });
     },
     add: function (e, data) {
+      $(".error").empty();
       $("#song_file").prop("disabled", true);
       $(".progress").fadeIn().find(".meter").css({ width: 0 });
       data.submit();
@@ -170,7 +168,7 @@ $(function() {
     }
   });
   
-  $(document).on("click", ".song-preview button", function (e) {
+  $(".songs").on("click", ".song-preview button", function () {
     var audio = $("audio")[0];
     if (audio.paused) {
       audio.play();

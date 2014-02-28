@@ -135,6 +135,12 @@ textarea {
   }
 }
 
+p.error {
+  color: red;
+  font-style: italic;
+  font-size: 12px;
+}
+
 .index {
   .panel {
     height: 120px;
@@ -144,12 +150,6 @@ textarea {
 .photos {
   ul li {
     position: relative;
-  }
-  
-  p.error {
-    color: red;
-    font-style: italic;
-    font-size: 12px;
   }
   
   .action-btns {

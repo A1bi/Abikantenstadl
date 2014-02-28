@@ -67,9 +67,8 @@ Abikantenstadl::Application.routes.draw do
       post "/", :action => :update
     end
     
-    resource :songs, :only => [:index, :update] do
+    resource :songs, :only => [:update] do
       get "/", :action => :index
-      post "/", :action => :update
     end
   end
 end
