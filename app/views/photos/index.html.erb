@@ -3,6 +3,9 @@
   <div class="small-12 columns">
     <h4>Fotos für Collagen</h4>
     <p>In der Abizeitung wird es einige Seiten mit Collagen unserer Fotos geben. Du kannst dazu natürlich auch beitragen, indem du hier deine Fotos hochlädst.</p>
+    <% if @_user.admin? %>
+      <p class="text-right"><%= link_to photos_path(format: :zip) do %><i class="fi-archive"></i> Alle Fotos herunterladen (~ <%= number_to_human_size @images_size %>)<% end %></p>
+    <% end %>
     <%= render "locked" %>
     <div class="photo-form">
       <% if !locked? %>

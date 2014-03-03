@@ -4,6 +4,35 @@ class PhotosController < ApplicationController
   before_filter :find_photos, only: [:index, :create]
   
   def index
+    respond_to do |format|
+      format.html do
+        @images_size = Photo.not_assigned.sum(:image_file_size)
+      end
+      format.zip do
+        return redirect_to({ action: :index }, alert: t("application.access_denied")) if !@_user.admin?
+        
+        path = File.join(Rails.public_path, "system", "archives")
+        FileUtils.mkdir_p(path)
+        path = File.join(path, "photos.zip")
+    
+        photos = Photo.not_assigned
+        Rails.cache.fetch([photos, :archive]) do
+          FileUtils.rm(path) if File.exists?(path)
+    
+          Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
+            i = 0
+            photos.each do |photo|
+              zip.add(i.to_s + photo.image.original_filename, photo.image.path)
+              i = i.next
+            end
+          end
+    
+          FileUtils.chmod("a+r", path)
+        end
+    
+        send_file path
+      end
+    end
   end
   
   def create

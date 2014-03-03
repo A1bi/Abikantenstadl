@@ -26,6 +26,8 @@ gem 'bcrypt-ruby'
 
 gem 'paperclip'
 
+gem 'rubyzip'
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
