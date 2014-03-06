@@ -64,7 +64,7 @@ $(function() {
       $.each(options, function (oId, optionInfo) {
         var option = poll.find("#poll_option_"+oId);
         option.find("input").prop("checked", optionInfo.v ? "checked" : "");
-        option.find(".progress .meter").css({ width: optionInfo.p + "%" });
+        option.find(".progress .meter").css({ width: optionInfo.p + "%" }).siblings(".info").text(optionInfo.p + " %");
       });
     });
   }

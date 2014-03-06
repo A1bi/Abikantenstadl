@@ -1,3 +1,5 @@
+require 'zip'
+
 class PhotosController < ApplicationController
   @@lock_time = Time.local(2014, 3, 1, 0)
   
@@ -16,10 +18,10 @@ class PhotosController < ApplicationController
         path = File.join(path, "photos.zip")
     
         photos = Photo.not_assigned
-        Rails.cache.fetch([photos, :archive]) do
+        if !File.exists?(path) || File.mtime(path) < photos.maximum(:updated_at)
           FileUtils.rm(path) if File.exists?(path)
     
-          Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
+          Zip::File.open(path, Zip::File::CREATE) do |zip|
             i = 0
             photos.each do |photo|
               zip.add(i.to_s + photo.image.original_filename, photo.image.path)
@@ -30,6 +32,7 @@ class PhotosController < ApplicationController
           FileUtils.chmod("a+r", path)
         end
     
+        headers['Content-Length'] = File.size(path).to_s
         send_file path
       end
     end

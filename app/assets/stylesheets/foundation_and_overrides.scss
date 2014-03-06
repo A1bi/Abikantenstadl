@@ -1404,9 +1404,20 @@ $topbar-breakpoint: 0px; // Change to 9999px for always mobile layout
   }
 }
 
-.progress .meter {
-  width: 0%;
-  transition: width .5s;
+.progress {
+  .meter {
+    width: 0%;
+    transition: width .5s;
+  }
+  
+  .info {
+    @extend .text-center;
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    text-shadow: 0px 0px 3px black;
+    color: white;
+  }
 }
 
 table tr.highlighted td {

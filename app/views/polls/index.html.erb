@@ -6,7 +6,7 @@
     <%= render "locked" %>
     <% if @_user.admin? %><div class="text-right"><%= link_to new_poll_path, class: [:button, :small] do %><%= glyph "plus" %> Umfrage erstellen<% end %></div><% end %>
     <% @polls.each do |poll| %>
-      <% cache [:polls, :index, :poll, poll, @_user.admin?, locked?] do %>
+      <% cache [:polls, :index, :poll, poll, poll.options, @_user.admin?, locked?] do %>
         <%= form_tag vote_poll_path(poll), remote: true do %>
           <div class="panel callout" id="poll_<%= poll.id %>">
             <div class="row">
@@ -19,7 +19,7 @@
               </div>
             </div>
             <hr />
-            <% poll.options.each do |option| %>
+            <% poll.options.joins("LEFT JOIN poll_votes AS v ON v.option_id = poll_options.id").group(:id).order("COUNT(v.id) DESC").each do |option| %>
               <%= render "option", poll: poll, option: option %>
             <% end %>
             <% if poll.options.empty? %>
