@@ -1,9 +1,13 @@
 class SongsController < ApplicationController
   before_action :find_song
   
+  def index
+    @songs = Song.where.not(artist: "", title: "", user_id: @_user).order(:artist, :title)
+  end
+  
   def update
     response = { file: {} }
-    if !@song.update(params.require(:song).permit(:file))
+    if !@song.update(params.require(:song).permit(:file, :artist, :title))
       @song.errors.delete(:file)
       response[:file][:error] = @song.errors.full_messages.join(', ').html_safe
     else

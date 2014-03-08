@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303111753) do
+ActiveRecord::Schema.define(version: 20140307181614) do
 
   create_table "about_us_entries", force: true do |t|
     t.text     "text"
@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 20140303111753) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "artist"
+    t.string   "title"
   end
 
   create_table "stories", force: true do |t|

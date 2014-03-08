@@ -2,18 +2,39 @@
 <div class="row songs">
   <div class="small-12 columns">
     <h4>Einlaufsong</h4>
-    <p>Hier kannst du deinen persönlichen Song, zu dem du bei der offiziellen Verabschiedung auf die Bühne gehst, hochladen. Bitte achte darauf, dass er zwischen 30 und 45 Sekunden lang ist. Schneide ihn bitte vorher entsprechend zurecht. Erlaubte Formate sind: mp3, aac, wav. Wenn du bereits einen Song hochgeladen hast, kannst du ihn durch erneutes Hochladen ersetzen.</p>
+    <p>Hier kannst du deinen persönlichen Song, zu dem du bei der offiziellen Verabschiedung auf die Bühne gehst, hochladen. Bitte achte darauf, dass er zwischen 30 und 45 Sekunden lang ist. Schneide ihn bitte vorher entsprechend zurecht. Erlaubte Formate sind: mp3, aac, wav. Wenn du bereits einen Song hochgeladen hast, kannst du ihn durch erneutes Hochladen ersetzen.
+    <br />Schau bitte auch in der Tabelle darunter, ob dein Song nicht bereits schon von jemand anderem gewählt wurde.</p>
     <div>
       <div class="panel">
-        <%= form_for Song.new, method: :patch do |f| %>
+        <%= form_for @song, method: :patch, url: songs_path, remote: true, class: :edit_song do |f| %>
           <div class="row">
-            <div class="large-3 columns">
-              Song hochladen / ersetzen:
-            </div>
-            <div class="large-3 columns">
-              <%= f.file_field :file, accept: Song.accepted_types %>
+            <div class="large-6 columns">
+              <label>Interpret:</label>
+              <%= f.text_field :artist %>
             </div>
             <div class="large-6 columns">
+              <label>Titel:</label>
+              <%= f.text_field :title %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Datei:</label>
+              <div class="row">
+                <div class="large-4 columns">
+                  <%= f.file_field :file, accept: Song.accepted_types %>
+                </div>
+                <div class="large-8 columns">
+                  <% if @song.persisted? %><small>Nur auswählen, wenn du deine bisherige Datei ersetzen möchtest.</small><% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-3 columns hcen">
+              <%= f.submit :speichern, class: [:button, :tiny] %>
+            </div>
+            <div class="small-9 columns">
               <div class="progress radius hide">
                 <div class="meter"></div>
               </div>
@@ -24,5 +45,23 @@
         <%= render "song" if @song.persisted? %>
       </div>
     </div>
+    <hr />
+    <h4>Diese Songs wurden bereits von anderen gewählt:</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Interpret</th>
+          <th>Titel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.artist %></td>
+            <td><%= song.title %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
