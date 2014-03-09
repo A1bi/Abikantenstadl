@@ -1,3 +1,5 @@
+require "zip"
+
 class ProfilesController < ApplicationController
   @@lock_time = Time.local(2014, 2, 1, 3)
   
@@ -9,6 +11,58 @@ class ProfilesController < ApplicationController
   def index
     @fields = ProfileField.all
     @users = User.ordered_by_name.student
+    respond_to do |format|
+      format.html
+      format.zip do
+        path = File.join(Rails.public_path, "system", "archives")
+        FileUtils.mkdir_p(path)
+        path = File.join(path, "profiles.zip")
+        
+        if !File.exists?(path)
+          FileUtils.rm(path) if File.exists?(path)
+    
+          zip = Zip::File.open(path, Zip::File::CREATE)
+          
+          builder = Nokogiri::XML::Builder.new do |xml|
+            xml.people do
+              @users.each do |user|
+                xml.person do
+                  xml.firstname user.first_name
+                  xml.lastname user.last_name
+                  xml.pics do
+                    user.profile_photos.each do |photo|
+                      img_path = photo.id.to_s + File.extname(photo.image.original_filename).downcase
+                      xml.pic img_path
+                      zip.add(img_path, photo.image.path)
+                    end
+                  end
+                  xml.fields do
+                    user.profile_field_values.each do |value|
+                      xml.field do
+                        xml.fieldid value.profile_field.id
+                        xml.content value.value
+                      end
+                    end
+                  end
+                  xml.about user.about_us_entries.map { |e| e.text.gsub("\r\n", "") }.join("\n")
+                end
+              end
+            end
+          end
+          
+          xml_path = "/tmp/profiles.xml"
+          File.open(xml_path, "w") { |f| f.write(builder.to_xml) }
+          zip.add("profiles.xml", xml_path)
+          zip.close
+          File.delete(xml_path)
+    
+          FileUtils.chmod("a+r", path)
+        end
+    
+        headers['Content-Length'] = File.size(path).to_s
+        send_file path
+      end
+    end
   end
   
   def edit
