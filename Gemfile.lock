@@ -172,6 +172,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   jquery-rails (~> 3.1.0)
   mysql2
+  nokogiri
   paperclip
   rails (~> 4.0.2)
   rspec-rails
