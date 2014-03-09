@@ -10,7 +10,7 @@
       <button class="tiny round" title="Vorschau"><i class="fi-play"></i><i class="fi-pause hide"></i></button>
     </div>
     <div class="small-10 large-11 columns">
-      <%= @song.artist %> - <%= @song.title %>
+      <%= @song.artist %><% if @song.artist.present? && @song.title.present? %> - <% end %><%= @song.title %>
     </div>
   </div>
   <%= audio_tag @song.file.url %>

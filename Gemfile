@@ -35,6 +35,8 @@ gem 'dalli'
 
 gem 'unicorn'
 
+gem 'nokogiri'
+
 group :development do
   gem 'capistrano', '~> 2.15.5'
   gem 'rvm-capistrano'

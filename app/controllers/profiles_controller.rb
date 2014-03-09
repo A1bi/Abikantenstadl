@@ -40,7 +40,7 @@ class ProfilesController < ApplicationController
                     user.profile_field_values.each do |value|
                       xml.field do
                         xml.fieldid value.profile_field.id
-                        xml.content value.value
+                        xml.content value.value == "-" ? "" : value.value
                       end
                     end
                   end

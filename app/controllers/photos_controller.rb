@@ -1,4 +1,5 @@
 require 'zip'
+require 'nokogiri'
 
 class PhotosController < ApplicationController
   @@lock_time = Time.local(2014, 3, 1, 0)
