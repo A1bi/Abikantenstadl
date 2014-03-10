@@ -6,7 +6,19 @@ class SnippetsController < ApplicationController
   
   def index
     @snippet = Snippet.new
-    render_index
+    respond_to do |format|
+      format.html do
+        render_index
+      end
+      format.text do
+        response = "<ASCII-MAC>\n"
+        @snippets.each do |snippet|
+          response << snippet.content.gsub("\r\n", "<0x000A>")
+          response << "<0x000D>" if snippet != @snippets.last
+        end
+        send_data response.encode("MacRoman"), type: "text/plain; charset=MacRoman"
+      end
+    end
   end
   
   def create
