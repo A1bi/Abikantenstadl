@@ -1,4 +1,4 @@
-<div class="song-preview">
+<div class="my-song song-preview">
   <hr />
   <div class="row">
     <div class="large-12 columns">
@@ -7,7 +7,7 @@
   </div>
   <div class="row">
     <div class="small-2 large-1 columns">
-      <button class="tiny round" title="Vorschau"><i class="fi-play"></i><i class="fi-pause hide"></i></button>
+      <%= render "preview_btn" %>
     </div>
     <div class="small-10 large-11 columns">
       <%= @song.artist %><% if @song.artist.present? && @song.title.present? %> - <% end %><%= @song.title %>

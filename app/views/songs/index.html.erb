@@ -6,7 +6,7 @@
     <br />Schau bitte auch in der Tabelle darunter, ob dein Song nicht bereits schon von jemand anderem gewählt wurde.</p>
     <div>
       <div class="panel">
-        <%= form_for @song, method: :patch, url: songs_path, remote: true, class: :edit_song do |f| %>
+        <%= form_for @song, method: :patch, url: songs_path, remote: true do |f| %>
           <div class="row">
             <div class="large-6 columns">
               <label>Interpret:</label>
@@ -47,21 +47,17 @@
     </div>
     <hr />
     <h4>Diese Songs wurden bereits von anderen gewählt:</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Interpret</th>
-          <th>Titel</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @songs.each do |song| %>
-          <tr>
-            <td><%= song.artist %></td>
-            <td><%= song.title %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% @songs.each do |song| %>
+      <div class="row song-preview entry">
+        <% if @_user.admin? %><div class="small-1 columns"><%= render "preview_btn" %></div><% end %>
+        <div class="small-11 columns">
+          <div class="row">
+            <div class="large-4 columns"><%= song.artist %></div>
+            <div class="large-8 columns"><%= song.title %></div>
+          </div>
+        </div>
+        <%= audio_tag song.file.url %>
+      </div>
+    <% end %>
   </div>
 </div>
