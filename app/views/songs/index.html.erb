@@ -52,12 +52,22 @@
         <% if @_user.admin? %><div class="small-1 columns"><%= render "preview_btn" %></div><% end %>
         <div class="small-11 columns">
           <div class="row">
-            <div class="large-4 columns"><%= song.artist %></div>
-            <div class="large-8 columns"><%= song.title %></div>
+            <div class="large-4 columns"><%= song.artist.presence || "<em>nicht angegeben</em>".html_safe %></div>
+            <div class="large-4 columns"><%= song.title.presence || "<em>nicht angegeben</em>".html_safe %></div>
+            <% if @_user.admin? %><div class="large-4 columns"><%= song.user.full_name %></div><% end %>
           </div>
         </div>
-        <%= audio_tag song.file.url %>
+        <%= audio_tag song.file.url if @_user.admin? %>
       </div>
+    <% end %>
+    <% if @_user.admin? %>
+      <hr />
+      <h4>Schüler, deren Song noch fehlt</h4>
+      <% @students.each do |student| %>
+        <div class="row entry">
+          <div class="large-12 columns"><%= student.full_name %></div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
