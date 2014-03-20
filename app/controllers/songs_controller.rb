@@ -3,7 +3,7 @@ class SongsController < ApplicationController
   
   def index
     @songs = Song.where.not(user_id: @_user).order(:artist, :title)
-    @students = User.student.ordered_by_name.includes(:song).where("songs.id IS NULL")
+    @students = User.student.ordered_by_name.includes(:song).where("songs.id IS NULL").references(:songs)
   end
   
   def update
