@@ -1,6 +1,8 @@
-<% if photos.empty? %>
-  <p class="no-photos"><em>Noch keine Fotos hochgeladen.</em></p>
+<% cache [:photos, :gallery, photos] do %>
+  <% if photos.empty? %>
+    <p class="no-photos"><em>Noch keine Fotos hochgeladen.</em></p>
+  <% end %>
+  <ul class="small-block-grid-2 large-block-grid-5 gallery">
+    <%= render photos, no_delete: (no_delete ||= false) %>
+  </ul>
 <% end %>
-<ul class="small-block-grid-2 large-block-grid-5 gallery">
-  <%= render photos, no_delete: (no_delete ||= false) %>
-</ul>
