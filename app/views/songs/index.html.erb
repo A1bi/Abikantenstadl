@@ -49,7 +49,7 @@
     <h4>Diese Songs wurden bereits von anderen gewählt:</h4>
     <% @songs.each do |song| %>
       <% cache [:songs, :index, song, @_user.admin?] do %>
-        <div class="row song-preview entry">
+        <%= content_tag :div, class: %w(row song-preview entry), data: { audio_path: song.file.url } do %>
           <% if @_user.admin? %><div class="small-1 columns"><%= render "preview_btn" %></div><% end %>
           <div class="small-11 columns">
             <div class="row">
@@ -58,8 +58,7 @@
               <% if @_user.admin? %><div class="large-4 columns"><%= song.user.full_name %></div><% end %>
             </div>
           </div>
-          <%= audio_tag song.file.url, preload: :none if @_user.admin? %>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
     <% cache [:songs, :index, @students] do %>
@@ -73,3 +72,4 @@
     <% end if @_user.admin? %>
   </div>
 </div>
+<%= audio_tag %>

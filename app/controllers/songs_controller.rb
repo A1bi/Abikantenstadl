@@ -2,7 +2,7 @@ class SongsController < ApplicationController
   before_action :find_song
   
   def index
-    @songs = Song.where.not(user_id: @_user).order(:artist, :title)
+    @songs = Song.where.not(user_id: @_user).joins(:user).where(users: { student: true }).order(:artist, :title)
     @students = User.student.ordered_by_name.includes(:song).where("songs.id IS NULL").references(:songs)
   end
   

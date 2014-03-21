@@ -23,14 +23,18 @@
       <% end %>
       <h4>Deine Fotos</h4>
       <div class="panel">
-        <%= render "gallery", photos: @own_photos %>
+        <% cache [:photos, :index, :user, @all_photos, @_user] do %>
+          <%= render "gallery", photos: @own_photos %>
+        <% end %>
       </div>
     </div>
     <% if @_user.admin? %>
       <hr />
       <h4>Fotos anderer</h4>
       <div class="panel">
-        <%= render "gallery", photos: @all_photos %>
+        <% cache [:photos, :index, :all, @all_photos] do %>
+          <%= render "gallery", photos: @all_photos %>
+        <% end %>
       </div>
     <% end %>
   </div>

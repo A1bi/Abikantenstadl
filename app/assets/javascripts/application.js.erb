@@ -136,6 +136,7 @@ $(function() {
       var preview = $(".my-song");
       var newSong = $(file.html).hide();
       if (preview.length) {
+        pause_audio();
         preview.slideUp(function () {
           $(this).replaceWith(newSong);
         });
@@ -148,8 +149,11 @@ $(function() {
     }
   }
   
-  function toggle_audio_button(audio) {
-    $(audio).parents(".song-preview").find("button i").toggle();
+  function pause_audio() {
+    var audio = $("audio");
+    audio[0].pause();
+    $(".song-preview.playing").removeClass("playing").find("button i").toggle();
+    return audio;
   }
   
   $(".edit_song, .new_song").fileupload({
@@ -178,21 +182,18 @@ $(function() {
   });
   
   $(document).on("click", ".song-preview button", function () {
-    var audio = $(this).parents(".song-preview").find("audio")[0];
-    if (audio.paused) {
-      audio.play();
-      $("audio").each(function () {
-        if (this != audio && !this.paused) {
-          toggle_audio_button(this);
-          this.pause();
-        }
-      });
-    } else {
-      audio.pause();
+    var preview = $(this).parents(".song-preview");
+    var wasPlaying = preview.is(".playing");
+    var audio = pause_audio();
+    if (!wasPlaying) {
+      audio.prop("src", preview.data("audio-path"));
+      audio[0].play();
+      $("i", this).toggle();
+      preview.addClass("playing");
     }
-    $("i", this).toggle();
   });
-  $(".song-preview audio").on("ended", function () {
-    toggle_audio_button(this);
+  
+  $("audio").on("ended", function () {
+    pause_audio();
   });
 });

@@ -1,4 +1,4 @@
-<div class="my-song song-preview">
+<div class="my-song song-preview" data-audio-path="<%= @song.file.url %>">
   <hr />
   <div class="row">
     <div class="large-12 columns">
@@ -13,5 +13,4 @@
       <%= @song.artist %><% if @song.artist.present? && @song.title.present? %> - <% end %><%= @song.title %>
     </div>
   </div>
-  <%= audio_tag @song.file.url %>
 </div>
