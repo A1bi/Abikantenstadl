@@ -12,7 +12,19 @@ $faint-color: #9ED8FF;
   }
 }
 
-
 @mixin main-gradient {
   @include background-gradient(top, ($light-color 0%, $main-color 100%), $dark-color);
+}
+
+@mixin vendor-specific($property, $value) {
+	@each $vendor in moz, webkit, o, ms {
+		-#{$vendor}-#{$property}: $value;
+	}
+}
+
+@mixin keyframes($name) {
+	@-moz-keyframes #{$name} { @content; }
+	@-webkit-keyframes #{$name} { @content; }
+	@-o-keyframes #{$name} { @content; }
+	@-ms-keyframes #{$name} { @content; }
 }

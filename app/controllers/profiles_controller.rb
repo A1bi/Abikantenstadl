@@ -1,4 +1,5 @@
 require "zip"
+require "nokogiri"
 
 class ProfilesController < ApplicationController
   @@lock_time = Time.local(2014, 2, 1, 3)

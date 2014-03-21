@@ -212,3 +212,25 @@ p.error {
     }
   }
 }
+
+@include keyframes(others-color) {
+  0% {
+    color: red;
+  }
+  100% {
+    color: white;
+  }
+}
+
+@include keyframes(others-shadow) {
+  0% {
+    text-shadow: 0px 0px 10px red;
+  }
+  100% {
+    text-shadow: 0px 0px 10px blue;
+  }
+}
+
+.songs .others {
+  @include vendor-specific(animation, (others-color .2s alternate infinite, others-shadow .6s alternate infinite));
+}

@@ -1,5 +1,4 @@
 require 'zip'
-require 'nokogiri'
 
 class PhotosController < ApplicationController
   @@lock_time = Time.local(2014, 3, 1, 0)
@@ -19,7 +18,7 @@ class PhotosController < ApplicationController
         path = File.join(path, "photos.zip")
     
         photos = Photo.not_assigned
-        if !File.exists?(path) || File.mtime(path) < photos.maximum(:updated_at)
+        if !File.exists?(path) || File.mtime(path) < (photos.maximum(:updated_at) || Time.new(0))
           FileUtils.rm(path) if File.exists?(path)
     
           Zip::File.open(path, Zip::File::CREATE) do |zip|

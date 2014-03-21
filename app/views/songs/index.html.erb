@@ -46,7 +46,7 @@
       </div>
     </div>
     <hr />
-    <h4>Diese Songs wurden bereits von anderen gewählt:</h4>
+    <h4 title="Dein Song wird in der folgenden Liste nicht auftauchen, ist aber natürlich gespeichert, solange er oben steht.">Diese Songs wurden bereits von <span class="others">anderen</span> gewählt:</h4>
     <% @songs.each do |song| %>
       <% cache [:songs, :index, song, @_user.admin?] do %>
         <%= content_tag :div, class: %w(row song-preview entry), data: { audio_path: song.file.url } do %>
