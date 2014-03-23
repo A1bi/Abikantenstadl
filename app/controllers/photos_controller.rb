@@ -1,6 +1,6 @@
-require 'zip'
-
 class PhotosController < ApplicationController
+  include Zippable
+  
   @@lock_time = Time.local(2014, 3, 1, 0)
   
   before_filter :find_photos, only: [:index, :create]
@@ -13,27 +13,9 @@ class PhotosController < ApplicationController
       format.zip do
         return redirect_to({ action: :index }, alert: t("application.access_denied")) if !@_user.admin?
         
-        path = File.join(Rails.public_path, "system", "archives")
-        FileUtils.mkdir_p(path)
-        path = File.join(path, "photos.zip")
-    
-        photos = Photo.not_assigned
-        if !File.exists?(path) || File.mtime(path) < (photos.maximum(:updated_at) || Time.new(0))
-          FileUtils.rm(path) if File.exists?(path)
-    
-          Zip::File.open(path, Zip::File::CREATE) do |zip|
-            i = 0
-            photos.each do |photo|
-              zip.add(i.to_s + photo.image.original_filename, photo.image.path)
-              i = i.next
-            end
-          end
-    
-          FileUtils.chmod("a+r", path)
+        zip_attachments(:photos, Photo.not_assigned, ->(record){ record.image }) do |photo, attachment, i|
+          i.to_s + attachment.original_filename
         end
-    
-        headers['Content-Length'] = File.size(path).to_s
-        send_file path
       end
     end
   end

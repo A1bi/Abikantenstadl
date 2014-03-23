@@ -4,6 +4,10 @@
     <h4>Einlaufsong</h4>
     <p>Hier kannst du deinen persönlichen Song, zu dem du bei der offiziellen Verabschiedung auf die Bühne gehst, hochladen. Bitte achte darauf, dass er zwischen 30 und 45 Sekunden lang ist. Schneide ihn bitte vorher entsprechend zurecht. Erlaubte Formate sind: mp3, aac, wav. Wenn du bereits einen Song hochgeladen hast, kannst du ihn durch erneutes Hochladen ersetzen.
     <br />Schau bitte auch in der Tabelle darunter, ob dein Song nicht bereits schon von jemand anderem gewählt wurde.</p>
+    <% if @_user.admin? %>
+      <p class="text-right"><%= link_to songs_path(format: :zip) do %><i class="fi-archive"></i> Alle Songs herunterladen (~ <%= number_to_human_size @size %>)<% end %></p>
+    <% end %>
+    <%= render "locked" %>
     <div>
       <div class="panel">
         <%= form_for @song, method: :patch, url: songs_path, remote: true do |f| %>
@@ -41,35 +45,38 @@
               <p class="error"></p>
             </div>
           </div>
-        <% end %>
+          <hr />
+        <% end if !locked? %>
         <%= render "song" if @song.persisted? %>
       </div>
     </div>
-    <hr />
-    <h4 title="Dein Song wird in der folgenden Liste nicht auftauchen, ist aber natürlich gespeichert, solange er oben steht.">Diese Songs wurden bereits von <span class="others">anderen</span> gewählt:</h4>
-    <% @songs.each do |song| %>
-      <% cache [:songs, :index, song, @_user.admin?] do %>
-        <%= content_tag :div, class: %w(row song-preview entry), data: { audio_path: song.file.url } do %>
-          <% if @_user.admin? %><div class="small-1 columns"><%= render "preview_btn" %></div><% end %>
-          <div class="small-11 columns">
-            <div class="row">
-              <div class="large-4 columns"><%= song.artist.presence || "<em>nicht angegeben</em>".html_safe %></div>
-              <div class="large-4 columns"><%= song.title.presence || "<em>nicht angegeben</em>".html_safe %></div>
-              <% if @_user.admin? %><div class="large-4 columns"><%= song.user.full_name %></div><% end %>
+    <% if !locked? %>
+      <hr />
+      <h4 title="Dein Song wird in der folgenden Liste nicht auftauchen, ist aber natürlich gespeichert, solange er oben steht.">Diese Songs wurden bereits von <span class="others">anderen</span> gewählt:</h4>
+      <% @songs.each do |song| %>
+        <% cache [:songs, :index, song, @_user.admin?] do %>
+          <%= content_tag :div, class: %w(row song-preview entry), data: { audio_path: song.file.url } do %>
+            <% if @_user.admin? %><div class="small-1 columns"><%= render "preview_btn" %></div><% end %>
+            <div class="small-11 columns">
+              <div class="row">
+                <div class="large-4 columns"><%= song.artist.presence || "<em>nicht angegeben</em>".html_safe %></div>
+                <div class="large-4 columns"><%= song.title.presence || "<em>nicht angegeben</em>".html_safe %></div>
+                <% if @_user.admin? %><div class="large-4 columns"><%= song.user.full_name %></div><% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
+      <% cache [:songs, :index, @students] do %>
+        <hr />
+        <h4>Schüler, deren Song noch fehlt</h4>
+        <% @students.each do |student| %>
+          <div class="row entry">
+            <div class="large-12 columns"><%= student.full_name %></div>
+          </div>
+        <% end %>
+      <% end if @_user.admin? %>
     <% end %>
-    <% cache [:songs, :index, @students] do %>
-      <hr />
-      <h4>Schüler, deren Song noch fehlt</h4>
-      <% @students.each do |student| %>
-        <div class="row entry">
-          <div class="large-12 columns"><%= student.full_name %></div>
-        </div>
-      <% end %>
-    <% end if @_user.admin? %>
   </div>
 </div>
 <%= audio_tag %>
