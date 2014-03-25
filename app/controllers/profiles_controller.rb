@@ -1,7 +1,8 @@
-require "zip"
 require "nokogiri"
 
 class ProfilesController < ApplicationController
+  include Zippable
+  
   @@lock_time = Time.local(2014, 2, 1, 3)
   
   restrict_access_to_admins only: [:index]
@@ -15,15 +16,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       format.html
       format.zip do
-        path = File.join(Rails.public_path, "system", "archives")
-        FileUtils.mkdir_p(path)
-        path = File.join(path, "profiles.zip")
-        
-        if !File.exists?(path)
-          FileUtils.rm(path) if File.exists?(path)
-    
-          zip = Zip::File.open(path, Zip::File::CREATE)
-          
+        zip :profiles do |zip|
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.people do
               @users.each do |user|
@@ -51,17 +44,13 @@ class ProfilesController < ApplicationController
             end
           end
           
-          xml_path = "/tmp/profiles.xml"
-          File.open(xml_path, "w") { |f| f.write(builder.to_xml) }
-          zip.add("profiles.xml", xml_path)
-          zip.close
-          File.delete(xml_path)
-    
-          FileUtils.chmod("a+r", path)
+          Dir.mktmpdir do |dir|
+            path = File.join(dir, "profiles.xml")
+            File.open(path, "w") { |f| f.write(builder.to_xml) }
+            zip.add("profiles.xml", path)
+            zip.commit
+          end
         end
-    
-        headers['Content-Length'] = File.size(path).to_s
-        send_file path
       end
     end
   end
